@@ -70,25 +70,25 @@
   }
   .logo svg{ width:30px; height:30px; flex-shrink:0; }
   .logo-mark{
-    width:150px;
+    width:220px;
     height:44px;
     background-image:url('images/logo-horizontal.png');
     background-repeat:no-repeat;
-    background-position:center;
-    background-size:220% auto; /* increase % to zoom in further / decrease to zoom out */
+    background-position:left center;
+    background-size:auto 160%; /* height-only zoom: raise % to crop more empty top/bottom space */
     overflow:hidden;
     flex-shrink:0;
   }
   @media (max-width: 480px){
-    .logo-mark{ width:120px; height:36px; }
+    .logo-mark{ width:170px; height:36px; }
   }
   .footer-logo-mark{
-    width:170px;
+    width:220px;
     height:40px;
     background-image:url('images/logo-horizontal.png');
     background-repeat:no-repeat;
     background-position:left center;
-    background-size:250% auto; /* tune this % the same way as .logo-mark above */
+    background-size:auto 170%; /* tune the same way as .logo-mark above */
     filter:brightness(0) invert(1);
     margin-bottom:14px;
   }
