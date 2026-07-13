@@ -69,6 +69,29 @@
     letter-spacing:0.04em;
   }
   .logo svg{ width:30px; height:30px; flex-shrink:0; }
+  .logo-mark{
+    width:150px;
+    height:44px;
+    background-image:url('images/logo-horizontal.png');
+    background-repeat:no-repeat;
+    background-position:center;
+    background-size:220% auto; /* increase % to zoom in further / decrease to zoom out */
+    overflow:hidden;
+    flex-shrink:0;
+  }
+  @media (max-width: 480px){
+    .logo-mark{ width:120px; height:36px; }
+  }
+  .footer-logo-mark{
+    width:170px;
+    height:40px;
+    background-image:url('images/logo-horizontal.png');
+    background-repeat:no-repeat;
+    background-position:left center;
+    background-size:250% auto; /* tune this % the same way as .logo-mark above */
+    filter:brightness(0) invert(1);
+    margin-bottom:14px;
+  }
   .logo .en{
     font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:400;
     font-size:0.85rem; color:var(--ink-soft); letter-spacing:0.08em; margin-left:2px;
@@ -254,7 +277,7 @@
 <header class="site">
   <div class="nav-inner">
     <div class="logo">
-      <img src="images/logo-horizontal.png" alt="織光窗簾 GlowCurtain" style="height:34px; width:auto; display:block;">
+      <div class="logo-mark" role="img" aria-label="織光窗簾 GlowCurtain"></div>
     </div>
     <nav class="links">
       <a href="#categories">窗簾分類</a>
@@ -525,7 +548,7 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <img src="images/logo-horizontal.png" alt="織光窗簾 GlowCurtain" style="height:32px; width:auto; display:block; margin-bottom:14px; filter:brightness(0) invert(1);">
+        <div class="footer-logo-mark" role="img" aria-label="織光窗簾 GlowCurtain"></div>
         <p>台中在地訂製窗簾品牌，以法式浪漫美學織出屬於你家的光影。</p>
       </div>
       <div>
