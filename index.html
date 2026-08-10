@@ -2,8 +2,16 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>織光窗簾 GlowCurtain｜訂製窗簾・預約丈量・線上報價</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title data-cid="SEO-TITLE">訂製窗簾推薦-到府丈量估價｜織光窗簾 GlowCurtain</title>
+<meta name="description" content="織光窗簾提供訂製窗簾、電動窗簾、百葉窗與蜂巢簾等多款窗飾，全台到府免費丈量、快速線上估價，立即預約設計師到府規劃您的理想光影生活與居家美學。" data-cid="SEO-META-DESC">
+<meta name="robots" content="index, follow" data-cid="SEO-ROBOTS">
+<link rel="canonical" href="https://www.glowcurtain.com.tw/" data-cid="SEO-CANONICAL">
+<meta name="theme-color" content="#364852">
+<meta property="og:title" content="訂製窗簾推薦-到府丈量估價｜織光窗簾 GlowCurtain">
+<meta property="og:description" content="織光窗簾提供訂製窗簾、電動窗簾、百葉窗與蜂巢簾等多款窗飾，全台到府免費丈量、快速線上估價，立即預約設計師到府規劃您的理想光影生活與居家美學。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.glowcurtain.com.tw/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;1,400;1,500&display=swap" rel="stylesheet">
 <style>
@@ -22,9 +30,16 @@
     --line: rgba(54,72,82,0.16);
     --shadow: 0 12px 32px rgba(54,72,82,0.12);
     --radius: 2px;
+    /* RWD spacing scale — 依斷點調整，避免手機版留白過大 */
+    --section-pad: 110px;
+    --wrap-pad: 32px;
+    --grid-gap: 70px;
   }
   *{ box-sizing:border-box; }
   html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+  }
   body{
     margin:0;
     background:var(--bg);
@@ -33,6 +48,7 @@
     font-weight:300;
     line-height:1.7;
     -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
   }
   h1,h2,h3{
     font-family:'Noto Serif TC', serif;
@@ -51,8 +67,9 @@
   }
   a{ color:inherit; }
   button{ font-family:inherit; }
+  img{ max-width:100%; display:block; }
   :focus-visible{ outline:2px solid var(--navy); outline-offset:3px; }
-  .wrap{ max-width:1120px; margin:0 auto; padding:0 32px; }
+  .wrap{ max-width:1120px; margin:0 auto; padding:0 var(--wrap-pad); }
 
   /* ---------- NAV ---------- */
   header.site{
@@ -62,35 +79,35 @@
     border-bottom:1px solid var(--line);
   }
   .nav-inner{
-    max-width:1120px; margin:0 auto; padding:16px 32px;
+    max-width:1120px; margin:0 auto; padding:14px var(--wrap-pad);
     display:flex; align-items:center; justify-content:space-between;
+    gap:16px;
   }
   .logo{
     display:flex; align-items:center; gap:10px;
     font-family:'Noto Serif TC', serif; font-weight:700; font-size:1.3rem;
     letter-spacing:0.04em;
+    min-width:0;
   }
-  .logo svg{ width:30px; height:30px; flex-shrink:0; }
   .logo-mark{
     width:220px;
     height:44px;
-    background-image:url('https://raw.githubusercontent.com/curtain168888-tech/glowcurtain/main/images/logo-horizontal.png');
-    background-repeat:no-repeat;
-    background-position:left center;
-    background-size:auto 160%; /* height-only zoom: raise % to crop more empty top/bottom space */
-    overflow:hidden;
-    flex-shrink:0;
+    object-fit:cover;
+    object-position:left center;
+    flex-shrink:1;
+    max-width:100%;
   }
   @media (max-width: 480px){
     .logo-mark{ width:170px; height:36px; }
   }
+  @media (max-width: 360px){
+    .logo-mark{ width:150px; height:32px; }
+  }
   .footer-logo-mark{
     width:220px;
     height:40px;
-    background-image:url('https://raw.githubusercontent.com/curtain168888-tech/glowcurtain/main/images/logo-horizontal.png');
-    background-repeat:no-repeat;
-    background-position:left center;
-    background-size:auto 170%; /* tune the same way as .logo-mark above */
+    object-fit:cover;
+    object-position:left center;
     filter:brightness(0) invert(1);
     margin-bottom:14px;
   }
@@ -109,26 +126,35 @@
     border:1px solid var(--navy); color:var(--navy); padding:9px 20px;
     text-decoration:none; font-size:0.88rem; letter-spacing:0.03em; white-space:nowrap;
     transition:background .25s ease, color .25s ease;
+    flex-shrink:0;
   }
   .nav-cta:hover{ background:var(--navy); color:var(--paper); }
-  .menu-toggle{ display:none; background:none; border:none; cursor:pointer; padding:6px; }
+  .menu-toggle{
+    display:none; background:none; border:none; cursor:pointer; padding:8px;
+    -webkit-tap-highlight-color:transparent;
+  }
   .menu-toggle svg{ width:26px; height:26px; }
+  .menu-toggle .icon-close{ display:none; }
+  header.site.nav-open .menu-toggle .icon-open{ display:none; }
+  header.site.nav-open .menu-toggle .icon-close{ display:block; }
 
   /* ---------- HERO ---------- */
   .hero{
     position:relative; overflow:hidden;
     min-height:88vh; display:flex; align-items:center;
     background:linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 100%);
+    padding:60px 0;
   }
   .hero-folds{ position:absolute; inset:0; width:100%; height:100%; }
   .hero-content{
-    position:relative; z-index:2; max-width:1120px; margin:0 auto; padding:0 32px;
+    position:relative; z-index:2; max-width:1120px; margin:0 auto; padding:0 var(--wrap-pad);
     width:100%;
   }
   .hero-content .box{ max-width:620px; }
   .hero h1{
-    font-size:clamp(2.4rem, 5vw, 3.6rem);
-    line-height:1.25; margin-bottom:22px;
+    font-size:clamp(2rem, 5vw, 3.6rem);
+    line-height:1.28; margin-bottom:22px;
+    word-break:keep-all;
   }
   .hero h1 em{
     font-style:normal; color:var(--navy); position:relative;
@@ -140,33 +166,37 @@
   .btn-primary{
     background:var(--navy); color:var(--paper); border:1px solid var(--navy);
     padding:14px 30px; text-decoration:none; font-size:0.95rem; letter-spacing:0.03em;
-    transition:opacity .25s ease; display:inline-block;
+    transition:opacity .25s ease; display:inline-block; text-align:center;
   }
   .btn-primary:hover{ opacity:0.86; }
   .btn-secondary{
     border:1px solid var(--ink); color:var(--ink); padding:14px 30px;
     text-decoration:none; font-size:0.95rem; letter-spacing:0.03em; display:inline-block;
-    transition:background .25s ease, color .25s ease;
+    transition:background .25s ease, color .25s ease; text-align:center;
   }
   .btn-secondary:hover{ background:var(--ink); color:var(--paper); }
+  @media (max-width:480px){
+    .hero-actions{ flex-direction:column; align-items:stretch; }
+    .hero-actions a{ width:100%; }
+  }
 
   /* ---------- SECTION SHARED ---------- */
-  section{ padding:110px 0; }
+  section{ padding:var(--section-pad) 0; }
   .section-head{ max-width:640px; margin-bottom:64px; }
-  .section-head h2{ font-size:clamp(1.7rem, 3vw, 2.3rem); }
+  .section-head h2{ font-size:clamp(1.6rem, 3vw, 2.3rem); }
   .section-head p{ color:var(--ink-soft); margin-top:14px; font-size:1rem; }
 
   /* ---------- CATEGORIES ---------- */
   #categories{ background:var(--paper); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
   .cat-grid{
-    display:grid; grid-template-columns:repeat(4, 1fr); gap:1px;
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:1px;
     background:var(--line); border:1px solid var(--line);
   }
   .cat-card{
     background:var(--paper); padding:38px 28px; position:relative;
     transition:background .3s ease;
   }
-  .cat-card:hover{ background:var(--bg-soft); }
+  .cat-card:hover, .cat-card:focus-within{ background:var(--bg-soft); }
   .cat-card .num{
     font-family:'Cormorant Garamond', serif; font-style:italic; color:var(--gold-deep);
     font-size:0.85rem; letter-spacing:0.05em;
@@ -177,7 +207,7 @@
 
   /* ---------- BOOKING ---------- */
   #booking{ background:var(--bg); }
-  .booking-grid{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:70px; align-items:start; }
+  .booking-grid{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:var(--grid-gap); align-items:start; }
   .booking-info h2{ margin-bottom:20px; }
   .booking-info p{ color:var(--ink-soft); margin-bottom:26px; max-width:420px; }
   .step-list{ list-style:none; padding:0; margin:0; }
@@ -199,7 +229,8 @@
   label{ display:block; font-size:0.85rem; color:var(--ink-soft); margin-bottom:8px; letter-spacing:0.02em; }
   input, select, textarea{
     width:100%; background:var(--bg-soft); border:1px solid var(--line); color:var(--ink);
-    padding:12px 14px; font-family:'Noto Sans TC', sans-serif; font-size:0.95rem;
+    padding:12px 14px; font-family:'Noto Sans TC', sans-serif;
+    font-size:16px; /* 16px 以上可避免 iOS Safari 聚焦時自動放大畫面 */
   }
   textarea{ resize:vertical; min-height:88px; }
   input:focus, select:focus, textarea:focus{ background:var(--paper); }
@@ -207,6 +238,7 @@
     width:100%; background:var(--navy); color:var(--paper); border:none;
     padding:15px; font-size:0.98rem; letter-spacing:0.04em; cursor:pointer;
     transition:opacity .25s ease;
+    min-height:48px; /* 觸控目標高度 */
   }
   .submit-btn:hover{ opacity:0.87; }
   .confirm-box{
@@ -218,21 +250,22 @@
 
   /* ---------- QUOTE ---------- */
   #quote{ background:var(--paper); border-top:1px solid var(--line); }
-  .quote-grid{ display:grid; grid-template-columns:1.05fr 0.95fr; gap:70px; align-items:start; }
+  .quote-grid{ display:grid; grid-template-columns:1.05fr 0.95fr; gap:var(--grid-gap); align-items:start; }
   .quote-form{ display:grid; gap:20px; }
   .quote-form .field{ margin-bottom:0; }
   .quote-result{
-    background:var(--navy); color:var(--paper); padding:44px; position:sticky; top:110px;
+    background:var(--navy); color:var(--paper); padding:44px; position:sticky; top:96px;
   }
   .quote-result .eyebrow{ color:var(--gold-soft); }
   .quote-result h3{ color:var(--paper); font-size:1.2rem; margin-bottom:24px; }
   .quote-line{
-    display:flex; justify-content:space-between; padding:12px 0;
+    display:flex; justify-content:space-between; gap:12px; padding:12px 0;
     border-top:1px solid rgba(251,248,243,0.18); font-size:0.92rem;
   }
   .quote-line.total{
     border-top:1px solid rgba(251,248,243,0.4); margin-top:6px; padding-top:18px;
     font-family:'Noto Serif TC', serif; font-size:1.4rem;
+    flex-wrap:wrap;
   }
   .quote-note{ margin-top:24px; font-size:0.78rem; color:#C9CED0; line-height:1.6; }
 
@@ -256,48 +289,137 @@
     display:flex; justify-content:space-between; font-size:0.8rem; color:#7C8B92; flex-wrap:wrap; gap:10px;
   }
   .ig-link{ display:inline-flex; align-items:center; gap:8px; }
-  .ig-link svg{ width:16px; height:16px; }
+  .ig-link svg{ width:16px; height:16px; flex-shrink:0; }
 
+  /* ---------- BREAKPOINT: TABLET (≤1024px) ---------- */
+  @media (max-width: 1024px){
+    :root{ --grid-gap:44px; }
+    .cat-grid{ grid-template-columns:repeat(2, 1fr); }
+    .about-grid{ grid-template-columns:repeat(3, 1fr); gap:32px; }
+  }
+
+  /* ---------- BREAKPOINT: MOBILE NAV / STACKED GRIDS (≤860px) ---------- */
   @media (max-width: 860px){
-    nav.links{ display:none; }
+    :root{ --section-pad:72px; --wrap-pad:24px; }
+    nav.links{
+      display:none;
+      flex-direction:column;
+      position:absolute; top:100%; left:0; right:0;
+      background:var(--paper); padding:20px 24px 28px;
+      gap:6px; border-bottom:1px solid var(--line);
+      box-shadow:var(--shadow);
+    }
+    nav.links a{ padding:12px 4px; font-size:1rem; }
+    header.site.nav-open nav.links{ display:flex; }
     .menu-toggle{ display:block; }
-    .cat-grid{ grid-template-columns:repeat(2,1fr); }
+    .nav-cta{ display:none; }
+    header.site.nav-open .nav-cta{
+      display:inline-block; margin:4px 24px 20px; text-align:center;
+    }
+    header.site.nav-open nav.links{ padding-bottom:0; }
     .booking-grid, .quote-grid{ grid-template-columns:1fr; }
     .quote-result{ position:static; }
-    .about-grid{ grid-template-columns:1fr; }
-    .footer-grid{ grid-template-columns:1fr; }
+    .about-grid{ grid-template-columns:1fr; gap:28px; }
+    .footer-grid{ grid-template-columns:1fr; gap:36px; }
     form{ padding:28px; }
     .form-row{ grid-template-columns:1fr; }
+    .hero{ min-height:auto; padding:72px 0 56px; }
+    .section-head{ margin-bottom:40px; }
+  }
+
+  /* ---------- BREAKPOINT: SMALL MOBILE (≤480px) ---------- */
+  @media (max-width: 480px){
+    :root{ --wrap-pad:18px; }
+    .cat-grid{ grid-template-columns:1fr; }
+    .cat-card{ padding:28px 22px; }
+    form{ padding:20px; }
+    .quote-result{ padding:28px 22px; }
+    .footer-bottom{ flex-direction:column; align-items:flex-start; }
+    .hero h1{ margin-bottom:16px; }
+    section{ padding:56px 0; }
   }
 
   @media (prefers-reduced-motion: reduce){
     *{ animation:none !important; transition:none !important; }
   }
+
+  /* ---------- FAQ ---------- */
+  #faq{ background:var(--paper); border-top:1px solid var(--line); }
+  .faq-list{ display:grid; gap:1px; background:var(--line); border:1px solid var(--line); }
+  .faq-item{ background:var(--paper); padding:26px 28px; }
+  .faq-item h3{ font-size:1rem; margin-bottom:8px; display:flex; gap:12px; }
+  .faq-item h3 .q-mark{ font-family:'Cormorant Garamond', serif; font-style:italic; color:var(--gold-deep); flex-shrink:0; }
+  .faq-item p{ color:var(--ink-soft); font-size:0.92rem; margin:0 0 0 30px; }
+  @media (max-width:480px){
+    .faq-item{ padding:20px 20px; }
+  }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "織光窗簾 GlowCurtain",
+  "url": "https://www.glowcurtain.com.tw/",
+  "logo": "https://raw.githubusercontent.com/curtain168888-tech/glowcurtain/main/images/logo-horizontal.png",
+  "description": "織光窗簾提供訂製窗簾、電動窗簾與百葉窗等多款窗飾，全台到府免費丈量與線上估價服務。",
+  "areaServed": "TW",
+  "sameAs": ["https://www.instagram.com/glowcurtain/"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": [
+    {"@type":"Product","position":1,"name":"蛇型簾","description":"多樣布料花色，垂墜自然，適合客廳、臥室，營造最佳的空間光影氛圍。","offers":{"@type":"Offer","priceCurrency":"TWD","price":"1200","description":"基本款每平方公尺參考單價","availability":"https://schema.org/InStock"}},
+    {"@type":"Product","position":2,"name":"夢幻簾","description":"輕盈紗感搭配立體皺褶，光影朦朧夢幻，為客廳與臥室增添柔美浪漫氛圍。","offers":{"@type":"Offer","priceCurrency":"TWD","price":"1500","description":"基本款每平方公尺參考單價","availability":"https://schema.org/InStock"}},
+    {"@type":"Product","position":3,"name":"折景簾","description":"獨立分片設計，不必動手拉窗簾即可輕鬆進出陽台與室內，打造無死角的質感生活。","offers":{"@type":"Offer","priceCurrency":"TWD","price":"900","description":"基本款每平方公尺參考單價","availability":"https://schema.org/InStock"}},
+    {"@type":"Product","position":4,"name":"捲簾","description":"極簡俐落，操作簡便好清潔，遮光與透光款式皆備，兼顧美觀機能。","offers":{"@type":"Offer","priceCurrency":"TWD","price":"2200","description":"基本款每平方公尺參考單價","availability":"https://schema.org/InStock"}},
+    {"@type":"Product","position":5,"name":"橫式柔紗簾","description":"橫向簾片交織柔紗底布，可自由調節光線通透度與角度，浪漫兼具實用調光機能。","offers":{"@type":"Offer","priceCurrency":"TWD","price":"1400","description":"基本款每平方公尺參考單價","availability":"https://schema.org/InStock"}},
+    {"@type":"Product","position":6,"name":"調光簾","description":"層次分明，可自己定義空間光感，適合畏光又喜歡光的消費者。","offers":{"@type":"Offer","priceCurrency":"TWD","price":"3500","description":"基本款每平方公尺參考單價","availability":"https://schema.org/InStock"}},
+    {"@type":"Product","position":7,"name":"蜂巢簾","description":"蜂巢結構有效隔熱節能，線條簡約俐落，適合現代居家與辦公空間。","offers":{"@type":"Offer","priceCurrency":"TWD","price":"800","description":"基本款每平方公尺參考單價","availability":"https://schema.org/InStock"}},
+    {"@type":"Product","position":8,"name":"鋁百葉","description":"可提供仿木質感鋁百葉，可調角度精準控制光線與隱私，耐潮防塵且耐用。","offers":{"@type":"Offer","priceCurrency":"TWD","price":"1100","description":"基本款每平方公尺參考單價","availability":"https://schema.org/InStock"}},
+    {"@type":"Product","position":9,"name":"電動窗簾","description":"手機 App 或聲控一鍵開闔，可設定定時模式，智慧居家首選。","offers":{"@type":"Offer","priceCurrency":"TWD","price":"1100","description":"基本款每平方公尺參考單價","availability":"https://schema.org/InStock"}}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"到府丈量會收費嗎？","acceptedAnswer":{"@type":"Answer","text":"丈量與諮詢完全免費，全台服務範圍皆適用。"}},
+    {"@type":"Question","name":"織光窗簾的服務範圍是否僅限台中？","acceptedAnswer":{"@type":"Answer","text":"織光窗簾目前採無門市、全省到府服務，全台皆可預約丈量與安裝。"}},
+    {"@type":"Question","name":"線上報價準確嗎？還需要再丈量嗎？","acceptedAnswer":{"@type":"Answer","text":"線上報價為系統試算之參考金額，正式報價仍須以到府丈量結果為準。"}},
+    {"@type":"Question","name":"有提供電動窗簾嗎？","acceptedAnswer":{"@type":"Answer","text":"有的，電動窗簾支援手機 App 或聲控操作，並可設定定時開闔模式。"}}
+  ]
+}
+</script>
 </head>
 <body>
 
-<header class="site">
+<header class="site" id="siteHeader">
   <div class="nav-inner">
     <div class="logo">
-      <div class="logo-mark" role="img" aria-label="織光窗簾 GlowCurtain"></div>
+      <img class="logo-mark" src="https://raw.githubusercontent.com/curtain168888-tech/glowcurtain/main/images/logo-horizontal.png" alt="織光窗簾 GlowCurtain 品牌標誌" width="220" height="44" data-cid="IMG-001" data-cid-alt="IMG-001-ALT">
     </div>
-    <nav class="links">
-      <a href="#categories">窗簾分類</a>
-      <a href="#booking">預約丈量</a>
-      <a href="#quote">線上報價</a>
-      <a href="#about">關於我們</a>
-      <a href="#contact">聯絡方式</a>
+    <nav class="links" id="navLinks">
+      <a href="#categories" data-cid="NAV-L1">窗簾分類</a>
+      <a href="#booking" data-cid="NAV-L2">預約丈量</a>
+      <a href="#quote" data-cid="NAV-L3">線上報價</a>
+      <a href="#about" data-cid="NAV-L4">關於我們</a>
+      <a href="#contact" data-cid="NAV-L5">聯絡方式</a>
+      <a class="nav-cta" href="#booking" data-cid="NAV-CTA">立即預約丈量</a>
     </nav>
-    <a class="nav-cta" href="#booking">立即預約丈量</a>
-    <button class="menu-toggle" aria-label="開啟選單">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    <button class="menu-toggle" id="menuToggle" aria-label="開啟選單" aria-expanded="false" aria-controls="navLinks">
+      <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
   </div>
 </header>
 
 <section class="hero">
-  <svg class="hero-folds" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+  <svg class="hero-folds" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <defs>
       <linearGradient id="foldShade" x1="0" y1="0" x2="1" y2="0">
         <stop offset="0%" stop-color="#DED2C0" stop-opacity="0.9"/>
@@ -323,12 +445,12 @@
   </svg>
   <div class="hero-content">
     <div class="box">
-      <span class="eyebrow">Taichung · Custom Window Dressing</span>
-      <h1>讓光線，<em>溫柔穿透</em>每個家</h1>
-      <p class="lead">織光窗簾專注訂製窗簾與居家窗飾，以法式浪漫美學為基底，從布料選配、到府丈量到安裝，一次為您的空間織出剛好的光影層次。</p>
+      <span class="eyebrow" data-cid="HERO-EYEBROW">Glow Curtain · Custom Window Dressing</span>
+      <h1 data-cid="HERO-H1">讓光線，<em>溫柔穿透</em>每個家</h1>
+      <p class="lead" data-cid="HERO-LEAD">織光窗簾專注訂製窗簾與居家窗飾，擁有多年的窗飾職人規劃經驗，從布料選配、到府丈量到安裝，一次為您的空間織出剛好的光影層次。</p>
       <div class="hero-actions">
-        <a class="btn-primary" href="#booking">預約到府丈量</a>
-        <a class="btn-secondary" href="#quote">線上估算報價</a>
+        <a class="btn-primary" href="#booking" data-cid="HERO-CTA1">預約到府丈量</a>
+        <a class="btn-secondary" href="#quote" data-cid="HERO-CTA2">線上估算報價</a>
       </div>
     </div>
   </div>
@@ -337,67 +459,74 @@
 <section id="categories">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">Collections</span>
-      <h2>窗簾分類</h2>
-      <p>依空間需求與光線層次挑選，每一款皆可依尺寸與布料客製，點選了解特色，或直接於下方預約丈量與線上估價。</p>
+      <span class="eyebrow" data-cid="CAT-EYEBROW">Collections</span>
+      <h2 data-cid="CAT-H2">窗簾分類</h2>
+      <p data-cid="CAT-DESC">依空間需求與光線層次挑選，每一款皆可依尺寸與布料客製，點選了解特色，或直接於下方預約丈量與線上估價。</p>
     </div>
   </div>
   <div class="cat-grid">
 
     <div class="cat-card">
       <span class="num">01</span>
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M8 6v36M18 6c-3 12 3 24 0 36M30 6c3 12-3 24 0 36M40 6v36"/></svg>
-      <h3>訂製布簾</h3>
-      <p>多樣布料花色，垂墜自然，適合客廳、臥室，營造法式浪漫氛圍。</p>
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M8 6v36M18 6c-3 12 3 24 0 36M30 6c3 12-3 24 0 36M40 6v36"/></svg>
+      <h3 data-cid="CAT-01-TITLE">蛇型簾</h3>
+      <p data-cid="CAT-01-DESC">多樣布料花色，垂墜自然，適合客廳、臥室，營造最佳的空間光影氛圍。</p>
     </div>
 
     <div class="cat-card">
       <span class="num">02</span>
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M8 6h32M8 6v8M40 6v8M8 14c8 4 24 4 32 0"/><path d="M10 20h28v4H10zM10 27h28v4H10zM10 34h28v4H10z"/></svg>
-      <h3>蜂巢風琴簾</h3>
-      <p>蜂巢結構有效隔熱節能，線條簡約俐落，適合現代居家與辦公空間。</p>
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><path d="M10 6v36M16 6v36M22 6v36M28 6v36M34 6v36"/></svg>
+      <h3 data-cid="CAT-02-TITLE">夢幻簾</h3>
+      <p data-cid="CAT-02-DESC">輕盈紗感搭配立體皺褶，光影朦朧夢幻，為客廳與臥室增添柔美浪漫氛圍。</p>
     </div>
 
     <div class="cat-card">
       <span class="num">03</span>
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="8" y="6" width="32" height="6" rx="1"/><path d="M12 12v22M36 12v22M12 34h24"/></svg>
-      <h3>捲簾</h3>
-      <p>極簡俐落，操作簡便好清潔，遮光與透光款式皆備，兼顧美觀機能。</p>
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M8 6v36M16 6v36M24 6v36M32 6v36M40 6v36"/></svg>
+      <h3 data-cid="CAT-03-TITLE">折景簾</h3>
+      <p data-cid="CAT-03-DESC">夢幻柔紗，隨心穿梭！折景簾擁有特殊的「獨立分片設計」，不必動手拉窗簾，就能輕鬆進出陽台與室內，打造無死角的質感生活。</p>
     </div>
 
     <div class="cat-card">
       <span class="num">04</span>
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="8" y="6" width="32" height="36" rx="1"/><path d="M8 14h32M8 21h32M8 28h32M8 35h32"/></svg>
-      <h3>木百葉窗</h3>
-      <p>天然木質質感，可調角度控制光線與隱私，耐用且富設計感。</p>
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="8" y="6" width="32" height="6" rx="1"/><path d="M12 12v22M36 12v22M12 34h24"/></svg>
+      <h3 data-cid="CAT-04-TITLE">捲簾</h3>
+      <p data-cid="CAT-04-DESC">極簡俐落，操作簡便好清潔，遮光與透光款式皆備，兼顧美觀機能。</p>
     </div>
 
     <div class="cat-card">
       <span class="num">05</span>
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M10 6h28M10 6c-4 6 4 8 0 14s4 8 0 14s4 8 0 14M38 6c4 6-4 8 0 14s-4 8 0 14s-4 8 0 14"/></svg>
-      <h3>羅馬簾</h3>
-      <p>優雅摺線層次分明，適合復古或古典風格居家與窗型特殊的空間。</p>
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M10 6h28M10 6c-4 6 4 8 0 14s4 8 0 14s4 8 0 14M38 6c4 6-4 8 0 14s-4 8 0 14s-4 8 0 14"/></svg>
+      <h3 data-cid="CAT-05-TITLE">橫式柔紗簾</h3>
+      <p data-cid="CAT-05-DESC">橫向簾片交織柔紗底布，可自由調節光線通透度與角度，浪漫兼具實用調光機能。</p>
     </div>
 
     <div class="cat-card">
       <span class="num">06</span>
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M8 6v36M40 6v36"/><path d="M8 24h32" stroke-dasharray="2 4"/><circle cx="24" cy="24" r="4"/></svg>
-      <h3>電動窗簾</h3>
-      <p>手機 App 或聲控一鍵開闔，可設定定時模式，智慧居家首選。</p>
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M8 6h32M8 6v8M40 6v8M8 14c8 4 24 4 32 0"/><path d="M10 20h28v4H10zM10 27h28v4H10zM10 34h28v4H10z"/></svg>
+      <h3 data-cid="CAT-06-TITLE">調光簾</h3>
+      <p data-cid="CAT-06-DESC">層次分明，可自己定義空間光感，適合畏光又喜歡光的消費者。</p>
     </div>
 
     <div class="cat-card">
       <span class="num">07</span>
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.1"><path d="M10 6v36M16 6v36M22 6v36M28 6v36M34 6v36"/></svg>
-      <h3>紗簾</h3>
-      <p>柔光細紗透出朦朧光影，正是「織光」美學的核心，日夜氛圍皆宜。</p>
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M8 6h32M8 6v8M40 6v8M8 14c8 4 24 4 32 0"/><path d="M10 20h28v4H10zM10 27h28v4H10zM10 34h28v4H10z"/></svg>
+      <h3 data-cid="CAT-07-TITLE">蜂巢簾</h3>
+      <p data-cid="CAT-07-DESC">蜂巢結構有效隔熱節能，線條簡約俐落，適合現代居家與辦公空間。</p>
     </div>
 
     <div class="cat-card">
       <span class="num">08</span>
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M8 6v36M16 6v36M24 6v36M32 6v36M40 6v36"/></svg>
-      <h3>直立式縱簾</h3>
-      <p>適合大面落地窗與辦公空間，橫向拉曳好操作，展現俐落線條。</p>
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="8" y="6" width="32" height="36" rx="1"/><path d="M8 14h32M8 21h32M8 28h32M8 35h32"/></svg>
+      <h3 data-cid="CAT-08-TITLE">鋁百葉</h3>
+      <p data-cid="CAT-08-DESC">可提供仿木質感鋁百葉，可調角度精準控制光線與隱私，耐潮防塵且耐用。</p>
+    </div>
+
+    <div class="cat-card">
+      <span class="num">09</span>
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M8 6v36M40 6v36"/><path d="M8 24h32" stroke-dasharray="2 4"/><circle cx="24" cy="24" r="4"/></svg>
+      <h3 data-cid="CAT-09-TITLE">電動窗簾</h3>
+      <p data-cid="CAT-09-DESC">手機 App 或聲控一鍵開闔，可設定定時模式，智慧居家首選。</p>
     </div>
 
   </div>
@@ -406,60 +535,60 @@
 <section id="booking">
   <div class="wrap booking-grid">
     <div class="booking-info">
-      <span class="eyebrow">Home Visit Measurement</span>
-      <h2>預約到府丈量</h2>
-      <p>填寫您的空間資訊與方便時段，專人將於 1–2 個工作日內致電確認丈量時間，丈量與諮詢皆為免費服務。</p>
+      <span class="eyebrow" data-cid="BOOK-EYEBROW">Home Visit Measurement</span>
+      <h2 data-cid="BOOK-H2">預約到府丈量</h2>
+      <p data-cid="BOOK-DESC">填寫您的空間資訊與方便時段，專人將於 1–2 個工作日內致電確認丈量時間，丈量與諮詢皆為免費服務。</p>
       <ul class="step-list">
-        <li><span class="idx">01</span><div><strong>線上填寫需求</strong><span class="desc">留下聯絡方式、空間類型與偏好時段</span></div></li>
-        <li><span class="idx">02</span><div><strong>專人電話確認</strong><span class="desc">確認到府時間並初步了解需求</span></div></li>
-        <li><span class="idx">03</span><div><strong>到府丈量諮詢</strong><span class="desc">實地丈量尺寸、提供布料與款式建議</span></div></li>
-        <li><span class="idx">04</span><div><strong>正式報價確認</strong><span class="desc">依丈量結果提供最終報價與施工排程</span></div></li>
+        <li><span class="idx">01</span><div><strong data-cid="BOOK-STEP1-TITLE">線上填寫需求</strong><span class="desc" data-cid="BOOK-STEP1-DESC">留下聯絡方式、空間類型與偏好時段</span></div></li>
+        <li><span class="idx">02</span><div><strong data-cid="BOOK-STEP2-TITLE">專人電話確認</strong><span class="desc" data-cid="BOOK-STEP2-DESC">確認到府時間並初步了解需求</span></div></li>
+        <li><span class="idx">03</span><div><strong data-cid="BOOK-STEP3-TITLE">到府丈量諮詢</strong><span class="desc" data-cid="BOOK-STEP3-DESC">實地丈量尺寸、提供布料與款式建議</span></div></li>
+        <li><span class="idx">04</span><div><strong data-cid="BOOK-STEP4-TITLE">正式報價確認</strong><span class="desc" data-cid="BOOK-STEP4-DESC">依丈量結果提供最終報價與施工排程</span></div></li>
       </ul>
     </div>
 
     <form id="bookingForm" novalidate>
       <div class="form-row">
         <div class="field">
-          <label for="b-name">姓名</label>
-          <input id="b-name" name="name" type="text" required placeholder="請輸入您的姓名">
+          <label for="b-name" data-cid="BOOK-LBL-NAME">姓名</label>
+          <input id="b-name" name="name" type="text" required placeholder="請輸入您的姓名" autocomplete="name">
         </div>
         <div class="field">
-          <label for="b-phone">聯絡電話</label>
-          <input id="b-phone" name="phone" type="tel" required placeholder="09xx-xxx-xxx">
+          <label for="b-phone" data-cid="BOOK-LBL-PHONE">聯絡電話</label>
+          <input id="b-phone" name="phone" type="tel" required placeholder="09xx-xxx-xxx" autocomplete="tel" inputmode="tel">
         </div>
       </div>
       <div class="field">
-        <label for="b-address">安裝地址</label>
-        <input id="b-address" name="address" type="text" required placeholder="請輸入丈量地址（含縣市）">
+        <label for="b-address" data-cid="BOOK-LBL-ADDR">安裝地址</label>
+        <input id="b-address" name="address" type="text" required placeholder="請輸入丈量地址（含縣市）" autocomplete="street-address">
       </div>
       <div class="form-row">
         <div class="field">
-          <label for="b-date">偏好日期</label>
+          <label for="b-date" data-cid="BOOK-LBL-DATE">偏好日期</label>
           <input id="b-date" name="date" type="date" required>
         </div>
         <div class="field">
-          <label for="b-time">偏好時段</label>
+          <label for="b-time" data-cid="BOOK-LBL-TIME">偏好時段</label>
           <select id="b-time" name="time">
-            <option value="上午">上午（09:00–12:00）</option>
-            <option value="下午">下午（13:00–17:00）</option>
-            <option value="晚間">晚間（18:00–20:00）</option>
+            <option value="上午" data-cid="BOOK-TIME-OPT1">上午（09:00–12:00）</option>
+            <option value="下午" data-cid="BOOK-TIME-OPT2">下午（13:00–17:00）</option>
+            <option value="晚間" data-cid="BOOK-TIME-OPT3">晚間（18:00–20:00）</option>
           </select>
         </div>
       </div>
       <div class="field">
-        <label for="b-space">空間類型</label>
+        <label for="b-space" data-cid="BOOK-LBL-SPACE">空間類型</label>
         <select id="b-space" name="space">
-          <option value="住宅">住宅</option>
-          <option value="辦公室">辦公室 / 商業空間</option>
-          <option value="其他">其他</option>
+          <option value="住宅" data-cid="BOOK-SPACE-OPT1">住宅</option>
+          <option value="辦公室" data-cid="BOOK-SPACE-OPT2">辦公室 / 商業空間</option>
+          <option value="其他" data-cid="BOOK-SPACE-OPT3">其他</option>
         </select>
       </div>
       <div class="field full">
-        <label for="b-note">需求備註</label>
+        <label for="b-note" data-cid="BOOK-LBL-NOTE">需求備註</label>
         <textarea id="b-note" name="note" placeholder="窗戶數量、想了解的窗簾款式或風格偏好等"></textarea>
       </div>
-      <button class="submit-btn" type="submit">送出預約</button>
-      <div class="confirm-box" id="bookingConfirm"></div>
+      <button class="submit-btn" type="submit" data-cid="BOOK-SUBMIT">送出預約</button>
+      <div class="confirm-box" id="bookingConfirm" role="status" aria-live="polite"></div>
     </form>
   </div>
 </section>
@@ -467,57 +596,58 @@
 <section id="quote">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">Instant Estimate</span>
-      <h2>線上報價試算</h2>
-      <p>輸入窗戶尺寸、款式與材質等級，快速預估參考價格；正式報價仍以到府丈量結果為準。</p>
+      <span class="eyebrow" data-cid="QUOTE-EYEBROW">Instant Estimate</span>
+      <h2 data-cid="QUOTE-H2">線上報價試算</h2>
+      <p data-cid="QUOTE-DESC">輸入窗戶尺寸、款式與材質等級，快速預估參考價格；正式報價仍以到府丈量結果為準。</p>
     </div>
     <div class="quote-grid">
       <div class="quote-form">
         <div class="field">
-          <label for="q-type">窗簾款式</label>
+          <label for="q-type" data-cid="QUOTE-LBL-TYPE">窗簾款式</label>
           <select id="q-type">
-            <option value="1200">訂製布簾</option>
-            <option value="900">捲簾</option>
-            <option value="1500">蜂巢風琴簾</option>
-            <option value="2200">木百葉窗</option>
-            <option value="3500">電動窗簾</option>
-            <option value="1400">羅馬簾</option>
-            <option value="800">紗簾</option>
-            <option value="1100">直立式縱簾</option>
+            <option value="1200" data-cid="QUOTE-TYPE-OPT1">蛇型簾</option>
+            <option value="1500" data-cid="QUOTE-TYPE-OPT3">夢幻簾</option>
+            <option value="900" data-cid="QUOTE-TYPE-OPT2">折景簾</option>
+            <option value="2200" data-cid="QUOTE-TYPE-OPT4">捲簾</option>
+            <option value="1400" data-cid="QUOTE-TYPE-OPT6">橫式柔紗簾</option>
+            <option value="3500" data-cid="QUOTE-TYPE-OPT5">調光簾</option>
+            <option value="800" data-cid="QUOTE-TYPE-OPT7">蜂巢簾</option>
+            <option value="1100" data-cid="QUOTE-TYPE-OPT8">鋁百葉</option>
+            <option value="1100" data-cid="QUOTE-TYPE-OPT9">電動窗簾</option>
           </select>
         </div>
         <div class="form-row">
           <div class="field">
-            <label for="q-width">窗戶寬度（公分）</label>
-            <input id="q-width" type="number" min="30" max="1000" value="150">
+            <label for="q-width" data-cid="QUOTE-LBL-WIDTH">窗戶寬度（公分）</label>
+            <input id="q-width" type="number" min="30" max="1000" value="150" inputmode="numeric">
           </div>
           <div class="field">
-            <label for="q-height">窗戶高度（公分）</label>
-            <input id="q-height" type="number" min="30" max="500" value="200">
+            <label for="q-height" data-cid="QUOTE-LBL-HEIGHT">窗戶高度（公分）</label>
+            <input id="q-height" type="number" min="30" max="500" value="200" inputmode="numeric">
           </div>
         </div>
         <div class="field">
-          <label for="q-tier">材質等級</label>
+          <label for="q-tier" data-cid="QUOTE-LBL-TIER">材質等級</label>
           <select id="q-tier">
-            <option value="1">基本款</option>
-            <option value="1.3">精選款</option>
-            <option value="1.6">頂級款</option>
+            <option value="1" data-cid="QUOTE-TIER-OPT1">基本款</option>
+            <option value="1.3" data-cid="QUOTE-TIER-OPT2">精選款</option>
+            <option value="1.6" data-cid="QUOTE-TIER-OPT3">頂級款</option>
           </select>
         </div>
         <div class="field">
-          <label for="q-qty">窗戶數量</label>
-          <input id="q-qty" type="number" min="1" max="30" value="1">
+          <label for="q-qty" data-cid="QUOTE-LBL-QTY">窗戶數量</label>
+          <input id="q-qty" type="number" min="1" max="30" value="1" inputmode="numeric">
         </div>
       </div>
 
       <div class="quote-result">
-        <span class="eyebrow">Estimated Price</span>
-        <h3>預估報價明細</h3>
-        <div class="quote-line"><span>面積（每窗）</span><span id="r-area">— m²</span></div>
-        <div class="quote-line"><span>單價（每 m²）</span><span id="r-unit">— NT$</span></div>
-        <div class="quote-line"><span>窗戶數量</span><span id="r-qty">—</span></div>
-        <div class="quote-line total"><span>預估總價</span><span id="r-total">NT$ —</span></div>
-        <p class="quote-note">此報價為系統試算之參考金額，實際費用需視現場丈量、施工工法與布料選配而定，正式報價將於到府丈量後提供。</p>
+        <span class="eyebrow" data-cid="QUOTE-RESULT-EYEBROW">Estimated Price</span>
+        <h3 data-cid="QUOTE-RESULT-H3">預估報價明細</h3>
+        <div class="quote-line"><span data-cid="QUOTE-RESULT-LBL1">面積（每窗）</span><span id="r-area">— m²</span></div>
+        <div class="quote-line"><span data-cid="QUOTE-RESULT-LBL2">單價（每 m²）</span><span id="r-unit">— NT$</span></div>
+        <div class="quote-line"><span data-cid="QUOTE-RESULT-LBL3">窗戶數量</span><span id="r-qty">—</span></div>
+        <div class="quote-line total"><span data-cid="QUOTE-RESULT-LBL4">預估總價</span><span id="r-total">NT$ —</span></div>
+        <p class="quote-note" data-cid="QUOTE-NOTE">此報價為系統試算之參考金額，實際費用需視現場丈量、施工工法與布料選配而定，正式報價將於到府丈量後提供。</p>
       </div>
     </div>
   </div>
@@ -526,22 +656,51 @@
 <section id="about">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">Why GlowCurtain</span>
-      <h2>關於織光窗簾</h2>
-      <p>總部位於台中，以法式浪漫風格為靈感，專注於窗簾訂製與居家美學顧問，致力於讓每一扇窗都成為家中光線最溫柔的入口。</p>
+      <span class="eyebrow" data-cid="ABOUT-EYEBROW">Why GlowCurtain</span>
+      <h2 data-cid="ABOUT-H2">關於織光窗簾</h2>
+      <p data-cid="ABOUT-DESC">專注嚴選 MIT 窗簾，我們是您的專屬窗簾訂製與居家美學顧問。致力於精準調配光影，讓每一扇窗，都成為家中光線最溫柔的入口。</p>
     </div>
     <div class="about-grid">
       <div class="about-item">
-        <h3>台中在地服務</h3>
-        <p>深耕台中，提供全程到府丈量與安裝服務，熟悉在地各類建築窗型。</p>
+        <h3 data-cid="ABOUT-ITEM1-TITLE">全台免費到府丈量規劃</h3>
+        <p data-cid="ABOUT-ITEM1-DESC">深耕台中，全台服務，提供全程到府丈量與安裝服務，熟悉在地各類建築窗型。</p>
       </div>
       <div class="about-item">
-        <h3>法式美學選品</h3>
-        <p>布料與款式選配以法式浪漫、生活美學為核心，兼顧質感與實用。</p>
+        <h3 data-cid="ABOUT-ITEM2-TITLE">窗飾美學專業選品</h3>
+        <p data-cid="ABOUT-ITEM2-DESC">透過專業的空間規劃與生活美學，精準選配布料與款式，將高端質感與實用機能完美揉合。</p>
       </div>
       <div class="about-item">
-        <h3>丈量到安裝一條龍</h3>
-        <p>從諮詢丈量、報價確認到施工安裝，專人全程跟進，省心又安心。</p>
+        <h3 data-cid="ABOUT-ITEM3-TITLE">丈量到安裝一條龍</h3>
+        <p data-cid="ABOUT-ITEM3-DESC">從諮詢丈量、報價確認到施工安裝，專人全程跟進，省心又安心。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow" data-cid="FAQ-EYEBROW">FAQ</span>
+      <h2 data-cid="FAQ-H2">常見問題</h2>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="faq-list">
+      <div class="faq-item">
+        <h3><span class="q-mark">Q.</span><span data-cid="FAQ-Q1">到府丈量會收費嗎？</span></h3>
+        <p data-cid="FAQ-A1">丈量與諮詢完全免費，全台服務範圍皆適用。</p>
+      </div>
+      <div class="faq-item">
+        <h3><span class="q-mark">Q.</span><span data-cid="FAQ-Q2">織光窗簾的服務範圍是否僅限台中？</span></h3>
+        <p data-cid="FAQ-A2">織光窗簾目前採無門市、全省到府服務，全台皆可預約丈量與安裝。</p>
+      </div>
+      <div class="faq-item">
+        <h3><span class="q-mark">Q.</span><span data-cid="FAQ-Q3">線上報價準確嗎？還需要再丈量嗎？</span></h3>
+        <p data-cid="FAQ-A3">線上報價為系統試算之參考金額，正式報價仍須以到府丈量結果為準。</p>
+      </div>
+      <div class="faq-item">
+        <h3><span class="q-mark">Q.</span><span data-cid="FAQ-Q4">有提供電動窗簾嗎？</span></h3>
+        <p data-cid="FAQ-A4">有的，電動窗簾支援手機 App 或聲控操作，並可設定定時開闔模式。</p>
       </div>
     </div>
   </div>
@@ -551,25 +710,25 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <div class="footer-logo-mark" role="img" aria-label="織光窗簾 GlowCurtain"></div>
-        <p>台中在地訂製窗簾品牌，以法式浪漫美學織出屬於你家的光影。</p>
+        <img class="footer-logo-mark" src="https://raw.githubusercontent.com/curtain168888-tech/glowcurtain/main/images/logo-horizontal.png" alt="織光窗簾 GlowCurtain 品牌標誌（頁尾）" width="220" height="40" data-cid="IMG-002" data-cid-alt="IMG-002-ALT">
+        <p data-cid="FOOTER-TAGLINE">台中在地訂製窗簾品牌，以法式浪漫美學織出屬於你家的光影。</p>
       </div>
       <div>
-        <h4>快速連結</h4>
+        <h4 data-cid="FOOTER-LINKS-H4">快速連結</h4>
         <ul>
-          <li><a href="#categories">窗簾分類</a></li>
-          <li><a href="#booking">預約丈量</a></li>
-          <li><a href="#quote">線上報價</a></li>
+          <li><a href="#categories" data-cid="FOOTER-LINK1">窗簾分類</a></li>
+          <li><a href="#booking" data-cid="FOOTER-LINK2">預約丈量</a></li>
+          <li><a href="#quote" data-cid="FOOTER-LINK3">線上報價</a></li>
         </ul>
       </div>
       <div>
-        <h4>聯絡我們</h4>
+        <h4 data-cid="FOOTER-CONTACT-H4">聯絡我們</h4>
         <ul>
-          <li>台中市（詳細門市地址請洽詢）</li>
-          <li>服務時間｜週一至週六 10:00–19:00</li>
+          <li data-cid="FOOTER-ADDR">織光窗簾目前採「無門市、全省到府」服務，將資源專注於提升客製化品質。我們的規劃師皆出身專業門市訓練，直接到府為您進行精準的光影丈量，省去您往返門市的時間，讓整體規劃更高效、更貼近實際需求。</li>
+          <li data-cid="FOOTER-HOURS">服務時間｜週一至週六 10:00–19:00</li>
           <li>
-            <a class="ig-link" href="https://www.instagram.com/glowcurtain/" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+            <a class="ig-link" href="https://www.instagram.com/glowcurtain/" target="_blank" rel="noopener" data-cid="FOOTER-IG">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
               @glowcurtain
             </a>
           </li>
@@ -577,8 +736,8 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 織光窗簾 GlowCurtain. All rights reserved.</span>
-      <span>網站內容為初版示意，實際門市資訊請以官方公告為準。</span>
+      <span data-cid="FOOTER-COPY">© 2026 織光窗簾 GlowCurtain. All rights reserved.</span>
+      <span data-cid="FOOTER-DISCLAIMER">網站內容為初版示意，實際門市資訊請以官方公告為準。</span>
     </div>
   </div>
 </footer>
@@ -630,21 +789,26 @@
   [qType, qWidth, qHeight, qTier, qQty].forEach(el => el.addEventListener('input', calcQuote));
   calcQuote();
 
-  // mobile menu (simple toggle -> scroll to nav links shown as stacked)
-  const menuToggle = document.querySelector('.menu-toggle');
-  const navLinks = document.querySelector('nav.links');
+  // Mobile menu — class-based toggle (robust across resize/orientation change)
+  const siteHeader = document.getElementById('siteHeader');
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+
+  function setMenu(open){
+    siteHeader.classList.toggle('nav-open', open);
+    menuToggle.setAttribute('aria-expanded', String(open));
+  }
   menuToggle.addEventListener('click', () => {
-    const open = navLinks.style.display === 'flex';
-    navLinks.style.display = open ? 'none' : 'flex';
-    navLinks.style.flexDirection = 'column';
-    navLinks.style.position = 'absolute';
-    navLinks.style.top = '64px';
-    navLinks.style.left = '0';
-    navLinks.style.right = '0';
-    navLinks.style.background = 'var(--paper)';
-    navLinks.style.padding = '20px 32px';
-    navLinks.style.gap = '18px';
-    navLinks.style.borderBottom = '1px solid var(--line)';
+    setMenu(!siteHeader.classList.contains('nav-open'));
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => setMenu(false));
+  });
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape') setMenu(false);
+  });
+  window.addEventListener('resize', () => {
+    if(window.innerWidth > 860) setMenu(false);
   });
 </script>
 
