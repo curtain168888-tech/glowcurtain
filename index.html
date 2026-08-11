@@ -12,8 +12,6 @@
 <meta property="og:description" content="織光窗簾提供訂製窗簾、電動窗簾、百葉窗與蜂巢簾等多款窗飾，全台到府免費丈量、快速線上估價，立即預約設計師到府規劃您的理想光影生活與居家美學。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.glowcurtain.com.tw/">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;1,400;1,500&display=swap" rel="stylesheet">
 <style>
   :root{
     /* 織光窗簾 CIS 品牌識別色 — 標準色（金）CMYK C31 M45 Y61 K0 / 輔助色（藍灰）CMYK C83 M69 Y60 K23 */
@@ -30,6 +28,8 @@
     --line: rgba(54,72,82,0.16);
     --shadow: 0 12px 32px rgba(54,72,82,0.12);
     --radius: 2px;
+    --font-base: Calibri, "微軟正黑體", "Microsoft JhengHei", sans-serif;
+    --font-serif: Calibri, "微軟正黑體", "Microsoft JhengHei", sans-serif;
     /* RWD spacing scale — 依斷點調整，避免手機版留白過大 */
     --section-pad: 110px;
     --wrap-pad: 32px;
@@ -44,20 +44,20 @@
     margin:0;
     background:var(--bg);
     color:var(--ink);
-    font-family:'Noto Sans TC', sans-serif;
-    font-weight:300;
+    font-family:var(--font-base);
+    font-weight:400;
     line-height:1.7;
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
   }
   h1,h2,h3{
-    font-family:'Noto Serif TC', serif;
+    font-family:var(--font-serif);
     font-weight:600;
     margin:0;
     color:var(--ink);
   }
   .eyebrow{
-    font-family:'Cormorant Garamond', serif;
+    font-family:var(--font-base);
     font-style:italic;
     letter-spacing:0.12em;
     color:var(--gold-deep);
@@ -85,7 +85,7 @@
   }
   .logo{
     display:flex; align-items:center; gap:10px;
-    font-family:'Noto Serif TC', serif; font-weight:700; font-size:1.3rem;
+    font-family:var(--font-serif); font-weight:700; font-size:1.3rem;
     letter-spacing:0.04em;
     min-width:0;
   }
@@ -112,7 +112,7 @@
     margin-bottom:14px;
   }
   .logo .en{
-    font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:400;
+    font-family:var(--font-base); font-style:italic; font-weight:400;
     font-size:0.85rem; color:var(--ink-soft); letter-spacing:0.08em; margin-left:2px;
   }
   nav.links{ display:flex; gap:34px; font-size:0.95rem; }
@@ -198,7 +198,7 @@
   }
   .cat-card:hover, .cat-card:focus-within{ background:var(--bg-soft); }
   .cat-card .num{
-    font-family:'Cormorant Garamond', serif; font-style:italic; color:var(--gold-deep);
+    font-family:var(--font-base); font-style:italic; color:var(--gold-deep);
     font-size:0.85rem; letter-spacing:0.05em;
   }
   .cat-card svg{ width:44px; height:44px; margin:16px 0 18px; color:var(--navy); }
@@ -216,10 +216,10 @@
   }
   .step-list li:last-child{ border-bottom:1px solid var(--line); }
   .step-list .idx{
-    font-family:'Cormorant Garamond', serif; font-style:italic; color:var(--gold-deep);
+    font-family:var(--font-base); font-style:italic; color:var(--gold-deep);
     font-size:1.3rem; width:34px; flex-shrink:0;
   }
-  .step-list strong{ display:block; font-family:'Noto Serif TC',serif; font-weight:500; margin-bottom:2px; }
+  .step-list strong{ display:block; font-family:var(--font-serif); font-weight:500; margin-bottom:2px; }
   .step-list span.desc{ color:var(--ink-soft); font-size:0.9rem; }
 
   form{ background:var(--paper); padding:44px; border:1px solid var(--line); }
@@ -229,7 +229,7 @@
   label{ display:block; font-size:0.85rem; color:var(--ink-soft); margin-bottom:8px; letter-spacing:0.02em; }
   input, select, textarea{
     width:100%; background:var(--bg-soft); border:1px solid var(--line); color:var(--ink);
-    padding:12px 14px; font-family:'Noto Sans TC', sans-serif;
+    padding:12px 14px; font-family:var(--font-base);
     font-size:16px; /* 16px 以上可避免 iOS Safari 聚焦時自動放大畫面 */
   }
   textarea{ resize:vertical; min-height:88px; }
@@ -246,7 +246,7 @@
     border-left:3px solid var(--gold-deep); font-size:0.92rem;
   }
   .confirm-box.show{ display:block; }
-  .confirm-box b{ font-family:'Noto Serif TC', serif; }
+  .confirm-box b{ font-family:var(--font-serif); }
 
   /* ---------- QUOTE ---------- */
   #quote{ background:var(--paper); border-top:1px solid var(--line); }
@@ -264,10 +264,21 @@
   }
   .quote-line.total{
     border-top:1px solid rgba(251,248,243,0.4); margin-top:6px; padding-top:18px;
-    font-family:'Noto Serif TC', serif; font-size:1.4rem;
+    font-family:var(--font-serif); font-size:1.4rem;
     flex-wrap:wrap;
   }
   .quote-note{ margin-top:24px; font-size:0.78rem; color:#C9CED0; line-height:1.6; }
+
+  .quote-cta{ margin-top:44px; text-align:center; }
+  .btn-line{
+    display:inline-flex; align-items:center; gap:10px;
+    background:#06C755; color:#FBF8F3; border:1px solid #06C755;
+    padding:15px 34px; text-decoration:none; font-size:0.98rem; letter-spacing:0.03em;
+    transition:opacity .25s ease;
+  }
+  .btn-line:hover{ opacity:0.88; }
+  .btn-line svg{ width:20px; height:20px; flex-shrink:0; }
+  .quote-cta-note{ margin-top:14px; font-size:0.85rem; color:var(--ink-soft); }
 
   /* ---------- ABOUT STRIP ---------- */
   #about{ background:var(--bg); }
@@ -279,10 +290,10 @@
   /* ---------- FOOTER ---------- */
   footer{ background:var(--navy-deep); color:var(--bg-soft); padding:70px 0 30px; }
   .footer-grid{ display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:50px; margin-bottom:50px; }
-  footer h4{ font-family:'Noto Serif TC', serif; font-weight:500; font-size:1rem; margin-bottom:16px; color:var(--paper); }
+  footer h4{ font-family:var(--font-serif); font-weight:500; font-size:1rem; margin-bottom:16px; color:var(--paper); }
   footer p, footer a{ color:#B9C3C7; font-size:0.9rem; text-decoration:none; }
   footer a:hover{ color:var(--gold-soft); }
-  footer .flogo{ font-family:'Noto Serif TC', serif; font-size:1.3rem; color:var(--paper); margin-bottom:14px; }
+  footer .flogo{ font-family:var(--font-serif); font-size:1.3rem; color:var(--paper); margin-bottom:14px; }
   footer ul{ list-style:none; padding:0; margin:0; display:grid; gap:10px; }
   .footer-bottom{
     border-top:1px solid rgba(251,248,243,0.12); padding-top:24px;
@@ -290,6 +301,9 @@
   }
   .ig-link{ display:inline-flex; align-items:center; gap:8px; }
   .ig-link svg{ width:16px; height:16px; flex-shrink:0; }
+  .footer-line-link{ display:inline-flex; align-items:center; gap:8px; color:#4AD672; }
+  .footer-line-link:hover{ color:var(--gold-soft); }
+  .footer-line-link svg{ width:16px; height:16px; flex-shrink:0; }
 
   /* ---------- BREAKPOINT: TABLET (≤1024px) ---------- */
   @media (max-width: 1024px){
@@ -348,7 +362,7 @@
   .faq-list{ display:grid; gap:1px; background:var(--line); border:1px solid var(--line); }
   .faq-item{ background:var(--paper); padding:26px 28px; }
   .faq-item h3{ font-size:1rem; margin-bottom:8px; display:flex; gap:12px; }
-  .faq-item h3 .q-mark{ font-family:'Cormorant Garamond', serif; font-style:italic; color:var(--gold-deep); flex-shrink:0; }
+  .faq-item h3 .q-mark{ font-family:var(--font-base); font-style:italic; color:var(--gold-deep); flex-shrink:0; }
   .faq-item p{ color:var(--ink-soft); font-size:0.92rem; margin:0 0 0 30px; }
   @media (max-width:480px){
     .faq-item{ padding:20px 20px; }
@@ -547,6 +561,9 @@
     </div>
 
     <form id="bookingForm" novalidate>
+      <input type="hidden" name="access_key" value="25b54dcf-b02f-4854-9670-b08122268fb4">
+      <input type="hidden" name="subject" value="【織光窗簾】新的到府丈量預約">
+      <input type="hidden" name="from_name" value="織光窗簾官網預約表單">
       <div class="form-row">
         <div class="field">
           <label for="b-name" data-cid="BOOK-LBL-NAME">姓名</label>
@@ -650,6 +667,13 @@
         <p class="quote-note" data-cid="QUOTE-NOTE">此報價為系統試算之參考金額，實際費用需視現場丈量、施工工法與布料選配而定，正式報價將於到府丈量後提供。</p>
       </div>
     </div>
+    <div class="quote-cta">
+      <a class="btn-line" href="https://lin.ee/5Y7AiI6" target="_blank" rel="noopener" data-cid="QUOTE-LINE-CTA">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 5.86 2 10.6c0 4.24 3.54 7.79 8.32 8.47.32.07.76.21.87.49.1.25.06.65.03.9l-.14.86c-.04.25-.2.99.87.54 1.06-.45 5.74-3.38 7.83-5.79C21.29 13.86 22 12.3 22 10.6 22 5.86 17.52 2 12 2zm-3.6 11.02H6.98a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.42a.4.4 0 0 1 .4.4v3.7h1.6a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4zm2.02 0h-.42a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.42a.4.4 0 0 1 .4.4v4.52a.4.4 0 0 1-.4.4zm4.6 0h-.42a.4.4 0 0 1-.34-.18l-2.02-2.75v2.53a.4.4 0 0 1-.4.4h-.42a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.44a.4.4 0 0 1 .33.18l2 2.73V8.1a.4.4 0 0 1 .4-.4h.43a.4.4 0 0 1 .4.4v4.52a.4.4 0 0 1-.4.4zm4.6-3.7h-1.83v.72h1.83a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4h-1.83v.72h1.83a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4h-2.65a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h2.65a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4z"/></svg>
+        立即預約丈量
+      </a>
+      <p class="quote-cta-note" data-cid="QUOTE-CTA-NOTE">加入織光窗簾 LINE 官方帳號，專人將協助您安排到府丈量時間。</p>
+    </div>
   </div>
 </section>
 
@@ -711,7 +735,7 @@
     <div class="footer-grid">
       <div>
         <img class="footer-logo-mark" src="https://raw.githubusercontent.com/curtain168888-tech/glowcurtain/main/images/logo-horizontal.png" alt="織光窗簾 GlowCurtain 品牌標誌（頁尾）" width="220" height="40" data-cid="IMG-002" data-cid-alt="IMG-002-ALT">
-        <p data-cid="FOOTER-TAGLINE">台中在地訂製窗簾品牌，以法式浪漫美學織出屬於你家的光影。</p>
+        <p data-cid="FOOTER-TAGLINE">深耕窗飾設計多年，我們以透明誠信與專業規劃為本，完美演繹空間中的窗簾美學。</p>
       </div>
       <div>
         <h4 data-cid="FOOTER-LINKS-H4">快速連結</h4>
@@ -732,32 +756,63 @@
               @glowcurtain
             </a>
           </li>
+          <li>
+            <a class="footer-line-link" href="https://lin.ee/5Y7AiI6" target="_blank" rel="noopener" data-cid="FOOTER-LINE">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 5.86 2 10.6c0 4.24 3.54 7.79 8.32 8.47.32.07.76.21.87.49.1.25.06.65.03.9l-.14.86c-.04.25-.2.99.87.54 1.06-.45 5.74-3.38 7.83-5.79C21.29 13.86 22 12.3 22 10.6 22 5.86 17.52 2 12 2zm-3.6 11.02H6.98a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.42a.4.4 0 0 1 .4.4v3.7h1.6a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4zm2.02 0h-.42a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.42a.4.4 0 0 1 .4.4v4.52a.4.4 0 0 1-.4.4zm4.6 0h-.42a.4.4 0 0 1-.34-.18l-2.02-2.75v2.53a.4.4 0 0 1-.4.4h-.42a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.44a.4.4 0 0 1 .33.18l2 2.73V8.1a.4.4 0 0 1 .4-.4h.43a.4.4 0 0 1 .4.4v4.52a.4.4 0 0 1-.4.4zm4.6-3.7h-1.83v.72h1.83a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4h-1.83v.72h1.83a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4h-2.65a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h2.65a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4z"/></svg>
+              LINE 官方帳號｜立即預約丈量
+            </a>
+          </li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <span data-cid="FOOTER-COPY">© 2026 織光窗簾 GlowCurtain. All rights reserved.</span>
-      <span data-cid="FOOTER-DISCLAIMER">網站內容為初版示意，實際門市資訊請以官方公告為準。</span>
     </div>
   </div>
 </footer>
 
 <script>
-  // Booking form submit
+  // Booking form submit — sends lead data to your email via Web3Forms
   const bookingForm = document.getElementById('bookingForm');
   const bookingConfirm = document.getElementById('bookingConfirm');
-  bookingForm.addEventListener('submit', function(e){
+  bookingForm.addEventListener('submit', async function(e){
     e.preventDefault();
     if(!bookingForm.checkValidity()){
       bookingForm.reportValidity();
       return;
     }
+    const submitBtn = bookingForm.querySelector('.submit-btn');
     const name = document.getElementById('b-name').value;
     const date = document.getElementById('b-date').value;
     const time = document.getElementById('b-time').value;
-    bookingConfirm.innerHTML = `<b>${name} 您好，</b> 已收到您的預約需求（偏好日期：${date || '未指定'}／時段：${time}）。我們將於 1–2 個工作日內致電與您確認詳細丈量時間。`;
-    bookingConfirm.classList.add('show');
-    bookingForm.reset();
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = '送出中...';
+
+    try{
+      const formData = new FormData(bookingForm);
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: formData
+      });
+      const result = await res.json();
+
+      if(result.success){
+        bookingConfirm.innerHTML = `<b>${name} 您好，</b> 已收到您的預約需求（偏好日期：${date || '未指定'}／時段：${time}）。我們將於 1–2 個工作日內致電與您確認詳細丈量時間。`;
+        bookingConfirm.classList.add('show');
+        bookingForm.reset();
+      } else {
+        bookingConfirm.innerHTML = `<b>送出失敗，</b> 請稍後再試一次，或直接透過 LINE 官方帳號與我們聯繫。`;
+        bookingConfirm.classList.add('show');
+      }
+    } catch(err){
+      bookingConfirm.innerHTML = `<b>送出失敗，</b> 請確認網路連線後再試一次，或直接透過 LINE 官方帳號與我們聯繫。`;
+      bookingConfirm.classList.add('show');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = '送出預約';
+    }
   });
 
   // Quote calculator
