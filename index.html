@@ -322,6 +322,7 @@
   }
   .confirm-box.show{ display:block; }
   .confirm-box b{ font-family:var(--font-display); }
+  .confirm-box .btn-line{ margin-top:16px; }
 
   /* ---------- QUOTE ---------- */
   #quote{ background:var(--paper); border-top:1px solid var(--line); }
@@ -955,9 +956,24 @@
 </footer>
 
 <script>
-  // Booking form submit — sends lead data to your email via Web3Forms
+  // Booking form submit — sends lead data to your email via Web3Forms, then offers a one-tap LINE handoff
   const bookingForm = document.getElementById('bookingForm');
   const bookingConfirm = document.getElementById('bookingConfirm');
+  const LINE_OA_ID = '@133tlbtv';
+
+  function buildLineMessage({name, phone, address, date, time, space, status, note}){
+    const lines = [
+      `您好，我是 ${name}，想預約到府丈量：`,
+      `電話：${phone}`,
+      `地址：${address}`,
+      `日期／時段：${date || '未指定'} ／ ${time}`,
+      `空間類型：${space}`,
+      `房屋狀態：${status}`
+    ];
+    if (note) lines.push(`備註：${note}`);
+    return lines.join('\n');
+  }
+
   bookingForm.addEventListener('submit', async function(e){
     e.preventDefault();
     if(!bookingForm.checkValidity()){
@@ -966,8 +982,13 @@
     }
     const submitBtn = bookingForm.querySelector('.submit-btn');
     const name = document.getElementById('b-name').value;
+    const phone = document.getElementById('b-phone').value;
+    const address = document.getElementById('b-address').value;
     const date = document.getElementById('b-date').value;
     const time = document.getElementById('b-time').value;
+    const space = document.getElementById('b-space').value;
+    const status = document.getElementById('b-status').value;
+    const note = document.getElementById('b-note').value;
 
     submitBtn.disabled = true;
     submitBtn.textContent = '送出中...';
@@ -982,9 +1003,19 @@
       const result = await res.json();
 
       if(result.success){
-        bookingConfirm.innerHTML = `<b>${name} 您好，</b> 已收到您的預約需求（偏好日期：${date || '未指定'}／時段：${time}）。我們將於 1–2 個工作日內致電與您確認詳細丈量時間。`;
+        const lineText = buildLineMessage({name, phone, address, date, time, space, status, note});
+        const lineUrl = 'https://line.me/R/oaMessage/' + encodeURIComponent(LINE_OA_ID) + '/?' + encodeURIComponent(lineText);
+
+        bookingConfirm.innerHTML = `<b>${name} 您好，</b> 已收到您的預約需求（偏好日期：${date || '未指定'}／時段：${time}）。我們將於 1–2 個工作日內致電與您確認詳細丈量時間。<br>
+          <a class="btn-line" href="${lineUrl}" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 5.86 2 10.6c0 4.24 3.54 7.79 8.32 8.47.32.07.76.21.87.49.1.25.06.65.03.9l-.14.86c-.04.25-.2.99.87.54 1.06-.45 5.74-3.38 7.83-5.79C21.29 13.86 22 12.3 22 10.6 22 5.86 17.52 2 12 2zm-3.6 11.02H6.98a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.42a.4.4 0 0 1 .4.4v3.7h1.6a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4zm2.02 0h-.42a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.42a.4.4 0 0 1 .4.4v4.52a.4.4 0 0 1-.4.4zm4.6 0h-.42a.4.4 0 0 1-.34-.18l-2.02-2.75v2.53a.4.4 0 0 1-.4.4h-.42a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.44a.4.4 0 0 1 .33.18l2 2.73V8.1a.4.4 0 0 1 .4-.4h.43a.4.4 0 0 1 .4.4v4.52a.4.4 0 0 1-.4.4zm4.6-3.7h-1.83v.72h1.83a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4h-1.83v.72h1.83a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4h-2.65a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h2.65a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4z"/></svg>
+            透過 LINE 傳送預約內容給我們（點一下即可送出）
+          </a>`;
         bookingConfirm.classList.add('show');
         bookingForm.reset();
+
+        // 嘗試自動開啟 LINE 對話框並帶入訊息；若被瀏覽器攔截，上方按鈕仍可手動點擊開啟
+        try{ window.open(lineUrl, '_blank'); }catch(_){}
       } else {
         bookingConfirm.innerHTML = `<b>送出失敗，</b> 請稍後再試一次，或直接透過 LINE 官方帳號與我們聯繫。`;
         bookingConfirm.classList.add('show');
