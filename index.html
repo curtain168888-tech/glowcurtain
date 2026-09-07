@@ -151,35 +151,31 @@
   /* ---------- HERO ---------- */
   .hero{
     position:relative; overflow:hidden;
-    min-height:92vh; display:flex; align-items:center;
-    padding:76px 0;
-  }
-  .hero-bg{
-    /* 大尺寸背景照片容器：目前為 hero-photo1.webp（見下方 .hero-bg-img）
-       此處漸層作為圖片載入前／載入失敗時的備援底色 */
-    position:absolute; inset:0; z-index:0;
+    display:flex; align-items:center;
     background:linear-gradient(160deg, var(--bg) 0%, var(--bg-soft) 55%, var(--paper) 100%);
-    background-size:cover; background-position:center;
-  }
-  .hero-bg-img{
-    position:absolute; inset:0; width:100%; height:100%;
-    object-fit:cover; object-position:center;
-  }
-  .hero-scrim{
-    /* 由左至右淡出的遮罩，確保照片上的文字仍然清楚可讀 */
-    position:absolute; inset:0; z-index:1; pointer-events:none;
-    background:linear-gradient(100deg, var(--bg) 0%, rgba(237,230,220,0.88) 30%, rgba(237,230,220,0.5) 52%, rgba(237,230,220,0.12) 76%, rgba(237,230,220,0) 92%);
-  }
-  @media (max-width:860px){
-    .hero-scrim{
-      background:linear-gradient(180deg, rgba(237,230,220,0.6) 0%, rgba(237,230,220,0.9) 60%, var(--bg) 100%);
-    }
+    padding:96px 0;
   }
   .hero-content{
     position:relative; z-index:2; max-width:1120px; margin:0 auto; padding:0 var(--wrap-pad);
     width:100%;
+    display:grid; grid-template-columns:1.05fr 0.95fr; gap:var(--grid-gap); align-items:center;
   }
-  .hero-content .box{ max-width:640px; }
+  .hero-content .box{ max-width:560px; }
+  .hero-photo-frame{
+    /* 固定框架：用 aspect-ratio 鎖定裁切比例，不同裝置寬度不同，但看到的照片比例／構圖一致，不會滿版變形 */
+    position:relative; overflow:hidden; border-radius:var(--radius);
+    aspect-ratio:3/4; max-width:440px; width:100%; margin-left:auto;
+    box-shadow:var(--shadow-soft);
+    background:linear-gradient(160deg, var(--gold-soft) 0%, var(--bg-soft) 60%, var(--paper) 100%);
+  }
+  .hero-photo-frame img{
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; object-position:center; display:block;
+  }
+  @media (max-width:860px){
+    .hero-content{ grid-template-columns:1fr; }
+    .hero-photo-frame{ max-width:340px; margin:36px auto 0; }
+  }
   .hero h1{
     font-size:clamp(2.15rem, 5.2vw, 4rem);
     font-weight:500;
@@ -435,7 +431,7 @@
     .footer-grid{ grid-template-columns:1fr; gap:36px; }
     form{ padding:30px; }
     .form-row{ grid-template-columns:1fr; }
-    .hero{ min-height:auto; padding:76px 0 56px; }
+    .hero{ padding:76px 0 56px; }
     .section-head{ margin-bottom:44px; }
   }
 
@@ -531,10 +527,6 @@
 </header>
 
 <section class="hero">
-  <div class="hero-bg" aria-hidden="true">
-    <img class="hero-bg-img" src="https://raw.githubusercontent.com/curtain168888-tech/glowcurtain/main/images/hero-photo1.webp" alt="織光窗簾實際安裝情境照" width="1200" height="1600" loading="eager" fetchpriority="high" data-cid="HERO-PHOTO">
-  </div>
-  <div class="hero-scrim" aria-hidden="true"></div>
   <div class="hero-content">
     <div class="box">
       <span class="eyebrow" data-cid="HERO-EYEBROW">Glow Curtain · Custom Window Dressing</span>
@@ -544,6 +536,9 @@
         <a class="btn-primary" href="#booking" data-cid="HERO-CTA1">預約到府丈量</a>
         <a class="btn-secondary" href="#quote" data-cid="HERO-CTA2">線上估算報價</a>
       </div>
+    </div>
+    <div class="hero-photo-frame">
+      <img src="https://raw.githubusercontent.com/curtain168888-tech/glowcurtain/main/images/hero-photo1.webp" alt="織光窗簾實際安裝情境照" width="1200" height="1600" loading="eager" fetchpriority="high" data-cid="HERO-PHOTO">
     </div>
   </div>
 </section>
