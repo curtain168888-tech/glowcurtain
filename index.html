@@ -16,9 +16,6 @@
 <meta property="og:description" content="織光窗簾提供捲簾、鋁百葉、木百葉、調光簾、風琴簾與穿透簾等多款窗飾，全台到府免費丈量、快速線上估價，立即預約設計師到府規劃您的理想光影生活與居家美學。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.glowcurtain.com.tw/">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     /* 織光窗簾 CIS 品牌識別色 — 標準色（金）CMYK C31 M45 Y61 K0 / 輔助色（藍灰）CMYK C83 M69 Y60 K23 */
@@ -36,9 +33,9 @@
     --shadow: 0 12px 32px rgba(54,72,82,0.12);
     --shadow-soft: 0 22px 54px rgba(54,72,82,0.11);
     --radius: 2px;
-    --font-base: Calibri, "微軟正黑體", "Microsoft JhengHei", sans-serif;
-    --font-serif: Calibri, "微軟正黑體", "Microsoft JhengHei", sans-serif;
-    --font-display: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+    --font-base: Arial, "Microsoft JhengHei", "微軟正黑體", sans-serif;
+    --font-serif: Arial, "Microsoft JhengHei", "微軟正黑體", sans-serif;
+    --font-display: Arial, "Microsoft JhengHei", "微軟正黑體", sans-serif;
     /* RWD spacing scale — 依斷點調整，避免手機版留白過大 */
     --section-pad: 136px;
     --wrap-pad: 32px;
@@ -158,9 +155,8 @@
     padding:76px 0;
   }
   .hero-bg{
-    /* 大尺寸背景照片位置：之後提供照片後，改成
-       background-image:url('照片路徑'); 或改用 <img class="hero-bg-img"> 標籤
-       目前先用品牌漸層佔位，維持版面效果 */
+    /* 大尺寸背景照片容器：目前為 hero-photo1.webp（見下方 .hero-bg-img）
+       此處漸層作為圖片載入前／載入失敗時的備援底色 */
     position:absolute; inset:0; z-index:0;
     background:linear-gradient(160deg, var(--bg) 0%, var(--bg-soft) 55%, var(--paper) 100%);
     background-size:cover; background-position:center;
@@ -311,10 +307,18 @@
   .quote-grid{ display:grid; grid-template-columns:1.05fr 0.95fr; gap:var(--grid-gap); align-items:start; }
   .quote-form{ display:grid; gap:24px; }
   .quote-form .field{ margin-bottom:0; }
+  .quote-submit-btn{
+    width:100%; background:var(--gold-deep); color:var(--paper); border:none;
+    padding:17px; font-size:0.98rem; letter-spacing:0.05em; cursor:pointer;
+    transition:opacity .3s ease, transform .3s ease;
+    min-height:50px; /* 觸控目標高度 */
+  }
+  .quote-submit-btn:hover{ opacity:0.88; transform:translateY(-1px); }
   .quote-result{
     background:linear-gradient(165deg, var(--navy) 0%, var(--navy-deep) 100%);
     color:var(--paper); padding:48px; position:sticky; top:96px;
     border-top:2px solid var(--gold-deep);
+    scroll-margin-top:96px; /* 手機自動捲動時，留出 sticky header 的高度 */
   }
   .quote-result .eyebrow{ color:var(--gold-soft); }
   .quote-result .eyebrow::before{ background:var(--gold-soft); }
@@ -528,9 +532,7 @@
 
 <section class="hero">
   <div class="hero-bg" aria-hidden="true">
-    <!-- 之後提供大尺寸背景照片後，於此加入：
-         <img class="hero-bg-img" src="照片路徑" alt="說明文字" loading="eager" fetchpriority="high">
-         目前先以品牌漸層佔位（見 .hero-bg CSS） -->
+    <img class="hero-bg-img" src="https://raw.githubusercontent.com/curtain168888-tech/glowcurtain/main/images/hero-photo1.webp" alt="織光窗簾實際安裝情境照" width="1200" height="1600" loading="eager" fetchpriority="high" data-cid="HERO-PHOTO">
   </div>
   <div class="hero-scrim" aria-hidden="true"></div>
   <div class="hero-content">
@@ -782,6 +784,7 @@
           <label for="q-qty" data-cid="QUOTE-LBL-QTY">窗戶數量</label>
           <input id="q-qty" type="number" min="1" max="30" value="1" inputmode="numeric">
         </div>
+        <button type="button" class="quote-submit-btn" id="quoteSubmit" data-cid="QUOTE-SUBMIT-BTN">開始試算</button>
       </div>
 
       <div class="quote-result">
@@ -1103,8 +1106,21 @@
     rTotal.textContent = 'NT$ ' + Math.round(total).toLocaleString();
   }
 
-  qType.addEventListener('change', calcQuote);
-  [qWidth, qHeight, qTier, qQty].forEach(el => el.addEventListener('input', calcQuote));
+  const quoteSubmit = document.getElementById('quoteSubmit');
+  const quoteResultBox = document.querySelector('.quote-result');
+
+  quoteSubmit.addEventListener('click', () => {
+    calcQuote();
+    // 手機／平板（結果卡片不是 sticky 顯示）時，自動捲動到結果，不用使用者自己往下滑
+    if (window.innerWidth <= 860) {
+      quoteResultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+  // 桌機版仍即時更新，方便一邊調整一邊看變化；手機版靠上方按鈕觸發+捲動
+  [qType, qWidth, qHeight, qTier, qQty].forEach(el => {
+    el.addEventListener('input', () => { if (window.innerWidth > 860) calcQuote(); });
+    el.addEventListener('change', () => { if (window.innerWidth > 860) calcQuote(); });
+  });
   calcQuote();
 
   // Mobile menu — class-based toggle (robust across resize/orientation change)
