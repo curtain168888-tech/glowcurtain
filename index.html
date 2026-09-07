@@ -174,7 +174,7 @@
   }
   @media (max-width:860px){
     .hero-content{ grid-template-columns:1fr; }
-    .hero-photo-frame{ max-width:340px; margin:36px auto 0; }
+    .hero-photo-frame{ max-width:340px; margin:0 auto 32px; order:-1; }
   }
   .hero h1{
     font-size:clamp(2.15rem, 5.2vw, 4rem);
@@ -217,10 +217,10 @@
   #categories{ background:var(--paper); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
   .cat-carousel{ position:relative; overflow:hidden; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
   .cat-carousel::before, .cat-carousel::after{
-    content:""; position:absolute; top:0; bottom:0; width:72px; z-index:2; pointer-events:none;
+    content:""; position:absolute; top:0; bottom:0; width:160px; z-index:2; pointer-events:none;
   }
-  .cat-carousel::before{ left:0; background:linear-gradient(90deg, var(--paper), rgba(251,248,243,0)); }
-  .cat-carousel::after{ right:0; background:linear-gradient(270deg, var(--paper), rgba(251,248,243,0)); }
+  .cat-carousel::before{ left:0; background:linear-gradient(90deg, var(--paper) 0%, var(--paper) 45%, rgba(251,248,243,0) 100%); }
+  .cat-carousel::after{ right:0; background:linear-gradient(270deg, var(--paper) 0%, var(--paper) 45%, rgba(251,248,243,0) 100%); }
   .cat-track{
     display:flex; width:max-content; gap:1px; background:var(--line);
     animation:cat-scroll 48s linear infinite;
@@ -405,6 +405,7 @@
   @media (max-width: 1024px){
     :root{ --grid-gap:44px; --section-pad:108px; }
     .cat-card{ flex-basis:250px; width:250px; padding:36px 26px; }
+    .cat-carousel::before, .cat-carousel::after{ width:140px; }
   }
 
   /* ---------- BREAKPOINT: MOBILE NAV / STACKED GRIDS (≤860px) ---------- */
@@ -439,7 +440,7 @@
   @media (max-width: 480px){
     :root{ --wrap-pad:18px; }
     .cat-card{ flex-basis:216px; width:216px; padding:28px 22px; }
-    .cat-carousel::before, .cat-carousel::after{ width:36px; }
+    .cat-carousel::before, .cat-carousel::after{ width:130px; }
     form{ padding:22px; }
     .quote-result{ padding:30px 24px; }
     .footer-bottom{ flex-direction:column; align-items:flex-start; }
