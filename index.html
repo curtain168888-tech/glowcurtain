@@ -457,20 +457,18 @@
     *{ animation:none !important; transition:none !important; }
   }
 
-  /* ---------- STATS ---------- */
-  #stats{ background:var(--navy-deep); color:var(--paper); }
-  #stats .section-head{ text-align:center; margin:0 auto 56px; }
-  #stats .section-head .eyebrow{ justify-content:center; color:var(--gold-soft); }
-  #stats .section-head .eyebrow::before{ background:var(--gold-soft); }
-  #stats .section-head h2{ color:var(--paper); }
-  .stats-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:40px; text-align:center; max-width:640px; margin:0 auto; }
+  /* ---------- ABOUT STATS (累積的信任，已併入關於我們區塊) ---------- */
+  .about-stats{ margin-top:48px; padding-top:40px; border-top:1px solid var(--line); }
+  .about-stats > .eyebrow{ display:block; margin-bottom:22px; }
+  .stats-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:32px; max-width:420px; }
   .stat-item .num{
-    font-family:var(--font-display); font-size:clamp(2.4rem, 5vw, 3.4rem); font-weight:700;
-    color:var(--gold-soft); line-height:1; margin-bottom:14px; letter-spacing:0.01em;
+    font-family:var(--font-display); font-size:clamp(2rem, 4vw, 2.6rem); font-weight:700;
+    color:var(--gold-deep); line-height:1; margin-bottom:10px; letter-spacing:0.01em;
+    font-variant-numeric:tabular-nums;
   }
-  .stat-item .label{ font-size:0.95rem; color:#C9CED0; letter-spacing:0.02em; }
-  @media (max-width:860px){
-    .stats-grid{ grid-template-columns:1fr; gap:36px; }
+  .stat-item .label{ font-size:0.88rem; color:var(--ink-soft); letter-spacing:0.02em; }
+  @media (max-width:480px){
+    .stats-grid{ gap:24px; }
   }
 
   /* ---------- FAQ ---------- */
@@ -845,6 +843,20 @@
           <p data-cid="ABOUT-ITEM3-DESC">從諮詢丈量、報價確認到施工安裝，專人全程跟進，省心又安心。</p>
         </div>
       </div>
+
+      <div class="about-stats" id="aboutStats">
+        <span class="eyebrow" data-cid="STATS-EYEBROW">Our Track Record</span>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="num" data-target="1000" data-suffix="+" data-cid="STATS-1-NUM">0+</div>
+            <div class="label" data-cid="STATS-1-LABEL">每年安裝實績（扇窗）</div>
+          </div>
+          <div class="stat-item">
+            <div class="num" data-target="24" data-suffix="小時內" data-cid="STATS-2-NUM">0小時內</div>
+            <div class="label" data-cid="STATS-2-LABEL">客服效率回覆</div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="about-scene" aria-hidden="true">
@@ -909,25 +921,6 @@
           <circle class="mote m5" cx="180" cy="480" r="4.5" fill="url(#moteFill2)"/>
         </g>
       </svg>
-    </div>
-  </div>
-</section>
-
-<section id="stats">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow" data-cid="STATS-EYEBROW">Our Track Record</span>
-      <h2 data-cid="STATS-H2">累積的信任</h2>
-    </div>
-    <div class="stats-grid">
-      <div class="stat-item">
-        <div class="num" data-cid="STATS-1-NUM">1000+</div>
-        <div class="label" data-cid="STATS-1-LABEL">每年安裝實績（扇窗）</div>
-      </div>
-      <div class="stat-item">
-        <div class="num" data-cid="STATS-2-NUM">24小時內</div>
-        <div class="label" data-cid="STATS-2-LABEL">客服效率回覆</div>
-      </div>
     </div>
   </div>
 </section>
@@ -1158,6 +1151,41 @@
     el.addEventListener('change', () => { if (window.innerWidth > 860) calcQuote(); });
   });
   calcQuote();
+
+  // 「累積的信任」數字：滾動到畫面內才開始跑動畫，只播放一次
+  const aboutStats = document.getElementById('aboutStats');
+  if (aboutStats) {
+    const statNums = aboutStats.querySelectorAll('.num');
+    const animateCount = (el) => {
+      const target = parseInt(el.dataset.target, 10) || 0;
+      const suffix = el.dataset.suffix || '';
+      const duration = 1400;
+      const start = performance.now();
+      function tick(now){
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3); // ease-out
+        const current = Math.round(target * eased);
+        el.textContent = current + suffix;
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    };
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            statNums.forEach(animateCount);
+            obs.disconnect();
+          }
+        });
+      }, { threshold: 0.4 });
+      observer.observe(aboutStats);
+    } else {
+      // 不支援 IntersectionObserver 的舊瀏覽器，直接顯示最終數字
+      statNums.forEach(el => { el.textContent = el.dataset.target + (el.dataset.suffix || ''); });
+    }
+  }
 
   // Mobile menu — class-based toggle (robust across resize/orientation change)
   const siteHeader = document.getElementById('siteHeader');
