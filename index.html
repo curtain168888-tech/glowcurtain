@@ -192,6 +192,12 @@
     .hero-content{ padding:150px var(--wrap-pad) 72px; }
     .hero-bg-layer{ background-position:66% center; }
     .hero-scroll{ display:none; }
+    .hero-scrim{
+      /* 手機版文字滿版寬度，改用上下漸層＋整體加深，取代桌機版的左深右淺設計，避免右側文字對比不足 */
+      background:
+        linear-gradient(180deg, rgba(35,46,54,0.18) 0%, rgba(35,46,54,0.42) 22%, rgba(35,46,54,0.74) 50%, rgba(35,46,54,0.82) 100%),
+        rgba(35,46,54,0.22);
+    }
   }
   .hero h1{
     color:#fff; text-shadow:0 2px 24px rgba(0,0,0,0.3);
@@ -201,8 +207,8 @@
     word-break:keep-all;
   }
   .hero h1 em{
-    font-style:italic; color:var(--gold-deep); position:relative;
-    background-image:linear-gradient(transparent 76%, var(--gold-soft) 76%);
+    font-style:italic; color:var(--gold-soft); position:relative;
+    background-image:linear-gradient(transparent 76%, rgba(156,118,72,0.55) 76%);
   }
   .hero p.lead{
     font-size:1.1rem; color:rgba(255,255,255,0.86); max-width:480px; margin-bottom:40px;
