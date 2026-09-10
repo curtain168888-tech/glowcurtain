@@ -118,6 +118,12 @@
     object-position:left center;
     flex-shrink:1;
     max-width:100%;
+    transform-origin:center left;
+    animation:logoIntro 0.9s cubic-bezier(.2,.7,.3,1) both;
+  }
+  @keyframes logoIntro{
+    0%{ opacity:0; transform:rotate(-22deg) scale(0.82); }
+    100%{ opacity:1; transform:rotate(0deg) scale(1); }
   }
   @media (max-width: 480px){
     .logo-mark{ width:170px; height:36px; }
@@ -660,6 +666,7 @@
     </div>
     <nav class="links" id="navLinks">
       <a href="#categories" data-cid="NAV-L1">窗簾分類</a>
+      <a href="portfolio.html" data-cid="NAV-PORTFOLIO">作品集</a>
       <a href="#booking" data-cid="NAV-L2">預約丈量</a>
       <a href="#quote" data-cid="NAV-L3">線上報價</a>
       <a href="#about" data-cid="NAV-L4">關於我們</a>
@@ -1224,6 +1231,7 @@
         <h4 data-cid="FOOTER-LINKS-H4">快速連結</h4>
         <ul>
           <li><a href="#categories" data-cid="FOOTER-LINK1">窗簾分類</a></li>
+          <li><a href="portfolio.html" data-cid="FOOTER-LINK-PORTFOLIO">作品集</a></li>
           <li><a href="#booking" data-cid="FOOTER-LINK2">預約丈量</a></li>
           <li><a href="#quote" data-cid="FOOTER-LINK3">線上報價</a></li>
         </ul>
