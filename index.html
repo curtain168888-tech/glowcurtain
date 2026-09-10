@@ -119,11 +119,43 @@
     flex-shrink:1;
     max-width:100%;
     transform-origin:center left;
-    animation:logoIntro 0.9s cubic-bezier(.2,.7,.3,1) both;
+    animation:logoIntro 0.8s cubic-bezier(.2,.7,.3,1) 0.75s both;
   }
   @keyframes logoIntro{
-    0%{ opacity:0; transform:rotate(-22deg) scale(0.82); }
+    0%{ opacity:0; transform:rotate(-14deg) scale(0.85); }
     100%{ opacity:1; transform:rotate(0deg) scale(1); }
+  }
+  /* ---------- 進場 Splash：Logo 放大置中展現，再縮小飛回導覽列位置 ---------- */
+  .intro-overlay{
+    position:fixed; inset:0; z-index:9999;
+    background:var(--bg);
+    display:flex; align-items:center; justify-content:center;
+    pointer-events:none;
+    animation:introOverlayHide 0.01s linear 1.45s forwards;
+  }
+  .intro-overlay img{
+    width:min(320px, 60vw);
+    height:calc(min(320px, 60vw) / 5);
+    object-fit:cover;
+    object-position:left center;
+    animation:introLogoShrink 0.65s cubic-bezier(.32,.74,.35,1) 0.72s both;
+  }
+  @keyframes introOverlayHide{
+    to{ opacity:0; visibility:hidden; }
+  }
+  @keyframes introLogoShrink{
+    0%{ transform:translate(0,0) scale(1); opacity:1; }
+    100%{ transform:translate(calc(-50vw + 145px), calc(-50vh + 36px)) scale(0.19); opacity:0; }
+  }
+  @media (max-width:480px){
+    .intro-overlay img{ width:min(220px, 66vw); height:calc(min(220px, 66vw) / 5); }
+    @keyframes introLogoShrink{
+      0%{ transform:translate(0,0) scale(1); opacity:1; }
+      100%{ transform:translate(calc(-50vw + 110px), calc(-50vh + 32px)) scale(0.17); opacity:0; }
+    }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .intro-overlay{ display:none; }
   }
   @media (max-width: 480px){
     .logo-mark{ width:170px; height:36px; }
@@ -659,6 +691,10 @@
 </head>
 <body>
 
+<div class="intro-overlay" aria-hidden="true">
+  <img src="https://raw.githubusercontent.com/curtain168888-tech/glowcurtain/main/images/logo-horizontal.png" alt="" width="320" height="64">
+</div>
+
 <header class="site" id="siteHeader">
   <div class="nav-inner">
     <div class="logo">
@@ -666,7 +702,6 @@
     </div>
     <nav class="links" id="navLinks">
       <a href="#categories" data-cid="NAV-L1">窗簾分類</a>
-      <a href="portfolio.html" data-cid="NAV-PORTFOLIO">作品集</a>
       <a href="#booking" data-cid="NAV-L2">預約丈量</a>
       <a href="#quote" data-cid="NAV-L3">線上報價</a>
       <a href="#about" data-cid="NAV-L4">關於我們</a>
@@ -1231,7 +1266,6 @@
         <h4 data-cid="FOOTER-LINKS-H4">快速連結</h4>
         <ul>
           <li><a href="#categories" data-cid="FOOTER-LINK1">窗簾分類</a></li>
-          <li><a href="portfolio.html" data-cid="FOOTER-LINK-PORTFOLIO">作品集</a></li>
           <li><a href="#booking" data-cid="FOOTER-LINK2">預約丈量</a></li>
           <li><a href="#quote" data-cid="FOOTER-LINK3">線上報價</a></li>
         </ul>
