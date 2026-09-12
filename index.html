@@ -1404,13 +1404,18 @@
 
       if(result.success){
         const lineText = buildLineMessage({name, phone, address, date, time, space, status, note});
-        const lineUrl = 'https://line.me/R/oaMessage/' + encodeURIComponent(LINE_OA_ID) + '/?' + encodeURIComponent(lineText);
         const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        // oaMessage 這種帶預填訊息的深連結，只有手機能正確跳轉進 LINE App；
+        // 桌機瀏覽器沒有對應的處理方式，硬用會被導去 LINE 的通用首頁（line.me/tw/），等於無效畫面，
+        // 所以桌機版改用一般的加好友連結，不強求預填訊息。
+        const lineDeepUrl = 'https://line.me/R/oaMessage/' + encodeURIComponent(LINE_OA_ID) + '/?' + encodeURIComponent(lineText);
+        const lineAddFriendUrl = 'https://lin.ee/5Y7AiI6';
+        const lineUrl = isMobile ? lineDeepUrl : lineAddFriendUrl;
 
         const nextStepText = isMobile
           ? '接下來會自動為您開啟 LINE，請在跳出的對話框中點擊「傳送」即可完成最後確認；若手機沒有自動跳轉，請點擊下方按鈕手動開啟。'
-          : '請點擊下方按鈕，透過 LINE 傳送預約內容給我們，完成最後確認。';
-        const lineBtnText = isMobile ? 'LINE 沒有自動開啟？點此手動開啟' : '透過 LINE 傳送預約內容給我們（點一下即可送出）';
+          : '請點擊下方按鈕加入我們的 LINE 官方帳號，並將偏好日期時段告訴我們，完成最後確認。';
+        const lineBtnText = isMobile ? 'LINE 沒有自動開啟？點此手動開啟' : '加入 LINE 官方帳號，聯繫我們確認';
 
         bookingConfirm.innerHTML = `<b>${escapeHtml(name)} 您好，</b> 已收到您的預約需求（偏好日期：${escapeHtml(date) || '未指定'}／時段：${escapeHtml(time)}）。我們將盡速於工作日內致電與您確認詳細丈量時間。<br>
           <span class="confirm-next-step">${nextStepText}</span>
@@ -1421,8 +1426,11 @@
         bookingConfirm.classList.add('show');
         bookingForm.reset();
 
-        // 嘗試自動開啟 LINE 對話框並帶入訊息；若被瀏覽器攔截，上方按鈕仍可手動點擊開啟
-        try{ window.open(lineUrl, '_blank'); }catch(_){}
+        // 只有手機才嘗試自動開啟 LINE App 對話框；桌機不自動跳分頁，避免跳出無效的 LINE 通用首頁造成困惑，
+        // 桌機使用者只會看到上面的按鈕，靠自己點擊前往加好友頁面。
+        if (isMobile) {
+          try{ window.open(lineUrl, '_blank'); }catch(_){}
+        }
       } else {
         bookingConfirm.innerHTML = `<b>送出失敗，</b> 請稍後再試一次，或直接透過 LINE 官方帳號與我們聯繫。`;
         bookingConfirm.classList.add('show');
