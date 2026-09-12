@@ -205,15 +205,25 @@
     display:flex; align-items:center;
     color:#fff;
   }
-  .hero-bg-photos{ position:absolute; inset:0; z-index:0; transform:scale(1.01); /* 避免縮放時邊緣露出底色 */ }
+  .hero-bg-photos{ position:absolute; inset:0; z-index:0; overflow:hidden; transform:scale(1.01); /* 避免縮放時邊緣露出底色 */ }
   .hero-bg-layer{
     position:absolute; inset:0;
     background-size:cover;
     background-position:62% center; /* 固定焦點在窗簾主體，裁切量隨螢幕改變但重心不跑掉 */
     background-repeat:no-repeat;
     opacity:0; transition:opacity 1.8s ease;
+    transform:scale(1);
+    will-change:transform;
   }
   .hero-bg-layer.active{ opacity:1; }
+  /* 景深效果：緩慢縮放營造照片的立體層次感，兩種輪流交替避免每張都同一個方向 */
+  .hero-bg-layer.kb-in.active{ animation:heroKenBurnsIn 6.5s ease-out both; }
+  .hero-bg-layer.kb-out.active{ animation:heroKenBurnsOut 6.5s ease-out both; }
+  @keyframes heroKenBurnsIn{ from{ transform:scale(1); } to{ transform:scale(1.08); } }
+  @keyframes heroKenBurnsOut{ from{ transform:scale(1.08); } to{ transform:scale(1); } }
+  @media (prefers-reduced-motion: reduce){
+    .hero-bg-layer.kb-in.active, .hero-bg-layer.kb-out.active{ animation:none; }
+  }
   .hero-scrim{
     position:absolute; inset:0; z-index:1; pointer-events:none;
     background:
@@ -1461,32 +1471,57 @@
   });
   calcQuote();
 
-  // Hero 主圖輪播：目前只有 1 張，之後上傳更多張大圖後，只要把檔名加進這個陣列，就會自動開始輪播（無需再改程式碼）
+  // Hero 主圖輪播：16 張圖採用「只建立 2 個圖層、輪流預載下一張」的方式，
+  // 不會一次把全部圖片都載入，同時間最多只有目前顯示+下一張在下載，兼顧輪播效果與載入效能
   (function(){
     const heroPhotos = [
-      'hero-photo1.webp',
-      // 'hero-photo2.webp',
-      // 'hero-photo3.webp',
-      // 'hero-photo4.webp',
-      // 'hero-photo5.webp',
+      'hero-photo1.webp','hero-photo2.webp','hero-photo3.webp','hero-photo4.webp',
+      'hero-photo5.webp','hero-photo6.webp','hero-photo7.webp','hero-photo8.webp',
+      'hero-photo9.webp','hero-photo10.webp','hero-photo11.webp','hero-photo12.webp',
+      'hero-photo13.webp','hero-photo14.webp','hero-photo15.webp','hero-photo16.webp',
     ];
     const container = document.getElementById('heroBgPhotos');
     if (!container || heroPhotos.length === 0) return;
     const base = 'https://raw.githubusercontent.com/curtain168888-tech/glowcurtain/main/images/';
-    heroPhotos.forEach((file, i) => {
-      const layer = document.createElement('div');
-      layer.className = 'hero-bg-layer' + (i === 0 ? ' active' : '');
-      layer.style.backgroundImage = `url('${base}${encodeURIComponent(file)}')`;
-      container.appendChild(layer);
-    });
+    const urlFor = (file) => `${base}${encodeURIComponent(file)}`;
+
+    const layerA = document.createElement('div');
+    const layerB = document.createElement('div');
+    layerA.className = 'hero-bg-layer active kb-in';
+    layerB.className = 'hero-bg-layer';
+    layerA.style.backgroundImage = `url('${urlFor(heroPhotos[0])}')`;
+    container.appendChild(layerA);
+    container.appendChild(layerB);
+
     if (heroPhotos.length > 1) {
       let current = 0;
-      const layers = container.querySelectorAll('.hero-bg-layer');
-      setInterval(() => {
-        layers[current].classList.remove('active');
-        current = (current + 1) % layers.length;
-        layers[current].classList.add('active');
-      }, 6000);
+      let showingA = true;
+
+      function preload(src){
+        return new Promise((resolve) => {
+          const img = new Image();
+          img.onload = resolve;
+          img.onerror = resolve;
+          img.src = src;
+        });
+      }
+
+      async function rotate(){
+        const nextIndex = (current + 1) % heroPhotos.length;
+        const nextUrl = urlFor(heroPhotos[nextIndex]);
+        await preload(nextUrl); // 下一張圖先在背景載好，才開始淡入，避免切換時出現空白/破圖
+        const showLayer = showingA ? layerB : layerA;
+        const hideLayer = showingA ? layerA : layerB;
+        showLayer.style.backgroundImage = `url('${nextUrl}')`;
+        showLayer.classList.remove('kb-in', 'kb-out');
+        void showLayer.offsetWidth; // 強制重排，讓動畫可以重新播放
+        showLayer.classList.add(showingA ? 'kb-out' : 'kb-in');
+        showLayer.classList.add('active');
+        hideLayer.classList.remove('active');
+        current = nextIndex;
+        showingA = !showingA;
+      }
+      setInterval(rotate, 6500);
     }
   })();
 
