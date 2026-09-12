@@ -403,6 +403,12 @@
   }
   input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--gold-deep); }
   .form-hint{ font-size:0.8rem; color:var(--ink-soft); line-height:1.6; margin:0 0 14px; }
+  .form-hint-desktop{ display:block; }
+  .form-hint-mobile{ display:none; }
+  @media (max-width:860px){
+    .form-hint-desktop{ display:none; }
+    .form-hint-mobile{ display:block; }
+  }
   .submit-btn{
     width:100%; background:var(--navy); color:var(--paper); border:none;
     padding:17px; font-size:0.98rem; letter-spacing:0.05em; cursor:pointer;
@@ -460,6 +466,8 @@
   .quote-note{ margin-top:26px; font-size:0.78rem; color:var(--ink-soft); line-height:1.7; }
 
   .quote-cta{ margin-top:30px; text-align:center; }
+  .quote-cta-hint{ font-size:0.78rem; color:var(--ink-soft); margin:0 0 10px; line-height:1.6; }
+  .quote-cta-hint:empty{ display:none; margin:0; }
   .btn-line{
     display:inline-flex; align-items:center; justify-content:center; gap:10px;
     width:100%; background:#06C755; color:#FBF8F3; border:1px solid #06C755;
@@ -530,6 +538,8 @@
     border-top:1px solid rgba(251,248,243,0.12); padding-top:24px;
     display:flex; justify-content:space-between; font-size:0.8rem; color:#7C8B92; flex-wrap:wrap; gap:10px;
   }
+  .footer-biz-link{ text-decoration:underline; text-underline-offset:2px; transition:color .25s ease; }
+  .footer-biz-link:hover{ color:var(--gold-soft); }
   .ig-link{ display:inline-flex; align-items:center; gap:8px; }
   .ig-link svg{ width:16px; height:16px; flex-shrink:0; }
   .footer-line-link{ display:inline-flex; align-items:center; gap:8px; color:#4AD672; }
@@ -931,7 +941,8 @@
         <label for="b-note" data-cid="BOOK-LBL-NOTE">需求備註</label>
         <textarea id="b-note" name="note" placeholder="窗戶數量、想了解的窗簾款式或風格偏好等"></textarea>
       </div>
-      <p class="form-hint" data-cid="BOOK-SUBMIT-HINT">送出後會協助您透過 LINE 官方帳號完成最後確認（手機版會自動跳轉開啟 LINE，桌機版請點擊確認畫面中的按鈕）</p>
+      <p class="form-hint form-hint-mobile" data-cid="BOOK-SUBMIT-HINT-MOBILE">使用手機瀏覽器直接送出，內容將直接跳轉至 LINE 官方，小編會立即接手為您安排丈量時間</p>
+      <p class="form-hint form-hint-desktop" data-cid="BOOK-SUBMIT-HINT-DESKTOP">建議使用手機瀏覽器填寫，送出後將直接跳轉至 LINE 官方，我們會立即與您聯繫預約丈量事宜</p>
       <button class="submit-btn" type="submit" data-cid="BOOK-SUBMIT">送出預約</button>
       <div class="confirm-box" id="bookingConfirm" role="status" aria-live="polite"></div>
     </form>
@@ -993,9 +1004,10 @@
         <div class="quote-line total"><span data-cid="QUOTE-RESULT-LBL4">預估總價</span><span id="r-total">NT$ —</span></div>
         <p class="quote-note" data-cid="QUOTE-NOTE">此報價為系統試算之參考金額，實際費用需視現場丈量、施工工法與布料選配而定，正式報價將於到府丈量後提供。</p>
         <div class="quote-cta">
-          <a class="btn-line" href="https://lin.ee/5Y7AiI6" target="_blank" rel="noopener" data-cid="QUOTE-LINE-CTA">
+          <p class="quote-cta-hint" id="quoteLineCtaHint"></p>
+          <a class="btn-line" id="quoteLineCta" href="https://lin.ee/5Y7AiI6" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 5.86 2 10.6c0 4.24 3.54 7.79 8.32 8.47.32.07.76.21.87.49.1.25.06.65.03.9l-.14.86c-.04.25-.2.99.87.54 1.06-.45 5.74-3.38 7.83-5.79C21.29 13.86 22 12.3 22 10.6 22 5.86 17.52 2 12 2zm-3.6 11.02H6.98a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.42a.4.4 0 0 1 .4.4v3.7h1.6a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4zm2.02 0h-.42a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.42a.4.4 0 0 1 .4.4v4.52a.4.4 0 0 1-.4.4zm4.6 0h-.42a.4.4 0 0 1-.34-.18l-2.02-2.75v2.53a.4.4 0 0 1-.4.4h-.42a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.44a.4.4 0 0 1 .33.18l2 2.73V8.1a.4.4 0 0 1 .4-.4h.43a.4.4 0 0 1 .4.4v4.52a.4.4 0 0 1-.4.4zm4.6-3.7h-1.83v.72h1.83a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4h-1.83v.72h1.83a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4h-2.65a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h2.65a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4z"/></svg>
-            加入 LINE 官方了解更多優惠
+            <span id="quoteLineCtaLabel" data-cid="QUOTE-LINE-CTA">加入 LINE 官方了解更多優惠</span>
           </a>
         </div>
       </div>
@@ -1314,7 +1326,7 @@
         <ul>
           <li data-cid="FOOTER-ADDR">織光窗簾目前採「無門市、全省到府」服務，將資源專注於提升客製化品質。無門市代表沒有店租等管銷費用，我們把省下的成本回饋到報價，提供更具競爭力的價格。我們的規劃師皆出身專業門市訓練，直接到府為您進行精準的光影丈量與布料比對，省去您往返門市的時間，讓整體規劃更高效、更貼近實際需求。</li>
           <li data-cid="FOOTER-HOURS">服務時間｜週一至週六 10:00–19:00</li>
-          <li data-cid="FOOTER-PHONE">織光窗簾服務專線｜唐先生 <a href="tel:0986295548">0986-295-548</a>（來電請說從網站上來的）</li>
+          <li data-cid="FOOTER-PHONE">織光窗簾服務專線｜唐先生 <a href="tel:0986295548">0986-295-548</a>（來電請主動告知是從官網上來的）</li>
           <li>
             <a class="ig-link" href="https://www.instagram.com/glowcurtain/" target="_blank" rel="noopener" data-cid="FOOTER-IG">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
@@ -1332,6 +1344,7 @@
     </div>
     <div class="footer-bottom">
       <span data-cid="FOOTER-COPY">© 2026 織光窗簾 GlowCurtain. All rights reserved.</span>
+      <a class="footer-biz-link" href="https://findbiz.nat.gov.tw/fts/business/61048852/61700000000027439869" target="_blank" rel="noopener" data-cid="FOOTER-BIZ-REG">統一編號 61048852｜商業登記資料查詢</a>
     </div>
   </div>
 </footer>
@@ -1349,6 +1362,12 @@
 
 <script>
   // Booking form submit — sends lead data to your email via Web3Forms, then offers a one-tap LINE handoff
+  // 手機／桌機判斷統一用同一種方式（User Agent），跟下面 LINE 深連結是否能正常運作的判斷邏輯一致，
+  // 避免「桌機瀏覽器縮小視窗寬度」被誤判成手機、顯示了手機才適用的文字
+  const isMobileDevice = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  document.querySelectorAll('.form-hint-mobile').forEach(el => { el.style.display = isMobileDevice ? 'block' : 'none'; });
+  document.querySelectorAll('.form-hint-desktop').forEach(el => { el.style.display = isMobileDevice ? 'none' : 'block'; });
+
   const bookingForm = document.getElementById('bookingForm');
   const bookingConfirm = document.getElementById('bookingConfirm');
   const LINE_OA_ID = '@133tlbtv';
@@ -1413,9 +1432,9 @@
         const lineUrl = isMobile ? lineDeepUrl : lineAddFriendUrl;
 
         const nextStepText = isMobile
-          ? '接下來會自動為您開啟 LINE，請在跳出的對話框中點擊「傳送」即可完成最後確認；若手機沒有自動跳轉，請點擊下方按鈕手動開啟。'
+          ? '已自動帶入您填寫的姓名、電話、地址與日期時段，接下來會為您開啟 LINE，請在跳出的對話框中點擊「傳送」即可完成最後確認。'
           : '請點擊下方按鈕加入我們的 LINE 官方帳號，並將偏好日期時段告訴我們，完成最後確認。';
-        const lineBtnText = isMobile ? 'LINE 沒有自動開啟？點此手動開啟' : '加入 LINE 官方帳號，聯繫我們確認';
+        const lineBtnText = isMobile ? '點此開啟 LINE，已帶入預約內容' : '加入 LINE 官方帳號，聯繫我們確認';
 
         bookingConfirm.innerHTML = `<b>${escapeHtml(name)} 您好，</b> 已收到您的預約需求（偏好日期：${escapeHtml(date) || '未指定'}／時段：${escapeHtml(time)}）。我們將盡速於工作日內致電與您確認詳細丈量時間。<br>
           <span class="confirm-next-step">${nextStepText}</span>
@@ -1512,9 +1531,37 @@
 
   const quoteSubmit = document.getElementById('quoteSubmit');
   const quoteResultBox = document.querySelector('.quote-result');
+  const quoteLineCta = document.getElementById('quoteLineCta');
+  const quoteLineCtaLabel = document.getElementById('quoteLineCtaLabel');
+  const quoteLineCtaHint = document.getElementById('quoteLineCtaHint');
+  const QUOTE_LINE_ADD_FRIEND_URL = 'https://lin.ee/5Y7AiI6';
+
+  // 把試算內容（款式/寬高/材質等級/數量）帶進 LINE 訊息：
+  // 手機能正確跳轉進 LINE App 並帶入預填文字；桌機沒有這個能力，改用一般加好友連結（同預約表單的處理方式）
+  function updateQuoteLineCta(){
+    const opt = qType.selectedOptions[0];
+    const typeName = opt.textContent.trim();
+    const tierName = qTier.selectedOptions[0].textContent.trim();
+    const widthCm = qWidth.value;
+    const heightCm = qHeight.value;
+    const qty = qQty.value;
+    const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    if (isMobile) {
+      const msg = `您好，我已在官網上預估報價：款式為「${typeName}」，寬度 ${widthCm}公分、高度 ${heightCm}公分，材質等級「${tierName}」，共 ${qty} 面窗戶。請問還能再優惠嗎？`;
+      quoteLineCta.href = 'https://line.me/R/oaMessage/' + encodeURIComponent(LINE_OA_ID) + '/?' + encodeURIComponent(msg);
+      quoteLineCtaLabel.textContent = '一鍵傳送至 LINE 詢問優惠';
+      quoteLineCtaHint.textContent = '使用手機瀏覽器直接送出，內容將直接跳轉至 LINE 官方，小編會立即接手為您處理優惠';
+    } else {
+      quoteLineCta.href = QUOTE_LINE_ADD_FRIEND_URL;
+      quoteLineCtaLabel.textContent = '加入 LINE 官方了解更多優惠';
+      quoteLineCtaHint.textContent = '建議使用手機瀏覽器填寫，送出後將直接跳轉至 LINE 官方，小編會立即接手為您處理優惠';
+    }
+  }
 
   quoteSubmit.addEventListener('click', () => {
     calcQuote();
+    updateQuoteLineCta();
     // 手機／平板（結果卡片不是 sticky 顯示）時，自動捲動到結果，不用使用者自己往下滑
     if (window.innerWidth <= 860) {
       quoteResultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1522,10 +1569,11 @@
   });
   // 桌機版仍即時更新，方便一邊調整一邊看變化；手機版靠上方按鈕觸發+捲動
   [qType, qWidth, qHeight, qTier, qQty].forEach(el => {
-    el.addEventListener('input', () => { if (window.innerWidth > 860) calcQuote(); });
-    el.addEventListener('change', () => { if (window.innerWidth > 860) calcQuote(); });
+    el.addEventListener('input', () => { if (window.innerWidth > 860) { calcQuote(); updateQuoteLineCta(); } });
+    el.addEventListener('change', () => { if (window.innerWidth > 860) { calcQuote(); updateQuoteLineCta(); } });
   });
   calcQuote();
+  updateQuoteLineCta();
 
   // Hero 主圖輪播：16 張圖採用「只建立 2 個圖層、輪流預載下一張」的方式，
   // 不會一次把全部圖片都載入，同時間最多只有目前顯示+下一張在下載，兼顧輪播效果與載入效能
