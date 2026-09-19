@@ -322,17 +322,26 @@
     .cat-nav-next{ right:6px; }
   }
   .cat-track{
-    display:flex; gap:1px; background:var(--line);
+    display:flex; gap:0; background:var(--paper);
     overflow-x:auto; -webkit-overflow-scrolling:touch;
     scroll-snap-type:x proximity; scroll-padding-left:var(--wrap-pad);
     scrollbar-width:none; -ms-overflow-style:none;
+    /* 內容比容器窄時（超寬螢幕）置中；內容比容器寬時（一般螢幕）安全地退回靠左，
+       不會觸發部分瀏覽器「justify-content:center 搭配捲動會裁掉開頭內容」的問題 */
+    justify-content:center;
+    justify-content:safe center;
   }
   .cat-track::-webkit-scrollbar{ display:none; }
   .cat-card{
     background:var(--paper); padding:40px 30px; position:relative;
     flex:0 0 288px; width:288px; scroll-snap-align:start;
+    border-right:1px solid var(--line);
     transition:background .35s ease, transform .35s ease, box-shadow .35s ease;
   }
+  .cat-card:last-child{ border-right:none; }
+  /* 內容已完整置中、不需要捲動時，由 JS（.cat-carousel.no-scroll）隱藏箭頭與邊緣漸層 */
+  .cat-carousel.no-scroll::before, .cat-carousel.no-scroll::after,
+  .cat-carousel.no-scroll .cat-nav-btn{ display:none; }
   .cat-card:hover, .cat-card:focus-within{
     background:var(--bg-soft); transform:translateY(-4px); box-shadow:var(--shadow-soft); z-index:1;
   }
@@ -791,7 +800,7 @@
     <div class="section-head">
       <span class="eyebrow" data-cid="CAT-EYEBROW">01 — Our Collection</span>
       <h2 data-cid="CAT-H2">窗簾分類</h2>
-      <p data-cid="CAT-DESC">依空間需求與光線層次挑選，每一款皆可依尺寸與布料客製，點選了解特色，或直接於下方預約丈量與線上估價。</p>
+      <p data-cid="CAT-DESC">依您的空間需求與光線層次挑選，每一款皆可依尺寸與布料客製，歡迎直接於下方預約丈量與線上估價，我們將提供您一站式的規劃服務。</p>
     </div>
   </div>
   <div class="cat-carousel">
@@ -1549,7 +1558,9 @@
     const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
     if (isMobile) {
-      const msg = `您好，我已在官網上預估報價：款式為「${typeName}」，寬度 ${widthCm}公分、高度 ${heightCm}公分，材質等級「${tierName}」，共 ${qty} 面窗戶。請問還能再優惠嗎？`;
+      const totalText = rTotal.textContent.trim();
+      const priceLine = totalText.startsWith('NT$') ? `，預估總價約 ${totalText}` : '';
+      const msg = `您好，我已在官網上預估報價：款式為「${typeName}」，寬度 ${widthCm}公分、高度 ${heightCm}公分，材質等級「${tierName}」，共 ${qty} 面窗戶${priceLine}。請問還能再優惠嗎？`;
       quoteLineCta.href = 'https://line.me/R/oaMessage/' + encodeURIComponent(LINE_OA_ID) + '/?' + encodeURIComponent(msg);
       quoteLineCtaLabel.textContent = '一鍵傳送至 LINE 詢問優惠';
       quoteLineCtaHint.textContent = '使用手機瀏覽器直接送出，內容將直接跳轉至 LINE 官方，小編會立即接手為您處理優惠';
@@ -1647,10 +1658,13 @@
     prevBtn.addEventListener('click', () => scrollByCard(-1));
     nextBtn.addEventListener('click', () => scrollByCard(1));
 
+    const carousel = track.closest('.cat-carousel');
     function updateNavState(){
       const maxScroll = track.scrollWidth - track.clientWidth - 2;
-      prevBtn.disabled = track.scrollLeft <= 2;
-      nextBtn.disabled = track.scrollLeft >= maxScroll;
+      const noScrollNeeded = maxScroll <= 0; // 8 張卡片已能完整顯示（如超寬螢幕），不需要捲動
+      if (carousel) carousel.classList.toggle('no-scroll', noScrollNeeded);
+      prevBtn.disabled = noScrollNeeded || track.scrollLeft <= 2;
+      nextBtn.disabled = noScrollNeeded || track.scrollLeft >= maxScroll;
     }
     track.addEventListener('scroll', updateNavState);
     window.addEventListener('resize', updateNavState);
