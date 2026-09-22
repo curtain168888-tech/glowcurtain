@@ -169,41 +169,55 @@
   @keyframes curtainOpenL{ to{ transform:translateX(-100%); } }
   @keyframes curtainOpenR{ to{ transform:translateX(100%); } }
   @keyframes seamFade{ to{ opacity:0; } }
-  .intro-overlay img{
-    position:relative; z-index:1;
+  .intro-logo-wrap{
+    position:relative; z-index:1; display:inline-block; overflow:hidden;
     width:min(320px, 60vw);
     height:calc(min(320px, 60vw) / 5);
+  }
+  .intro-overlay img{
+    display:block; width:100%; height:100%;
     object-fit:cover;
     object-position:left center;
     opacity:0;
     animation:introLogoReveal 0.6s cubic-bezier(.16,.84,.44,1) 0.5s both;
   }
+  /* 波光粼粼：Logo 顯現後，一道柔和的光帶斜向掃過，像光線落在水面／布料上輕輕一閃 */
+  .intro-logo-wrap::after{
+    content:""; position:absolute; top:0; left:0; z-index:2;
+    width:55%; height:220%; top:-60%;
+    background:linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.85) 50%, transparent 70%);
+    transform:translateX(-220%) rotate(8deg);
+    mix-blend-mode:overlay;
+    opacity:0;
+    animation:shimmerSweep 1.05s ease-out 0.95s both;
+    pointer-events:none;
+  }
+  @keyframes shimmerSweep{
+    0%{ transform:translateX(-220%) rotate(8deg); opacity:0; }
+    12%{ opacity:1; }
+    70%{ opacity:1; }
+    100%{ transform:translateX(260%) rotate(8deg); opacity:0; }
+  }
   html.intro-hide .intro-overlay{
-    animation:introOverlayHide 0.01s linear 0.62s forwards;
+    animation:introOverlayHide 0.55s ease forwards;
   }
   html.intro-hide .intro-overlay img{
-    animation:introLogoShrink 0.62s cubic-bezier(.32,.74,.35,1) both;
+    animation:introLogoFadeOut 0.5s ease both;
   }
   @keyframes introLogoReveal{
     0%{ opacity:0; transform:scale(0.97); }
     100%{ opacity:1; transform:scale(1); }
   }
   @keyframes introOverlayHide{
-    to{ opacity:0; visibility:hidden; }
+    0%{ opacity:1; visibility:visible; }
+    100%{ opacity:0; visibility:hidden; }
   }
-  @keyframes introLogoShrink{
-    0%{ transform:translate(0,0) scale(1); opacity:1; }
-    100%{ transform:translate(calc(-50vw + 145px), calc(-50vh + 36px)) scale(0.19); opacity:0; }
+  @keyframes introLogoFadeOut{
+    0%{ opacity:1; transform:scale(1); }
+    100%{ opacity:0; transform:scale(1.02); }
   }
   @media (max-width:480px){
-    .intro-overlay img{ width:min(220px, 66vw); height:calc(min(220px, 66vw) / 5); }
-    html.intro-hide .intro-overlay img{
-      animation-name:introLogoShrinkMobile;
-    }
-    @keyframes introLogoShrinkMobile{
-      0%{ transform:translate(0,0) scale(1); opacity:1; }
-      100%{ transform:translate(calc(-50vw + 110px), calc(-50vh + 32px)) scale(0.17); opacity:0; }
-    }
+    .intro-logo-wrap{ width:min(220px, 66vw); height:calc(min(220px, 66vw) / 5); }
   }
   @media (prefers-reduced-motion: reduce){
     .intro-overlay{ display:none; }
@@ -866,7 +880,9 @@
   <span class="intro-curtain intro-curtain-l"></span>
   <span class="intro-curtain intro-curtain-r"></span>
   <span class="intro-seam"></span>
-  <img src="https://raw.githubusercontent.com/curtain168888-tech/glowcurtain/main/images/logo-horizontal.png" alt="" width="320" height="64">
+  <span class="intro-logo-wrap">
+    <img src="https://raw.githubusercontent.com/curtain168888-tech/glowcurtain/main/images/logo-horizontal.png" alt="" width="320" height="64">
+  </span>
 </div>
 <noscript><style>.intro-overlay{ display:none !important; } .logo-mark{ opacity:1 !important; transform:none !important; }</style></noscript>
 <script>
@@ -877,8 +893,8 @@
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     return; // CSS 已處理 reduced-motion，直接不啟動計時，避免多餘動畫
   }
-  var MIN_MS = 1150;  // 最短顯示時間：至少讓「窗簾拉開」進場動畫（約 1.1 秒）完整播完，太快收合會被截斷
-  var MAX_MS = 2700;  // 最長等待時間：即使圖片一直沒載完，也不讓使用者卡住太久
+  var MIN_MS = 2050;  // 最短顯示時間：讓「窗簾拉開」＋ Logo 波光掃過的進場動畫（約 2 秒）完整播完，太快收合會被截斷
+  var MAX_MS = 3200;  // 最長等待時間：即使圖片一直沒載完，也不讓使用者卡住太久
   var startTime = Date.now();
   var settled = false;
 
