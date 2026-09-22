@@ -36,6 +36,8 @@
 <meta name="twitter:image" content="https://raw.githubusercontent.com/curtain168888-tech/glowcurtain/main/images/hero-photo1.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://raw.githubusercontent.com">
+<link rel="preload" as="image" fetchpriority="high" href="https://raw.githubusercontent.com/curtain168888-tech/glowcurtain/main/images/hero-photo1.webp">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -128,26 +130,44 @@
     flex-shrink:1;
     max-width:100%;
     transform-origin:center left;
-    animation:logoIntro 0.8s cubic-bezier(.2,.7,.3,1) 0.75s both;
+    opacity:0;
+    transform:rotate(-14deg) scale(0.85);
+  }
+  html.intro-hide .logo-mark{
+    animation:logoIntro 0.8s cubic-bezier(.2,.7,.3,1) both;
   }
   @keyframes logoIntro{
     0%{ opacity:0; transform:rotate(-14deg) scale(0.85); }
     100%{ opacity:1; transform:rotate(0deg) scale(1); }
   }
-  /* ---------- 進場 Splash：Logo 放大置中展現，再縮小飛回導覽列位置 ---------- */
+  /* ---------- 進場 Splash：Logo 放大置中展現，再縮小飛回導覽列位置 ----------
+     時機改由 JS 控制（見 body 內 intro-timing script）：
+     等待首張 hero 背景圖實際載入完成（或達到保底上限時間）才開始收合，
+     而不是用固定時間硬猜，避免網路較慢時畫面還沒準備好、Splash 卻已經先消失。 */
   .intro-overlay{
     position:fixed; inset:0; z-index:9999;
     background:var(--bg);
     display:flex; align-items:center; justify-content:center;
     pointer-events:none;
-    animation:introOverlayHide 0.01s linear 1.45s forwards;
+    opacity:1; visibility:visible;
   }
   .intro-overlay img{
     width:min(320px, 60vw);
     height:calc(min(320px, 60vw) / 5);
     object-fit:cover;
     object-position:left center;
-    animation:introLogoShrink 0.65s cubic-bezier(.32,.74,.35,1) 0.72s both;
+    opacity:0;
+    animation:introLogoIn 0.5s cubic-bezier(.2,.7,.3,1) 0.1s both;
+  }
+  html.intro-hide .intro-overlay{
+    animation:introOverlayHide 0.01s linear 0.62s forwards;
+  }
+  html.intro-hide .intro-overlay img{
+    animation:introLogoShrink 0.62s cubic-bezier(.32,.74,.35,1) both;
+  }
+  @keyframes introLogoIn{
+    0%{ opacity:0; transform:scale(0.94); }
+    100%{ opacity:1; transform:scale(1); }
   }
   @keyframes introOverlayHide{
     to{ opacity:0; visibility:hidden; }
@@ -158,13 +178,17 @@
   }
   @media (max-width:480px){
     .intro-overlay img{ width:min(220px, 66vw); height:calc(min(220px, 66vw) / 5); }
-    @keyframes introLogoShrink{
+    html.intro-hide .intro-overlay img{
+      animation-name:introLogoShrinkMobile;
+    }
+    @keyframes introLogoShrinkMobile{
       0%{ transform:translate(0,0) scale(1); opacity:1; }
       100%{ transform:translate(calc(-50vw + 110px), calc(-50vh + 32px)) scale(0.17); opacity:0; }
     }
   }
   @media (prefers-reduced-motion: reduce){
     .intro-overlay{ display:none; }
+    .logo-mark{ opacity:1; transform:none; }
   }
   @media (max-width: 480px){
     .logo-mark{ width:170px; height:36px; }
@@ -220,16 +244,17 @@
     background-size:cover;
     background-position:62% center; /* 固定焦點在窗簾主體，裁切量隨螢幕改變但重心不跑掉 */
     background-repeat:no-repeat;
-    opacity:0; transition:opacity 1.8s ease;
+    opacity:0; transition:opacity 1s ease;
     transform:scale(1);
     will-change:transform;
   }
   .hero-bg-layer.active{ opacity:1; }
-  /* 景深效果：緩慢縮放營造照片的立體層次感，兩種輪流交替避免每張都同一個方向 */
-  .hero-bg-layer.kb-in.active{ animation:heroKenBurnsIn 6.5s ease-out both; }
-  .hero-bg-layer.kb-out.active{ animation:heroKenBurnsOut 6.5s ease-out both; }
-  @keyframes heroKenBurnsIn{ from{ transform:scale(1); } to{ transform:scale(1.08); } }
-  @keyframes heroKenBurnsOut{ from{ transform:scale(1.08); } to{ transform:scale(1); } }
+  /* 景深效果：緩慢縮放營造照片的立體層次感，兩種輪流交替避免每張都同一個方向
+     動畫時長需與 JS 的輪播間隔（3秒）一致，縮放幅度也跟著縮小，避免快速切換時畫面跳動感過重 */
+  .hero-bg-layer.kb-in.active{ animation:heroKenBurnsIn 3s ease-out both; }
+  .hero-bg-layer.kb-out.active{ animation:heroKenBurnsOut 3s ease-out both; }
+  @keyframes heroKenBurnsIn{ from{ transform:scale(1); } to{ transform:scale(1.04); } }
+  @keyframes heroKenBurnsOut{ from{ transform:scale(1.04); } to{ transform:scale(1); } }
   @media (prefers-reduced-motion: reduce){
     .hero-bg-layer.kb-in.active, .hero-bg-layer.kb-out.active{ animation:none; }
   }
@@ -288,11 +313,12 @@
   }
   .btn-primary:hover{ opacity:0.88; transform:translateY(-2px); }
   .btn-secondary{
-    border-bottom:1px solid rgba(255,255,255,0.55); color:#fff; padding:16px 2px;
-    text-decoration:none; font-size:0.95rem; letter-spacing:0.04em; display:inline-block;
-    transition:border-color .3s ease, color .3s ease;
+    background:var(--gold-soft); color:var(--navy-deep); border:1px solid var(--gold-soft);
+    padding:16px 34px; text-decoration:none; font-size:0.95rem; letter-spacing:0.04em;
+    font-weight:600; display:inline-block; text-align:center;
+    transition:background .3s ease, border-color .3s ease, transform .3s ease;
   }
-  .btn-secondary:hover{ border-color:var(--gold-soft); color:var(--gold-soft); }
+  .btn-secondary:hover{ background:var(--gold); border-color:var(--gold); transform:translateY(-2px); }
   @media (max-width:480px){
     .hero-actions{ flex-direction:column; align-items:flex-start; gap:16px; }
   }
@@ -770,6 +796,40 @@
 <div class="intro-overlay" aria-hidden="true">
   <img src="https://raw.githubusercontent.com/curtain168888-tech/glowcurtain/main/images/logo-horizontal.png" alt="" width="320" height="64">
 </div>
+<noscript><style>.intro-overlay{ display:none !important; } .logo-mark{ opacity:1 !important; transform:none !important; }</style></noscript>
+<script>
+// Splash 收合時機：等待首張 hero 背景圖實際載入完成才開始收合，
+// 並設定最短／最長顯示時間，避免「網速快時一閃而過」或「網速慢時卡住太久」。
+(function(){
+  var html = document.documentElement;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return; // CSS 已處理 reduced-motion，直接不啟動計時，避免多餘動畫
+  }
+  var MIN_MS = 900;   // 最短顯示時間：太快消失會讓品牌動畫感覺沒播完
+  var MAX_MS = 2600;  // 最長等待時間：即使圖片一直沒載完，也不讓使用者卡住太久
+  var startTime = Date.now();
+  var settled = false;
+
+  function startHide(){
+    if (settled) return;
+    settled = true;
+    var elapsed = Date.now() - startTime;
+    var wait = Math.max(0, MIN_MS - elapsed);
+    setTimeout(function(){ html.classList.add('intro-hide'); }, wait);
+  }
+
+  try {
+    var heroImg = new Image();
+    heroImg.onload = startHide;
+    heroImg.onerror = startHide;
+    heroImg.src = 'https://raw.githubusercontent.com/curtain168888-tech/glowcurtain/main/images/hero-photo1.webp';
+  } catch (e) {
+    startHide();
+  }
+
+  setTimeout(startHide, MAX_MS); // 保底：任何情況下最長等待時間一到就強制開始收合
+})();
+</script>
 
 <header class="site" id="siteHeader">
   <div class="nav-inner">
@@ -801,7 +861,7 @@
       <p class="lead" data-cid="HERO-LEAD">織光窗簾專注訂製窗簾與居家窗飾，擁有多年的窗飾職人規劃經驗，從布料選配、到府丈量到安裝，一次為您的空間織出剛好的光影層次。</p>
       <div class="hero-actions">
         <a class="btn-primary" href="#booking" data-cid="HERO-CTA1">預約到府丈量</a>
-        <a class="btn-secondary" href="#quote" data-cid="HERO-CTA2">線上估算報價</a>
+        <a class="btn-secondary" href="#quote" data-cid="HERO-CTA2">立即試算報價</a>
       </div>
       <div class="hero-trust">
         <span data-cid="HERO-TRUST1">✓ 全省到府</span>
@@ -1643,7 +1703,10 @@
         });
       }
 
+      let rotating = false; // 避免切換間隔縮短後，若圖片還沒載完，下一輪計時器又觸發造成疊加/錯亂
       async function rotate(){
+        if (rotating) return;
+        rotating = true;
         const nextIndex = (current + 1) % heroPhotos.length;
         const nextUrl = urlFor(heroPhotos[nextIndex]);
         await preload(nextUrl); // 下一張圖先在背景載好，才開始淡入，避免切換時出現空白/破圖
@@ -1657,8 +1720,9 @@
         hideLayer.classList.remove('active');
         current = nextIndex;
         showingA = !showingA;
+        rotating = false;
       }
-      setInterval(rotate, 6500);
+      setInterval(rotate, 3000);
     }
   })();
 
