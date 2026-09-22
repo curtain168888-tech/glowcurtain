@@ -561,6 +561,45 @@
   .btn-line:hover{ opacity:0.88; transform:translateY(-1px); }
   .btn-line svg{ width:20px; height:20px; flex-shrink:0; }
 
+  /* ---------- 報價清單（可累加多面窗戶，最後一次送出至 LINE） ---------- */
+  .quote-list-wrap{ margin-top:26px; }
+  .quote-add-btn{
+    width:100%; background:none; color:var(--gold-deep); border:1.5px dashed var(--gold-deep);
+    padding:14px; font-size:0.9rem; font-weight:600; letter-spacing:0.02em; cursor:pointer;
+    transition:background .25s ease, color .25s ease;
+  }
+  .quote-add-btn:hover{ background:rgba(192,151,106,0.1); }
+  .quote-add-btn.is-added{ border-style:solid; color:var(--paper); background:var(--gold-deep); }
+  .quote-list{
+    margin-top:18px; background:var(--paper); border:1px solid var(--line); padding:22px;
+  }
+  .quote-list-head{
+    display:flex; justify-content:space-between; align-items:baseline; gap:12px;
+    font-weight:700; font-size:0.85rem; letter-spacing:0.02em; color:var(--ink); margin-bottom:14px;
+  }
+  .quote-list-grand{ font-family:var(--font-display); font-size:1.2rem; color:var(--gold-deep); }
+  .quote-list-items{ list-style:none; margin:0; padding:0; display:grid; gap:10px; }
+  .quote-list-item{
+    display:flex; justify-content:space-between; align-items:flex-start; gap:10px;
+    padding-bottom:10px; border-bottom:1px solid var(--line); font-size:0.85rem; color:var(--ink-soft); line-height:1.6;
+  }
+  .quote-list-item:last-child{ border-bottom:none; padding-bottom:0; }
+  .quote-list-item .qli-text b{ color:var(--ink); font-weight:600; }
+  .quote-list-item .qli-price{ color:var(--gold-deep); font-weight:600; white-space:nowrap; }
+  .quote-list-item .qli-remove{
+    background:none; border:none; color:var(--ink-soft); cursor:pointer; font-size:1rem;
+    line-height:1; padding:2px 4px; flex-shrink:0; transition:color .2s ease;
+  }
+  .quote-list-item .qli-remove:hover{ color:var(--gold-deep); }
+  .quote-list-actions{ display:grid; gap:10px; margin-top:18px; }
+  .quote-list-copy, .quote-list-clear{
+    background:none; border:1px solid var(--line); color:var(--ink-soft); padding:11px;
+    font-size:0.85rem; cursor:pointer; transition:background .25s ease, border-color .25s ease;
+  }
+  .quote-list-copy:hover{ border-color:var(--gold-deep); color:var(--gold-deep); }
+  .quote-list-clear:hover{ border-color:var(--ink-soft); color:var(--ink); }
+  .quote-list-hint{ font-size:0.76rem; color:var(--ink-soft); line-height:1.6; margin:14px 0 0; }
+
   /* ---------- ABOUT STRIP ---------- */
   /* ---------- ABOUT STRIP ---------- */
   #about{ background:var(--bg); overflow:hidden; }
@@ -1118,6 +1157,27 @@
         <div class="quote-line"><span data-cid="QUOTE-RESULT-LBL3">窗戶數量</span><span id="r-qty">—</span></div>
         <div class="quote-line total"><span data-cid="QUOTE-RESULT-LBL4">預估總價</span><span id="r-total">NT$ —</span></div>
         <p class="quote-note" data-cid="QUOTE-NOTE">此報價為系統試算之參考金額，實際費用需視現場丈量、施工工法與布料選配而定，正式報價將於到府丈量後提供。</p>
+
+        <div class="quote-list-wrap">
+          <button type="button" class="quote-add-btn" id="quoteAddBtn" data-cid="QUOTE-ADD-BTN">＋ 加入清單（可累加多面窗戶，最後一次送出）</button>
+          <div class="quote-list" id="quoteList" hidden>
+            <div class="quote-list-head">
+              <span data-cid="QUOTE-LIST-H4">已加入清單</span>
+              <span class="quote-list-grand" id="quoteListGrand">NT$ 0</span>
+            </div>
+            <ul class="quote-list-items" id="quoteListItems"></ul>
+            <div class="quote-list-actions">
+              <a class="btn-line" id="quoteListSendBtn" href="https://lin.ee/5Y7AiI6" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 5.86 2 10.6c0 4.24 3.54 7.79 8.32 8.47.32.07.76.21.87.49.1.25.06.65.03.9l-.14.86c-.04.25-.2.99.87.54 1.06-.45 5.74-3.38 7.83-5.79C21.29 13.86 22 12.3 22 10.6 22 5.86 17.52 2 12 2zm-3.6 11.02H6.98a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.42a.4.4 0 0 1 .4.4v3.7h1.6a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4zm2.02 0h-.42a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.42a.4.4 0 0 1 .4.4v4.52a.4.4 0 0 1-.4.4zm4.6 0h-.42a.4.4 0 0 1-.34-.18l-2.02-2.75v2.53a.4.4 0 0 1-.4.4h-.42a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.44a.4.4 0 0 1 .33.18l2 2.73V8.1a.4.4 0 0 1 .4-.4h.43a.4.4 0 0 1 .4.4v4.52a.4.4 0 0 1-.4.4zm4.6-3.7h-1.83v.72h1.83a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4h-1.83v.72h1.83a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4h-2.65a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h2.65a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4z"/></svg>
+                <span id="quoteListSendLabel" data-cid="QUOTE-LIST-SEND-BTN">一次傳送清單至 LINE 詢問優惠</span>
+              </a>
+              <button type="button" class="quote-list-copy" id="quoteListCopyBtn" data-cid="QUOTE-LIST-COPY-BTN">複製清單內容</button>
+              <button type="button" class="quote-list-clear" id="quoteListClearBtn" data-cid="QUOTE-LIST-CLEAR-BTN">清空清單</button>
+            </div>
+            <p class="quote-list-hint" id="quoteListHint" data-cid="QUOTE-LIST-HINT">建議使用手機瀏覽器，可一鍵跳轉 LINE 並帶入完整清單內容；桌機請先複製清單內容，再貼到 LINE 對話中送出。</p>
+          </div>
+        </div>
+
         <div class="quote-cta">
           <p class="quote-cta-hint" id="quoteLineCtaHint"></p>
           <a class="btn-line" id="quoteLineCta" href="https://lin.ee/5Y7AiI6" target="_blank" rel="noopener">
@@ -1811,6 +1871,150 @@
   });
   calcQuote();
   updateQuoteLineCta();
+
+  // 報價清單：可將每次試算結果加入清單（存於 sessionStorage，重新整理頁面仍會記得，
+  // 關閉分頁或跨裝置則不會保留），累加多面窗戶後一次送出至 LINE，不用每面窗戶各傳一次訊息
+  (function(){
+    const STORAGE_KEY = 'glowcurtain_quote_list';
+    const addBtn = document.getElementById('quoteAddBtn');
+    const listWrap = document.getElementById('quoteList');
+    const listItemsEl = document.getElementById('quoteListItems');
+    const listGrandEl = document.getElementById('quoteListGrand');
+    const sendBtn = document.getElementById('quoteListSendBtn');
+    const sendLabel = document.getElementById('quoteListSendLabel');
+    const copyBtn = document.getElementById('quoteListCopyBtn');
+    const clearBtn = document.getElementById('quoteListClearBtn');
+    const hintEl = document.getElementById('quoteListHint');
+    if (!addBtn || !listWrap) return;
+
+    const ADD_FRIEND_URL = 'https://lin.ee/5Y7AiI6';
+    const isMobileQ = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    const addBtnDefaultText = addBtn.textContent;
+
+    let items = [];
+    try {
+      const saved = sessionStorage.getItem(STORAGE_KEY);
+      if (saved) items = JSON.parse(saved);
+    } catch (e) { items = []; }
+
+    function persist(){
+      try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch (e) {}
+    }
+
+    function parsePrice(text){
+      const m = text.replace(/[, ]/g, '').match(/NT\$(\d+)/);
+      return m ? parseInt(m[1], 10) : null;
+    }
+
+    function itemLineText(it, idx){
+      const priceText = it.subtotalNum !== null ? ('NT$ ' + it.subtotalNum.toLocaleString()) : it.subtotalText;
+      return (idx + 1) + '. ' + it.typeName + '｜寬' + it.widthCm + 'cm×高' + it.heightCm + 'cm｜' + it.tierName + '｜共' + it.qty + '面 → ' + priceText;
+    }
+
+    function buildMessage(){
+      const lines = items.map(itemLineText);
+      const grand = items.reduce((sum, it) => sum + (it.subtotalNum || 0), 0);
+      const hasUnknown = items.some(it => it.subtotalNum === null);
+      const grandText = 'NT$ ' + grand.toLocaleString() + (hasUnknown ? '（不含需另洽詢的項目）' : '');
+      return '您好，我已在官網上試算了以下窗戶報價清單，共 ' + items.length + ' 項：\n\n' + lines.join('\n') +
+             '\n\n預估總計：' + grandText + '\n\n請問還能再優惠嗎？';
+    }
+
+    function updateSendCta(){
+      const msg = buildMessage();
+      if (isMobileQ) {
+        sendBtn.href = 'https://line.me/R/oaMessage/' + encodeURIComponent(LINE_OA_ID) + '/?' + encodeURIComponent(msg);
+        sendLabel.textContent = '一次傳送清單至 LINE 詢問優惠';
+        hintEl.textContent = '使用手機瀏覽器直接送出，內容將直接跳轉至 LINE 官方，小編會立即接手為您處理優惠';
+      } else {
+        sendBtn.href = ADD_FRIEND_URL;
+        sendLabel.textContent = '加入 LINE 官方送出清單';
+        hintEl.textContent = '桌機請先按下方「複製清單內容」，加入 LINE 官方好友後貼上訊息送出，我們會立即為您處理優惠';
+      }
+    }
+
+    function render(){
+      listItemsEl.innerHTML = '';
+      items.forEach((it, idx) => {
+        const li = document.createElement('li');
+        li.className = 'quote-list-item';
+        const priceText = it.subtotalNum !== null ? ('NT$ ' + it.subtotalNum.toLocaleString()) : it.subtotalText;
+        const textSpan = document.createElement('span');
+        textSpan.className = 'qli-text';
+        textSpan.innerHTML = '<b>' + it.typeName + '</b>｜寬' + it.widthCm + 'cm×高' + it.heightCm + 'cm｜' + it.tierName + '｜共' + it.qty + '面';
+        const priceSpan = document.createElement('span');
+        priceSpan.className = 'qli-price';
+        priceSpan.textContent = priceText;
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.className = 'qli-remove';
+        removeBtn.setAttribute('aria-label', '移除此項');
+        removeBtn.innerHTML = '&times;';
+        removeBtn.addEventListener('click', () => {
+          items.splice(idx, 1);
+          persist();
+          render();
+        });
+        li.appendChild(textSpan);
+        li.appendChild(priceSpan);
+        li.appendChild(removeBtn);
+        listItemsEl.appendChild(li);
+      });
+      const grand = items.reduce((sum, it) => sum + (it.subtotalNum || 0), 0);
+      listGrandEl.textContent = 'NT$ ' + grand.toLocaleString();
+      listWrap.hidden = items.length === 0;
+      updateSendCta();
+    }
+
+    addBtn.addEventListener('click', () => {
+      const opt = qType.selectedOptions[0];
+      const typeName = opt.textContent.trim();
+      const tierName = qTier.selectedOptions[0].textContent.trim();
+      const widthCm = qWidth.value;
+      const heightCm = qHeight.value;
+      const qty = qQty.value;
+      const totalText = rTotal.textContent.trim();
+      items.push({
+        typeName: typeName, tierName: tierName, widthCm: widthCm, heightCm: heightCm,
+        qty: qty, subtotalText: totalText, subtotalNum: parsePrice(totalText)
+      });
+      persist();
+      render();
+      addBtn.classList.add('is-added');
+      addBtn.textContent = '✓ 已加入清單，可繼續試算下一面窗戶';
+      setTimeout(() => {
+        addBtn.classList.remove('is-added');
+        addBtn.textContent = addBtnDefaultText;
+      }, 1600);
+    });
+
+    clearBtn.addEventListener('click', () => {
+      items = [];
+      persist();
+      render();
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      const msg = buildMessage();
+      try {
+        await navigator.clipboard.writeText(msg);
+      } catch (e) {
+        const ta = document.createElement('textarea');
+        ta.value = msg;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); } catch (e2) {}
+        document.body.removeChild(ta);
+      }
+      const original = copyBtn.textContent;
+      copyBtn.textContent = '已複製！';
+      setTimeout(() => { copyBtn.textContent = original; }, 1600);
+    });
+
+    render();
+  })();
 
   // Hero 主圖輪播：16 張圖採用「只建立 2 個圖層、輪流預載下一張」的方式，
   // 不會一次把全部圖片都載入，同時間最多只有目前顯示+下一張在下載，兼顧輪播效果與載入效能
