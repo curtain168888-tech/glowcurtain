@@ -492,6 +492,27 @@
   }
   input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--gold-deep); }
   .form-hint{ font-size:0.8rem; color:var(--ink-soft); line-height:1.6; margin:0 0 14px; }
+  .note-paste-row{
+    display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+    margin:0 0 8px;
+  }
+  .note-paste-row[hidden]{ display:none; }
+  .note-paste-hint{ font-size:0.78rem; color:var(--ink-soft); line-height:1.5; }
+  .note-paste-btn{
+    display:inline-flex; align-items:center; gap:6px; flex-shrink:0;
+    background:var(--gold-soft); color:var(--navy-deep); border:1.5px solid var(--gold-soft);
+    padding:8px 14px; font-size:0.8rem; font-weight:700; letter-spacing:0.02em; cursor:pointer;
+    transition:background .25s ease, border-color .25s ease, transform .25s ease;
+  }
+  .note-paste-btn:hover{ background:var(--gold); border-color:var(--gold); transform:translateY(-1px); }
+  .note-paste-btn .npb-icon{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:16px; height:16px; border-radius:50%; background:var(--navy-deep); color:var(--gold-soft);
+    font-size:0.72rem; line-height:1; flex-shrink:0;
+  }
+  .note-paste-btn.is-pasted{ background:var(--gold-deep); border-color:var(--gold-deep); color:var(--paper); }
+  .note-paste-btn.is-pasted .npb-icon{ background:var(--paper); color:var(--gold-deep); }
+  @media (max-width:480px){ .note-paste-row{ flex-direction:column; align-items:flex-start; } }
   .form-hint-desktop{ display:inline-block; color:var(--navy-deep); font-weight:800; font-size:0.8rem; background:var(--gold-soft); padding:6px 12px; border-radius:4px; }
   .form-hint-mobile{ display:none; }
   @media (max-width:860px){
@@ -1258,7 +1279,14 @@
       </div>
       <div class="field full">
         <label for="b-note" data-cid="BOOK-LBL-NOTE">需求備註</label>
-        <textarea id="b-note" name="note" placeholder="窗戶數量、想了解的窗簾款式或風格偏好等"></textarea>
+        <div class="note-paste-row" id="notePasteRow" hidden>
+          <span class="note-paste-hint" id="notePasteHint" data-cid="BOOK-NOTE-PASTE-HINT"></span>
+          <button type="button" class="note-paste-btn" id="notePasteBtn" data-cid="BOOK-NOTE-PASTE-BTN">
+            <span class="npb-icon" aria-hidden="true">↓</span>
+            <span id="notePasteBtnLabel">一鍵帶入報價試算內容</span>
+          </button>
+        </div>
+        <textarea id="b-note" name="note" placeholder="窗戶數量、想了解的窗簾款式或風格偏好等；也可先至「線上報價試算」試算後，複製結果貼於此處"></textarea>
       </div>
       <p class="form-hint form-hint-mobile" data-cid="BOOK-SUBMIT-HINT-MOBILE">使用手機瀏覽器直接送出，內容將直接跳轉至 LINE 官方，小編會立即接手為您安排丈量時間</p>
       <p class="form-hint form-hint-desktop" data-cid="BOOK-SUBMIT-HINT-DESKTOP">建議使用手機瀏覽器填寫，送出後將直接跳轉至 LINE 官方，我們會立即與您聯繫預約丈量事宜</p>
@@ -1938,6 +1966,7 @@
       listGrandEl.textContent = 'NT$ ' + grand.toLocaleString();
       listWrap.hidden = items.length === 0;
       updateSendCta();
+      if (window.refreshNotePasteHint) window.refreshNotePasteHint();
     }
 
     addBtn.addEventListener('click', () => {
@@ -1990,6 +2019,69 @@
     });
 
     render();
+  })();
+
+  // 預約丈量（02）需求備註：若使用者已在「線上報價試算」（03）加入過清單，
+  // 提供一鍵帶入按鈕，把清單內容直接填進需求備註欄，不用再手動重打一次款式/尺寸/數量
+  (function(){
+    const STORAGE_KEY = 'glowcurtain_quote_list';
+    const noteEl = document.getElementById('b-note');
+    const pasteRow = document.getElementById('notePasteRow');
+    const pasteHint = document.getElementById('notePasteHint');
+    const pasteBtn = document.getElementById('notePasteBtn');
+    const pasteBtnLabel = document.getElementById('notePasteBtnLabel');
+    if (!noteEl || !pasteRow || !pasteBtn) return;
+
+    const pasteBtnDefaultLabel = pasteBtnLabel ? pasteBtnLabel.textContent : '';
+    let lastPastedText = null;
+
+    function getItems(){
+      try {
+        const saved = sessionStorage.getItem(STORAGE_KEY);
+        return saved ? JSON.parse(saved) : [];
+      } catch (e) { return []; }
+    }
+
+    function itemLineText(it, idx){
+      const priceText = it.subtotalNum !== null && it.subtotalNum !== undefined ? ('NT$ ' + it.subtotalNum.toLocaleString()) : it.subtotalText;
+      return (idx + 1) + '. ' + it.typeName + '｜寬' + it.widthCm + 'cm×高' + it.heightCm + 'cm｜' + it.tierName + '｜共' + it.qty + '面 → ' + priceText;
+    }
+
+    function refresh(){
+      const items = getItems();
+      if (items.length > 0) {
+        pasteRow.hidden = false;
+        pasteHint.textContent = '已在「線上報價試算」加入 ' + items.length + ' 項清單，可一鍵帶入需求備註';
+      } else {
+        pasteRow.hidden = true;
+      }
+    }
+
+    pasteBtn.addEventListener('click', () => {
+      const items = getItems();
+      if (items.length === 0) return;
+      const text = '【報價試算清單】\n' + items.map(itemLineText).join('\n');
+      // 若使用者尚未編輯過上一次帶入的內容，這次點擊改為「更新」原本那段內容，
+      // 避免重複點擊時同一份清單被一直往下疊加
+      if (lastPastedText && noteEl.value.includes(lastPastedText)) {
+        noteEl.value = noteEl.value.replace(lastPastedText, text);
+      } else {
+        noteEl.value = noteEl.value.trim() ? (noteEl.value.trim() + '\n\n' + text) : text;
+      }
+      lastPastedText = text;
+      pasteBtn.classList.add('is-pasted');
+      if (pasteBtnLabel) pasteBtnLabel.textContent = '✓ 已帶入';
+      setTimeout(() => {
+        pasteBtn.classList.remove('is-pasted');
+        if (pasteBtnLabel) pasteBtnLabel.textContent = pasteBtnDefaultLabel;
+      }, 1600);
+    });
+
+    // 使用者可能是先在 03 加入清單後才捲動/切換回 02，補上頁面重新可見時的即時刷新
+    window.addEventListener('focus', refresh);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) refresh(); });
+    window.refreshNotePasteHint = refresh;
+    refresh();
   })();
 
   // Hero 主圖輪播：16 張圖採用「只建立 2 個圖層、輪流預載下一張」的方式，
