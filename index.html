@@ -1934,7 +1934,7 @@
   });
 
   // IG／LINE 仿真對話泡泡：進場動畫結束後才依序出現（IG 先、LINE 後），避免跟 Splash 搶注意力，
-  // 也避免兩個泡泡同時顯示時互相重疊（兩顆按鈕距離很近）；使用者各自關閉後 24 小時內不再顯示該泡泡
+  // 也避免兩個泡泡同時顯示時互相重疊（兩顆按鈕距離很近）；每次載入頁面都會顯示，關閉只影響當次瀏覽，不會記憶
   (function(){
     const igBubble = document.getElementById('igChatBubble');
     const igCloseBtn = document.getElementById('igBubbleClose');
@@ -1942,43 +1942,25 @@
     const lineCloseBtn = document.getElementById('chatBubbleClose');
     if (!igBubble && !lineBubble) return;
 
-    const DISMISS_HOURS = 24;
-    function isDismissed(key){
-      try {
-        const last = localStorage.getItem(key);
-        return !!(last && (Date.now() - Number(last)) < DISMISS_HOURS * 3600 * 1000);
-      } catch (e) { return false; /* localStorage 不可用時，直接照正常流程顯示 */ }
-    }
-    function remember(key){
-      try { localStorage.setItem(key, String(Date.now())); } catch (e) {}
-    }
-
-    const IG_KEY = 'glowcurtain_ig_bubble_dismissed_at';
-    const LINE_KEY = 'glowcurtain_line_bubble_dismissed_at';
-    const igEnabled = !!igBubble && !isDismissed(IG_KEY);
-    const lineEnabled = !!lineBubble && !isDismissed(LINE_KEY);
-
-    function hideIg(shouldRemember){
+    function hideIg(){
       if (!igBubble) return;
       igBubble.classList.remove('show');
-      if (shouldRemember) remember(IG_KEY);
     }
-    function hideLine(shouldRemember){
+    function hideLine(){
       if (!lineBubble) return;
       lineBubble.classList.remove('show');
-      if (shouldRemember) remember(LINE_KEY);
     }
     function showLine(){
-      if (lineEnabled) lineBubble.classList.add('show');
+      if (lineBubble) lineBubble.classList.add('show');
     }
 
-    if (igEnabled) {
+    if (igBubble) {
       setTimeout(() => {
         igBubble.classList.add('show');
-        // IG 泡泡顯示一段時間後自動收合（不記憶為已關閉），接著換 LINE 泡泡出場，兩者錯開不重疊
-        setTimeout(() => { hideIg(false); setTimeout(showLine, 450); }, 5000);
+        // IG 泡泡顯示一段時間後自動收合，接著換 LINE 泡泡出場，兩者錯開不重疊
+        setTimeout(() => { hideIg(); setTimeout(showLine, 450); }, 5000);
       }, 2800);
-    } else if (lineEnabled) {
+    } else if (lineBubble) {
       setTimeout(showLine, 2800);
     }
 
@@ -1986,13 +1968,13 @@
       igCloseBtn.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
-        hideIg(true);
+        hideIg();
         setTimeout(showLine, 450);
       });
     }
     if (igBubble) {
       igBubble.addEventListener('click', () => {
-        hideIg(true);
+        hideIg();
         window.open('https://www.instagram.com/glowcurtain/', '_blank', 'noopener');
       });
     }
@@ -2001,12 +1983,12 @@
       lineCloseBtn.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
-        hideLine(true);
+        hideLine();
       });
     }
     if (lineBubble) {
       lineBubble.addEventListener('click', () => {
-        hideLine(true);
+        hideLine();
         document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     }
