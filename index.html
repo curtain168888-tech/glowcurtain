@@ -347,6 +347,7 @@
   .section-head{ max-width:640px; margin-bottom:72px; }
   .section-head h2{ font-size:clamp(1.7rem, 3.2vw, 2.5rem); font-weight:500; line-height:1.42; }
   .section-head p{ color:var(--ink-soft); margin-top:16px; font-size:1rem; line-height:1.85; }
+  .section-head p + p{ margin-top:14px; }
 
   /* ---------- CATEGORIES (手動左右滑動瀏覽) ---------- */
   #categories{ background:var(--paper); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
@@ -477,7 +478,7 @@
   }
   input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--gold-deep); }
   .form-hint{ font-size:0.8rem; color:var(--ink-soft); line-height:1.6; margin:0 0 14px; }
-  .form-hint-desktop{ display:block; color:var(--gold-deep); font-weight:700; }
+  .form-hint-desktop{ display:inline-block; color:var(--navy-deep); font-weight:800; font-size:0.8rem; background:var(--gold-soft); padding:6px 12px; border-radius:4px; }
   .form-hint-mobile{ display:none; }
   @media (max-width:860px){
     .form-hint-desktop{ display:none; }
@@ -535,7 +536,7 @@
 
   .quote-cta{ margin-top:30px; text-align:center; }
   .quote-cta-hint{ font-size:0.78rem; color:var(--ink-soft); margin:0 0 10px; line-height:1.6; text-align:left; }
-  .quote-cta-hint.is-desktop-suggestion{ color:var(--gold-deep); font-weight:700; }
+  .quote-cta-hint.is-desktop-suggestion{ display:inline-block; color:var(--navy-deep); font-weight:800; font-size:0.78rem; background:var(--gold-soft); padding:6px 12px; border-radius:4px; }
   .quote-cta-hint:empty{ display:none; margin:0; }
   .btn-line{
     display:inline-flex; align-items:center; justify-content:center; gap:10px;
@@ -549,10 +550,17 @@
   /* ---------- ABOUT STRIP ---------- */
   /* ---------- ABOUT STRIP ---------- */
   #about{ background:var(--bg); overflow:hidden; }
-  .about-layout{ display:grid; grid-template-columns:1.05fr 0.95fr; gap:var(--grid-gap); align-items:center; }
+  .about-layout{ display:grid; grid-template-columns:1.05fr 0.95fr; gap:var(--grid-gap); align-items:start; }
   .about-main{ grid-column:1; grid-row:1; }
+  .about-items-head{ margin-bottom:28px; }
+  .about-items-head h3{ font-size:clamp(1.3rem, 2.2vw, 1.6rem); font-weight:500; line-height:1.42; margin-bottom:14px; }
+  .about-items-head p{ color:var(--ink-soft); font-size:0.98rem; line-height:1.85; max-width:520px; }
   .about-main .about-grid{ display:grid; grid-template-columns:1fr; gap:32px; }
-  .about-scene{ grid-column:2; grid-row:1; position:relative; overflow:hidden; border-radius:2px; aspect-ratio:3/4; background:var(--bg); }
+  .about-closing{ margin-top:44px; padding-top:32px; border-top:1px solid var(--line); }
+  .about-closing h3{ font-size:1.2rem; font-weight:500; margin-bottom:10px; }
+  .about-closing p{ color:var(--ink-soft); font-size:0.95rem; line-height:1.8; }
+  .about-visual{ grid-column:2; grid-row:1; align-self:start; position:sticky; top:120px; }
+  .about-scene{ position:relative; overflow:hidden; border-radius:2px; aspect-ratio:3/4; background:var(--bg); }
   .about-scene::after{
     /* 邊緣柔化遮罩：讓插畫自然淡入背景色，避免出現生硬的矩形邊框 */
     content:""; position:absolute; inset:0; pointer-events:none; z-index:1;
@@ -589,6 +597,7 @@
   }
   @media (max-width:1024px){
     .about-layout{ grid-template-columns:1fr; }
+    .about-visual{ position:static; grid-column:1; grid-row:auto; }
     .about-scene{ display:none; }
   }
   .about-item::before{ content:""; position:absolute; top:-1px; left:0; width:36px; height:2px; background:var(--gold-deep); }
@@ -725,8 +734,7 @@
   /* ---------- ABOUT STATS (累積的信任，已併入關於我們區塊) ---------- */
   /* ---------- ABOUT STATS (累積的信任，疊在 SVG 插畫上方，融合一體) ---------- */
   .about-stats{
-    grid-column:2; grid-row:1; align-self:end; justify-self:stretch;
-    position:relative; z-index:2; margin:0 20px 20px;
+    position:absolute; left:0; right:0; bottom:0; z-index:2; margin:0 20px 20px;
     background:rgba(251,248,243,0.86); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
     border-radius:2px; padding:26px 28px; box-shadow:var(--shadow-soft);
   }
@@ -740,7 +748,7 @@
   .stat-item .label{ font-size:0.8rem; color:var(--ink-soft); letter-spacing:0.02em; }
   @media (max-width:1024px){
     .about-stats{
-      grid-column:1; grid-row:auto; align-self:auto; justify-self:auto;
+      position:static;
       margin:40px 0 0; background:none; backdrop-filter:none; -webkit-backdrop-filter:none;
       box-shadow:none; padding:32px 0 0; border-top:1px solid var(--line);
       border-radius:0;
@@ -921,7 +929,7 @@
   <div class="hero-content">
     <div class="box">
       <span class="eyebrow" data-cid="HERO-EYEBROW">Glow Curtain · Custom Window Dressing</span>
-      <h1 data-cid="HERO-H1">讓光線，<em>溫柔穿透</em>每個家</h1>
+      <h1 data-cid="HERO-H1">讓光線，<em>溫柔穿透</em></h1>
       <p class="lead" data-cid="HERO-LEAD">織光窗簾專注訂製窗簾與居家窗飾，擁有多年的窗飾職人規劃經驗，從布料選配、到府丈量到安裝，一次為您的空間織出剛好的光影層次。</p>
       <div class="hero-actions">
         <a class="btn-primary" href="#booking" data-cid="HERO-CTA1">預約到府丈量</a>
@@ -1174,24 +1182,35 @@
       <div class="section-head">
         <span class="eyebrow" data-cid="ABOUT-EYEBROW">04 — About Glow</span>
         <h2 data-cid="ABOUT-H2">關於織光窗簾</h2>
-        <p data-cid="ABOUT-DESC">專注嚴選 MIT 窗簾，我們是您的專屬窗簾訂製與居家美學顧問。致力於精準調配光影，讓每一扇窗，都成為家中光線最溫柔的入口。</p>
+        <p data-cid="ABOUT-DESC">織光窗簾相信，家的優雅，藏在光線被溫柔安放的細節裡。</p>
+        <p data-cid="ABOUT-DESC-2">專注訂製窗簾與居家窗飾，織光以多年累積的職人經驗，細讀每個空間的採光、比例與生活習慣，讓布料的肌理、色澤與垂墜，融入家的日常。從布料選配、到府丈量到細緻安裝，每一道工序，都為了讓窗飾與空間自然相襯。</p>
+        <p data-cid="ABOUT-DESC-3">隨著簾幕輕啟，光穿過織紋，褪去直射的銳利，在牆面與家具間緩緩暈開。織光窗簾將光影織入生活，讓明亮與靜謐各得其所，也讓優雅在每一天的起居之間，自然流露。</p>
+      </div>
+      <div class="about-items-head">
+        <h3 data-cid="ABOUT-ITEMS-H3">讓家的理想模樣，從一扇窗開始</h3>
+        <p data-cid="ABOUT-ITEMS-LEAD">窗簾選得好，改變的不只是光線，更是整個家的質感。織光窗簾從您的空間與生活習慣出發，將美感、採光與隱私一併考量，讓每一次拉開與闔上，都恰如您所想。</p>
       </div>
       <div class="about-grid">
         <div class="about-item">
-          <h3 data-cid="ABOUT-ITEM1-TITLE">全台免費到府丈量規劃</h3>
-          <p data-cid="ABOUT-ITEM1-DESC">深耕台中，全台服務，提供全程到府丈量與安裝服務，熟悉在地各類建築窗型。</p>
+          <h3 data-cid="ABOUT-ITEM1-TITLE">全台免費到府丈量・把專業帶進您家</h3>
+          <p data-cid="ABOUT-ITEM1-DESC">深耕台中，服務全台。不必自行估尺寸、憑想像挑款式，讓織光親自到府，依照窗型、採光與居家風格，提供合適的窗飾規劃。從一開始，就為您把細節想周全。</p>
         </div>
         <div class="about-item">
-          <h3 data-cid="ABOUT-ITEM2-TITLE">窗飾美學專業選品</h3>
-          <p data-cid="ABOUT-ITEM2-DESC">透過專業的空間規劃與生活美學，精準選配布料與款式，將高端質感與實用機能完美揉合。</p>
+          <h3 data-cid="ABOUT-ITEM2-TITLE">專業選布搭配・讓質感真正融入生活</h3>
+          <p data-cid="ABOUT-ITEM2-DESC">好看的布料，更要適合您的家。織光細膩搭配色澤、肌理與垂墜線條，同時考量遮光、透光與隱私需求，讓窗簾與家具、牆面自然相襯，織出耐看，也住得舒服的日常。</p>
         </div>
         <div class="about-item">
-          <h3 data-cid="ABOUT-ITEM3-TITLE">丈量到安裝一條龍</h3>
-          <p data-cid="ABOUT-ITEM3-DESC">從諮詢丈量、報價確認到施工安裝，專人全程跟進，省心又安心。</p>
+          <h3 data-cid="ABOUT-ITEM3-TITLE">丈量到安裝一條龍・安心交給織光</h3>
+          <p data-cid="ABOUT-ITEM3-DESC">從諮詢丈量、選布搭配、報價確認到施工安裝，皆由專人全程跟進。您的期待有人理解，每個環節有人照料，讓理想中的窗景，妥貼落實在家中。</p>
         </div>
+      </div>
+      <div class="about-closing">
+        <h3 data-cid="ABOUT-CLOSING-H3">家的光影值得講究，第一步，交給織光。</h3>
+        <p data-cid="ABOUT-CLOSING-TEXT">立即預約全台免費到府丈量與規劃，讓喜歡的窗景，成為每天回家的風景。</p>
       </div>
     </div>
 
+    <div class="about-visual">
     <div class="about-stats" id="aboutStats">
       <span class="eyebrow" data-cid="STATS-EYEBROW">Our Track Record</span>
       <div class="stats-grid">
@@ -1268,6 +1287,7 @@
           <circle class="mote m5" cx="180" cy="480" r="4.5" fill="url(#moteFill2)"/>
         </g>
       </svg>
+    </div>
     </div>
   </div>
 </section>
