@@ -775,10 +775,22 @@
   .faq-layout .section-head{ margin-bottom:0; position:sticky; top:110px; }
   .faq-list{ display:grid; gap:1px; background:var(--line); border:1px solid var(--line); }
   .faq-category{
-    background:var(--bg); padding:14px 32px;
+    width:100%; display:flex; align-items:center; justify-content:space-between; gap:12px;
+    background:var(--bg); padding:14px 32px; border:none; margin:0; cursor:pointer; text-align:left;
     font-family:var(--font-base); font-weight:700; font-size:0.78rem;
     letter-spacing:0.12em; color:var(--gold-deep); text-transform:uppercase;
+    -webkit-tap-highlight-color:transparent; transition:background .25s ease;
   }
+  .faq-category:hover{ background:var(--bg-soft); }
+  .faq-cat-icon{ position:relative; flex-shrink:0; width:14px; height:14px; }
+  .faq-cat-icon::before, .faq-cat-icon::after{
+    content:""; position:absolute; background:var(--gold-deep); transition:transform .3s ease, opacity .3s ease;
+  }
+  .faq-cat-icon::before{ left:0; top:50%; width:100%; height:1.5px; transform:translateY(-50%); }
+  .faq-cat-icon::after{ top:0; left:50%; width:1.5px; height:100%; transform:translateX(-50%); }
+  .faq-category[aria-expanded="true"] .faq-cat-icon::after{ opacity:0; transform:translateX(-50%) rotate(90deg); }
+  .faq-cat-group{ display:grid; gap:1px; background:var(--line); }
+  .faq-cat-group.is-collapsed{ display:none; }
   .faq-item{ background:var(--paper); transition:background .3s ease; }
   .faq-item:hover{ background:var(--bg-soft); }
   .faq-item h3{ margin:0; font-weight:500; }
@@ -1315,8 +1327,12 @@
       <h2 data-cid="FAQ-H2">常見問題</h2>
     </div>
     <div class="faq-list">
-      <div class="faq-category"><span data-cid="CAT-SERVICE">服務與預約</span></div>
-      <div class="faq-item">
+      <button type="button" class="faq-category" data-cat="service" aria-expanded="false" aria-controls="faq-cat-service">
+        <span data-cid="CAT-SERVICE">服務與預約</span>
+        <span class="faq-cat-icon" aria-hidden="true"></span>
+      </button>
+      <div class="faq-cat-group" id="faq-cat-service" data-cat-group="service">
+      <div class="faq-item" data-cat="service">
         <h3>
           <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-panel-1" id="faq-btn-1">
             <span class="q-wrap"><span class="q-mark">Q.</span><span data-cid="FAQ-Q1">到府丈量會收費嗎？</span></span>
@@ -1327,7 +1343,7 @@
           <p data-cid="FAQ-A1">丈量與諮詢完全免費，全台服務範圍皆適用。</p>
         </div>
       </div>
-      <div class="faq-item">
+      <div class="faq-item" data-cat="service">
         <h3>
           <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-panel-2" id="faq-btn-2">
             <span class="q-wrap"><span class="q-mark">Q.</span><span data-cid="FAQ-Q2">織光窗簾的服務範圍是否僅限台中？</span></span>
@@ -1338,7 +1354,7 @@
           <p data-cid="FAQ-A2">織光窗簾目前採無門市、全省到府服務，全台皆可預約丈量與安裝，服務範圍涵蓋台北、新北、基隆、桃園、新竹、苗栗、台中等彰化以北地區，皆可安排到府免費丈量。</p>
         </div>
       </div>
-      <div class="faq-item">
+      <div class="faq-item" data-cat="service">
         <h3>
           <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-panel-16" id="faq-btn-16">
             <span class="q-wrap"><span class="q-mark">Q.</span><span data-cid="FAQ-Q16">無門市如何挑選布料？</span></span>
@@ -1349,8 +1365,12 @@
           <p data-cid="FAQ-A16">無門市代表沒有店租、裝潢等管銷成本，我們把省下來的費用回饋到報價上，提供更有競爭力的價格。而且無論有沒有門市，最終都需要專人到府丈量才能確保裁切準確；與其先請您跑一趟門市看布料、再另約時間到府丈量，不如直接把布料樣品帶到您家，在自己實際的採光環境下比對顏色與質感。門市燈光經常跟居家環境不同，在家挑選反而更貼近真實效果。</p>
         </div>
       </div>
-      <div class="faq-category"><span data-cid="CAT-PRICING">報價與費用</span></div>
-      <div class="faq-item">
+      </div><button type="button" class="faq-category" data-cat="pricing" aria-expanded="false" aria-controls="faq-cat-pricing">
+        <span data-cid="CAT-PRICING">報價與費用</span>
+        <span class="faq-cat-icon" aria-hidden="true"></span>
+      </button>
+      <div class="faq-cat-group" id="faq-cat-pricing" data-cat-group="pricing">
+      <div class="faq-item" data-cat="pricing">
         <h3>
           <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-panel-3" id="faq-btn-3">
             <span class="q-wrap"><span class="q-mark">Q.</span><span data-cid="FAQ-Q3">線上報價準確嗎？還需要再丈量嗎？</span></span>
@@ -1361,7 +1381,7 @@
           <p data-cid="FAQ-A3">線上報價為系統試算之參考金額，正式報價仍須以到府丈量結果為準。</p>
         </div>
       </div>
-      <div class="faq-item">
+      <div class="faq-item" data-cat="pricing">
         <h3>
           <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-panel-4" id="faq-btn-4">
             <span class="q-wrap"><span class="q-mark">Q.</span><span data-cid="FAQ-Q4">基礎款跟進階款的價格差在哪裡？</span></span>
@@ -1372,7 +1392,7 @@
           <p data-cid="FAQ-A4">進階款採用更高規格的布料或機構設計，質感與耐用度較佳，實際差異依款式而定，建議到府丈量時請設計師詳細說明。</p>
         </div>
       </div>
-      <div class="faq-item">
+      <div class="faq-item" data-cat="pricing">
         <h3>
           <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-panel-5" id="faq-btn-5">
             <span class="q-wrap"><span class="q-mark">Q.</span><span data-cid="FAQ-Q5">窗簾價格怎麼計算？</span></span>
@@ -1383,7 +1403,7 @@
           <p data-cid="FAQ-A5">多數款式採「才數」計價（才＝寬×高，以台尺計算，無條件進位），依材質等級分為基礎款與進階款；布簾與紗簾則以寬度乘以牌價計算。可先用線上報價試算抓參考金額，正式報價以到府丈量結果為準。</p>
         </div>
       </div>
-      <div class="faq-item">
+      <div class="faq-item" data-cat="pricing">
         <h3>
           <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-panel-6" id="faq-btn-6">
             <span class="q-wrap"><span class="q-mark">Q.</span><span data-cid="FAQ-Q6">新成屋窗簾預算大約多少？</span></span>
@@ -1394,8 +1414,12 @@
           <p data-cid="FAQ-A6">預算會依窗戶數量、款式與材質等級而不同，建議先用線上報價試算單一窗戶的參考金額，或於預約丈量時告知坪數與需求，讓規劃師協助抓出整體預算範圍。</p>
         </div>
       </div>
-      <div class="faq-category"><span data-cid="CAT-STYLE">款式挑選建議</span></div>
-      <div class="faq-item">
+      </div><button type="button" class="faq-category" data-cat="style" aria-expanded="false" aria-controls="faq-cat-style">
+        <span data-cid="CAT-STYLE">款式挑選建議</span>
+        <span class="faq-cat-icon" aria-hidden="true"></span>
+      </button>
+      <div class="faq-cat-group" id="faq-cat-style" data-cat-group="style">
+      <div class="faq-item" data-cat="style">
         <h3>
           <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-panel-7" id="faq-btn-7">
             <span class="q-wrap"><span class="q-mark">Q.</span><span data-cid="FAQ-Q7">西曬房間適合哪種窗簾？</span></span>
@@ -1406,7 +1430,7 @@
           <p data-cid="FAQ-A7">西曬房間建議選擇隔熱效果較好的風琴簾（蜂巢結構），或可調角度控光的鋁百葉／木百葉，依需求調整光線與溫度；布簾搭配遮光布也是常見選擇。</p>
         </div>
       </div>
-      <div class="faq-item">
+      <div class="faq-item" data-cat="style">
         <h3>
           <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-panel-8" id="faq-btn-8">
             <span class="q-wrap"><span class="q-mark">Q.</span><span data-cid="FAQ-Q8">臥室需要幾成遮光？</span></span>
@@ -1417,7 +1441,7 @@
           <p data-cid="FAQ-A8">臥室建議選擇遮光度較高的布料，一般建議 8 成以上，對光線敏感者可選全遮光款式；實際遮光程度依選用布料而定，丈量諮詢時可請設計師依睡眠需求推薦。</p>
         </div>
       </div>
-      <div class="faq-item">
+      <div class="faq-item" data-cat="style">
         <h3>
           <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-panel-9" id="faq-btn-9">
             <span class="q-wrap"><span class="q-mark">Q.</span><span data-cid="FAQ-Q9">木百葉適合台灣潮濕環境嗎？</span></span>
@@ -1428,7 +1452,7 @@
           <p data-cid="FAQ-A9">實木百葉在長期潮濕的空間（如浴室、廚房）較容易變形，建議這類空間選用仿木百葉或鋁百葉；一般臥室、客廳等乾燥空間則不受此限，可依喜好選擇木百葉的自然質感。</p>
         </div>
       </div>
-      <div class="faq-item">
+      <div class="faq-item" data-cat="style">
         <h3>
           <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-panel-10" id="faq-btn-10">
             <span class="q-wrap"><span class="q-mark">Q.</span><span data-cid="FAQ-Q10">蜂巢簾真的比較隔熱嗎？</span></span>
@@ -1439,7 +1463,7 @@
           <p data-cid="FAQ-A10">蜂巢（風琴簾）結構會在簾片間形成中空氣層，具有實際的隔熱效果，有助於夏季隔絕熱氣、冬季減少熱能散失，實際效果會依窗戶朝向與室內環境而有差異。</p>
         </div>
       </div>
-      <div class="faq-item">
+      <div class="faq-item" data-cat="style">
         <h3>
           <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-panel-11" id="faq-btn-11">
             <span class="q-wrap"><span class="q-mark">Q.</span><span data-cid="FAQ-Q11">調光簾晚上看得到裡面嗎？</span></span>
@@ -1450,7 +1474,7 @@
           <p data-cid="FAQ-A11">調光簾在夜間室內開燈、室外變暗時，若簾片角度未完全閉合，仍有一定的透視可能；建議晚間將簾片調整至完全閉合角度，或於臥室等重視隱私的空間搭配遮光簾使用。</p>
         </div>
       </div>
-      <div class="faq-item">
+      <div class="faq-item" data-cat="style">
         <h3>
           <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-panel-12" id="faq-btn-12">
             <span class="q-wrap"><span class="q-mark">Q.</span><span data-cid="FAQ-Q12">租屋適合裝什麼窗簾？</span></span>
@@ -1461,7 +1485,7 @@
           <p data-cid="FAQ-A12">租屋族群可考慮捲簾、風琴簾等安裝較單純、退租時較好復原的輕量款式；建議丈量時告知是租屋使用，讓規劃師依現場條件建議適合的安裝方式，降低牆面損傷風險。</p>
         </div>
       </div>
-      <div class="faq-item">
+      <div class="faq-item" data-cat="style">
         <h3>
           <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-panel-13" id="faq-btn-13">
             <span class="q-wrap"><span class="q-mark">Q.</span><span data-cid="FAQ-Q13">落地窗適合哪種窗簾？</span></span>
@@ -1472,8 +1496,12 @@
           <p data-cid="FAQ-A13">落地窗或陽台門建議選擇折景簾，獨立分片設計不必整片拉開就能進出陽台；布簾搭配寬軌道也是常見做法，可依空間動線與風格需求選擇。</p>
         </div>
       </div>
-      <div class="faq-category"><span data-cid="CAT-PROCESS">丈量與安裝流程</span></div>
-      <div class="faq-item">
+      </div><button type="button" class="faq-category" data-cat="process" aria-expanded="false" aria-controls="faq-cat-process">
+        <span data-cid="CAT-PROCESS">丈量與安裝流程</span>
+        <span class="faq-cat-icon" aria-hidden="true"></span>
+      </button>
+      <div class="faq-cat-group" id="faq-cat-process" data-cat-group="process">
+      <div class="faq-item" data-cat="process">
         <h3>
           <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-panel-14" id="faq-btn-14">
             <span class="q-wrap"><span class="q-mark">Q.</span><span data-cid="FAQ-Q14">窗簾可以自己量尺寸嗎？</span></span>
@@ -1484,7 +1512,7 @@
           <p data-cid="FAQ-A14">可以先自行測量抓概略預算，但正式訂製建議以到府丈量為準，因為除了寬高，還需考量安裝方式、窗框深度等細節，專人丈量能確保裁切與安裝的準確度，且丈量服務完全免費。</p>
         </div>
       </div>
-      <div class="faq-item">
+      <div class="faq-item" data-cat="process">
         <h3>
           <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-panel-15" id="faq-btn-15">
             <span class="q-wrap"><span class="q-mark">Q.</span><span data-cid="FAQ-Q15">丈量到安裝通常需要多久？</span></span>
@@ -1495,7 +1523,7 @@
           <p data-cid="FAQ-A15">一般而言，從到府丈量到完成安裝，依訂製款式與布料到貨時間，約需 2 至 4 週，實際時程會在丈量後由專人依現場狀況與訂製內容告知確切時間。</p>
         </div>
       </div>
-    </div>
+    </div></div>
   </div>
 </section>
 
@@ -1889,6 +1917,18 @@
     document.querySelectorAll('.faq-question[aria-expanded="true"]').forEach(btn => {
       const panel = document.getElementById(btn.getAttribute('aria-controls'));
       panel.style.maxHeight = panel.scrollHeight + 'px';
+    });
+  });
+
+  // 常見問題大分類收合／展開：預設全部收合，讓頁面初始更精簡，點分類標題可展開該組全部題目
+  document.querySelectorAll('.faq-category').forEach(catBtn => {
+    const group = document.getElementById(catBtn.getAttribute('aria-controls'));
+    if (!group) return;
+    group.classList.add('is-collapsed');
+    catBtn.addEventListener('click', () => {
+      const isOpen = catBtn.getAttribute('aria-expanded') === 'true';
+      catBtn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+      group.classList.toggle('is-collapsed', isOpen);
     });
   });
 
