@@ -157,24 +157,30 @@
     object-fit:cover;
     object-position:left center;
     opacity:0;
-    animation:introLogoIn 0.5s cubic-bezier(.2,.7,.3,1) 0.1s both;
+    /* SVG 濾鏡讓 Logo 進場時帶有布料被風吹拂、微微起伏後才平順落定的「窗簾飄逸感」 */
+    filter:url(#curtainRipple);
+    animation:introLogoIn 1.1s cubic-bezier(.2,.7,.3,1) 0.1s both;
   }
   html.intro-hide .intro-overlay{
-    animation:introOverlayHide 0.01s linear 0.62s forwards;
+    animation:introOverlayHide 0.01s linear 0.9s forwards;
   }
   html.intro-hide .intro-overlay img{
-    animation:introLogoShrink 0.62s cubic-bezier(.32,.74,.35,1) both;
+    animation:introLogoShrink 0.9s cubic-bezier(.32,.74,.35,1) both;
   }
   @keyframes introLogoIn{
-    0%{ opacity:0; transform:scale(0.94); }
-    100%{ opacity:1; transform:scale(1); }
+    0%{ opacity:0; transform:scale(0.9) rotate(-3deg) skewX(5deg); }
+    45%{ opacity:1; transform:scale(1.03) rotate(1.5deg) skewX(-2deg); }
+    70%{ transform:scale(0.99) rotate(-0.6deg) skewX(1deg); }
+    100%{ opacity:1; transform:scale(1) rotate(0deg) skewX(0deg); }
   }
   @keyframes introOverlayHide{
     to{ opacity:0; visibility:hidden; }
   }
   @keyframes introLogoShrink{
-    0%{ transform:translate(0,0) scale(1); opacity:1; }
-    100%{ transform:translate(calc(-50vw + 145px), calc(-50vh + 36px)) scale(0.19); opacity:0; }
+    0%{ transform:translate(0,0) scale(1) rotate(0deg); opacity:1; }
+    30%{ transform:translate(calc(-14vw + 40px), calc(-6vh + 6px)) scale(0.78) rotate(-5deg); opacity:1; }
+    60%{ transform:translate(calc(-34vw + 95px), calc(-26vh + 18px)) scale(0.44) rotate(4deg); opacity:0.9; }
+    100%{ transform:translate(calc(-50vw + 145px), calc(-50vh + 36px)) scale(0.19) rotate(0deg); opacity:0; }
   }
   @media (max-width:480px){
     .intro-overlay img{ width:min(220px, 66vw); height:calc(min(220px, 66vw) / 5); }
@@ -182,8 +188,10 @@
       animation-name:introLogoShrinkMobile;
     }
     @keyframes introLogoShrinkMobile{
-      0%{ transform:translate(0,0) scale(1); opacity:1; }
-      100%{ transform:translate(calc(-50vw + 110px), calc(-50vh + 32px)) scale(0.17); opacity:0; }
+      0%{ transform:translate(0,0) scale(1) rotate(0deg); opacity:1; }
+      30%{ transform:translate(calc(-10vw + 30px), calc(-5vh + 5px)) scale(0.74) rotate(-5deg); opacity:1; }
+      60%{ transform:translate(calc(-26vw + 70px), calc(-22vh + 14px)) scale(0.4) rotate(4deg); opacity:0.9; }
+      100%{ transform:translate(calc(-50vw + 110px), calc(-50vh + 32px)) scale(0.17) rotate(0deg); opacity:0; }
     }
   }
   @media (prefers-reduced-motion: reduce){
@@ -835,6 +843,20 @@
 </head>
 <body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <!-- 進場 Logo 的「窗簾飄逸」濾鏡：用亂流貼圖讓 Logo 像布料被風吹拂般微微起伏，隨動畫時間拉直、平順落定 -->
+    <filter id="curtainRipple" x="-20%" y="-60%" width="140%" height="220%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.03 0.16" numOctaves="2" seed="7" result="curtainNoise">
+        <animate attributeName="baseFrequency" dur="1.2s" values="0.045 0.22;0.008 0.03" keyTimes="0;1" fill="freeze"/>
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="curtainNoise" xChannelSelector="R" yChannelSelector="G" scale="26">
+        <animate attributeName="scale" dur="1.2s" values="26;0" keyTimes="0;1" fill="freeze"/>
+      </feDisplacementMap>
+    </filter>
+  </defs>
+</svg>
+
 <div class="intro-overlay" aria-hidden="true">
   <img src="https://raw.githubusercontent.com/curtain168888-tech/glowcurtain/main/images/logo-horizontal.png" alt="" width="320" height="64">
 </div>
@@ -847,8 +869,8 @@
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     return; // CSS 已處理 reduced-motion，直接不啟動計時，避免多餘動畫
   }
-  var MIN_MS = 900;   // 最短顯示時間：太快消失會讓品牌動畫感覺沒播完
-  var MAX_MS = 2600;  // 最長等待時間：即使圖片一直沒載完，也不讓使用者卡住太久
+  var MIN_MS = 1300;  // 最短顯示時間：至少讓 Logo 的飄逸進場動畫（約 1.2 秒）完整播完，太快收合會被截斷
+  var MAX_MS = 2900;  // 最長等待時間：即使圖片一直沒載完，也不讓使用者卡住太久
   var startTime = Date.now();
   var settled = false;
 
