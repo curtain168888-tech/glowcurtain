@@ -411,21 +411,32 @@
   }
 
   /* ---------- BOOKING ---------- */
-  #booking{ background:var(--bg); }
+  /* 這裡沿用原本 #quote 深色區塊的視覺處理，讓「深／淺背景交錯」的節奏維持不變：
+     categories(淺) → statement(深) → quote(淺) → booking(深) → about(淺) */
+  #booking{ background:var(--navy-deep); color:var(--paper); border-top:1px solid var(--line); }
+  #booking .eyebrow{ color:var(--gold-soft); }
+  #booking .eyebrow::before{ background:var(--gold-soft); }
+  #booking .booking-info h2{ color:var(--paper); }
   .booking-grid{ display:grid; grid-template-columns:0.85fr 1.15fr; gap:var(--grid-gap); align-items:start; }
   .booking-info h2{ margin-bottom:24px; font-weight:500; }
   .booking-info p{ color:var(--ink-soft); margin-bottom:32px; max-width:420px; line-height:1.85; }
+  #booking .booking-info p{ color:rgba(251,248,243,0.68); }
   .step-list{ list-style:none; padding:0; margin:0; }
   .step-list li{
     display:flex; gap:20px; padding:20px 0; border-top:1px solid var(--line);
   }
+  #booking .step-list li{ border-top-color:rgba(251,248,243,0.2); }
   .step-list li:last-child{ border-bottom:1px solid var(--line); }
+  #booking .step-list li:last-child{ border-bottom-color:rgba(251,248,243,0.2); }
   .step-list .idx{
     font-family:var(--font-display); font-style:italic; color:var(--gold-deep);
     font-size:1.3rem; width:34px; flex-shrink:0;
   }
+  #booking .step-list .idx{ color:var(--gold-soft); }
   .step-list strong{ display:block; font-family:var(--font-display); font-weight:500; margin-bottom:4px; font-size:1.02rem; }
+  #booking .step-list strong{ color:var(--paper); }
   .step-list span.desc{ color:var(--ink-soft); font-size:0.9rem; line-height:1.75; }
+  #booking .step-list span.desc{ color:rgba(251,248,243,0.66); }
 
   form{ background:var(--paper); padding:48px; border:1px solid var(--line); }
   .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
@@ -469,17 +480,11 @@
   .confirm-next-step{ display:block; margin-top:10px; color:var(--gold-deep); font-weight:500; }
   .confirm-box .btn-line{ margin-top:16px; }
 
-  /* ---------- QUOTE ---------- */
-  #quote{ background:var(--navy-deep); color:var(--paper); border-top:1px solid var(--line); }
-  #quote .section-head h2{ color:var(--paper); }
-  #quote .section-head p{ color:rgba(251,248,243,0.68); }
-  #quote .eyebrow{ color:var(--gold-soft); }
-  #quote .eyebrow::before{ background:var(--gold-soft); }
-  #quote label{ color:rgba(251,248,243,0.66); }
-  #quote input, #quote select{ color:var(--paper); border-bottom-color:rgba(251,248,243,0.24); }
-  #quote input:focus, #quote select:focus{ border-color:var(--gold-soft); }
-  #quote select option{ color:var(--ink); background:var(--paper); }
-  .quote-grid{ display:grid; grid-template-columns:1.05fr 0.95fr; gap:var(--grid-gap); align-items:start; }
+  /* ---------- QUOTE ----------
+     現在改為淺色背景（沿用原本 #booking 的淺色處理），標題／文字／表單顏色都直接使用
+     全站預設樣式即可（見上方 h1,h2,h3、label、input、.eyebrow 等預設規則），不需要額外覆蓋。 */
+  #quote{ background:var(--bg); }
+  .quote-grid{ display:grid; grid-template-columns:0.85fr 1.15fr; gap:var(--grid-gap); align-items:start; }
   .quote-form{ display:grid; gap:24px; }
   .quote-form .field{ margin-bottom:0; }
   .quote-submit-btn{
@@ -838,8 +843,8 @@
     </div>
     <nav class="links" id="navLinks">
       <a href="#categories" data-cid="NAV-L1">窗簾分類</a>
-      <a href="#booking" data-cid="NAV-L2">預約丈量</a>
-      <a href="#quote" data-cid="NAV-L3">線上報價</a>
+      <a href="#quote" data-cid="NAV-L2">線上報價</a>
+      <a href="#booking" data-cid="NAV-L3">預約丈量</a>
       <a href="#about" data-cid="NAV-L4">關於我們</a>
       <a href="#contact" data-cid="NAV-L5">聯絡方式</a>
       <a class="nav-cta" href="#booking" data-cid="NAV-CTA">立即預約免費丈量</a>
@@ -964,10 +969,76 @@
   <blockquote data-cid="STATEMENT-QUOTE">我們安裝的不只是一片窗簾，<br>而是替一個家，留下<em>剛剛好的光與隱私。</em></blockquote>
 </section>
 
+<section id="quote">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow" data-cid="QUOTE-EYEBROW">02 — Instant Estimate</span>
+      <h2 data-cid="QUOTE-H2">線上報價試算</h2>
+      <p data-cid="QUOTE-DESC">輸入窗戶尺寸、款式與材質等級，快速預估參考價格；正式報價仍以到府丈量結果為準。</p>
+    </div>
+    <div class="quote-grid">
+      <div class="quote-form">
+        <div class="field">
+          <label for="q-type" data-cid="QUOTE-LBL-TYPE">窗簾款式</label>
+          <select id="q-type">
+            <option value="cai" data-calc="cai" data-base="100" data-adv="180" data-cid="QUOTE-TYPE-OPT1">捲簾</option>
+            <option value="cai" data-calc="cai" data-base="80" data-adv="220" data-cid="QUOTE-TYPE-OPT2">鋁百葉</option>
+            <option value="cai" data-calc="cai" data-base="280" data-adv="380" data-cid="QUOTE-TYPE-OPT3">木百葉/仿木百葉</option>
+            <option value="cai" data-calc="cai" data-base="175" data-adv="300" data-cid="QUOTE-TYPE-OPT4">調光簾</option>
+            <option value="cai" data-calc="cai" data-base="280" data-adv="400" data-cid="QUOTE-TYPE-OPT5">風琴簾</option>
+            <option value="cai" data-calc="cai" data-base="300" data-adv="500" data-cid="QUOTE-TYPE-OPT6">穿透簾</option>
+            <option value="linear" data-calc="linear" data-base="200" data-adv="200" data-cid="QUOTE-TYPE-OPT7">布簾</option>
+            <option value="linear" data-calc="linear" data-base="200" data-adv="200" data-cid="QUOTE-TYPE-OPT8">紗簾</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="q-width" data-cid="QUOTE-LBL-WIDTH">窗戶寬度（公分）</label>
+            <input id="q-width" type="number" min="30" max="1000" value="150" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="q-height" data-cid="QUOTE-LBL-HEIGHT">窗戶高度（公分）</label>
+            <input id="q-height" type="number" min="30" max="500" value="200" inputmode="numeric">
+          </div>
+        </div>
+        <div class="field">
+          <label for="q-tier" data-cid="QUOTE-LBL-TIER">材質等級</label>
+          <select id="q-tier">
+            <option value="base" data-cid="QUOTE-TIER-OPT1">基礎款</option>
+            <option value="adv" data-cid="QUOTE-TIER-OPT2">進階款</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="q-qty" data-cid="QUOTE-LBL-QTY">窗戶數量</label>
+          <input id="q-qty" type="number" min="1" max="30" value="1" inputmode="numeric">
+        </div>
+        <button type="button" class="quote-submit-btn" id="quoteSubmit" data-cid="QUOTE-SUBMIT-BTN">開始試算</button>
+      </div>
+
+      <div class="quote-result">
+        <span class="eyebrow" data-cid="QUOTE-RESULT-EYEBROW">Estimated Price</span>
+        <h3 data-cid="QUOTE-RESULT-H3">預估報價明細</h3>
+        <div class="quote-line"><span data-cid="QUOTE-RESULT-LBL1" id="r-area-label">面積（每窗）</span><span id="r-area">— m²</span></div>
+        <div class="quote-line"><span data-cid="QUOTE-RESULT-LBL2" id="r-unit-label">單價</span><span id="r-unit">— NT$</span></div>
+        <div class="quote-line"><span data-cid="QUOTE-RESULT-LBL3">窗戶數量</span><span id="r-qty">—</span></div>
+        <div class="quote-line total"><span data-cid="QUOTE-RESULT-LBL4">預估總價</span><span id="r-total">NT$ —</span></div>
+        <p class="quote-note" data-cid="QUOTE-NOTE">此報價為系統試算之參考金額，實際費用需視現場丈量、施工工法與布料選配而定，正式報價將於到府丈量後提供。</p>
+        <div class="quote-cta">
+          <p class="quote-cta-hint" id="quoteLineCtaHint"></p>
+          <a class="btn-line" id="quoteLineCta" href="https://lin.ee/5Y7AiI6" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 5.86 2 10.6c0 4.24 3.54 7.79 8.32 8.47.32.07.76.21.87.49.1.25.06.65.03.9l-.14.86c-.04.25-.2.99.87.54 1.06-.45 5.74-3.38 7.83-5.79C21.29 13.86 22 12.3 22 10.6 22 5.86 17.52 2 12 2zm-3.6 11.02H6.98a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.42a.4.4 0 0 1 .4.4v3.7h1.6a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4zm2.02 0h-.42a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.42a.4.4 0 0 1 .4.4v4.52a.4.4 0 0 1-.4.4zm4.6 0h-.42a.4.4 0 0 1-.34-.18l-2.02-2.75v2.53a.4.4 0 0 1-.4.4h-.42a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.44a.4.4 0 0 1 .33.18l2 2.73V8.1a.4.4 0 0 1 .4-.4h.43a.4.4 0 0 1 .4.4v4.52a.4.4 0 0 1-.4.4zm4.6-3.7h-1.83v.72h1.83a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4h-1.83v.72h1.83a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4h-2.65a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h2.65a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4z"/></svg>
+            <span id="quoteLineCtaLabel" data-cid="QUOTE-LINE-CTA">加入 LINE 官方了解更多優惠</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="booking">
   <div class="wrap booking-grid">
     <div class="booking-info">
-      <span class="eyebrow" data-cid="BOOK-EYEBROW">02 — Home Visit</span>
+      <span class="eyebrow" data-cid="BOOK-EYEBROW">03 — Home Visit</span>
       <h2 data-cid="BOOK-H2">預約到府丈量</h2>
       <p data-cid="BOOK-DESC">填寫您的空間資訊與方便時段，專人將盡速於工作日內致電確認丈量時間，丈量與諮詢皆為免費服務。</p>
       <ul class="step-list">
@@ -1035,72 +1106,6 @@
       <button class="submit-btn" type="submit" data-cid="BOOK-SUBMIT">送出預約</button>
       <div class="confirm-box" id="bookingConfirm" role="status" aria-live="polite"></div>
     </form>
-  </div>
-</section>
-
-<section id="quote">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow" data-cid="QUOTE-EYEBROW">03 — Instant Estimate</span>
-      <h2 data-cid="QUOTE-H2">線上報價試算</h2>
-      <p data-cid="QUOTE-DESC">輸入窗戶尺寸、款式與材質等級，快速預估參考價格；正式報價仍以到府丈量結果為準。</p>
-    </div>
-    <div class="quote-grid">
-      <div class="quote-form">
-        <div class="field">
-          <label for="q-type" data-cid="QUOTE-LBL-TYPE">窗簾款式</label>
-          <select id="q-type">
-            <option value="cai" data-calc="cai" data-base="100" data-adv="180" data-cid="QUOTE-TYPE-OPT1">捲簾</option>
-            <option value="cai" data-calc="cai" data-base="80" data-adv="220" data-cid="QUOTE-TYPE-OPT2">鋁百葉</option>
-            <option value="cai" data-calc="cai" data-base="280" data-adv="380" data-cid="QUOTE-TYPE-OPT3">木百葉/仿木百葉</option>
-            <option value="cai" data-calc="cai" data-base="175" data-adv="300" data-cid="QUOTE-TYPE-OPT4">調光簾</option>
-            <option value="cai" data-calc="cai" data-base="280" data-adv="400" data-cid="QUOTE-TYPE-OPT5">風琴簾</option>
-            <option value="cai" data-calc="cai" data-base="300" data-adv="500" data-cid="QUOTE-TYPE-OPT6">穿透簾</option>
-            <option value="linear" data-calc="linear" data-base="200" data-adv="200" data-cid="QUOTE-TYPE-OPT7">布簾</option>
-            <option value="linear" data-calc="linear" data-base="200" data-adv="200" data-cid="QUOTE-TYPE-OPT8">紗簾</option>
-          </select>
-        </div>
-        <div class="form-row">
-          <div class="field">
-            <label for="q-width" data-cid="QUOTE-LBL-WIDTH">窗戶寬度（公分）</label>
-            <input id="q-width" type="number" min="30" max="1000" value="150" inputmode="numeric">
-          </div>
-          <div class="field">
-            <label for="q-height" data-cid="QUOTE-LBL-HEIGHT">窗戶高度（公分）</label>
-            <input id="q-height" type="number" min="30" max="500" value="200" inputmode="numeric">
-          </div>
-        </div>
-        <div class="field">
-          <label for="q-tier" data-cid="QUOTE-LBL-TIER">材質等級</label>
-          <select id="q-tier">
-            <option value="base" data-cid="QUOTE-TIER-OPT1">基礎款</option>
-            <option value="adv" data-cid="QUOTE-TIER-OPT2">進階款</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="q-qty" data-cid="QUOTE-LBL-QTY">窗戶數量</label>
-          <input id="q-qty" type="number" min="1" max="30" value="1" inputmode="numeric">
-        </div>
-        <button type="button" class="quote-submit-btn" id="quoteSubmit" data-cid="QUOTE-SUBMIT-BTN">開始試算</button>
-      </div>
-
-      <div class="quote-result">
-        <span class="eyebrow" data-cid="QUOTE-RESULT-EYEBROW">Estimated Price</span>
-        <h3 data-cid="QUOTE-RESULT-H3">預估報價明細</h3>
-        <div class="quote-line"><span data-cid="QUOTE-RESULT-LBL1" id="r-area-label">面積（每窗）</span><span id="r-area">— m²</span></div>
-        <div class="quote-line"><span data-cid="QUOTE-RESULT-LBL2" id="r-unit-label">單價</span><span id="r-unit">— NT$</span></div>
-        <div class="quote-line"><span data-cid="QUOTE-RESULT-LBL3">窗戶數量</span><span id="r-qty">—</span></div>
-        <div class="quote-line total"><span data-cid="QUOTE-RESULT-LBL4">預估總價</span><span id="r-total">NT$ —</span></div>
-        <p class="quote-note" data-cid="QUOTE-NOTE">此報價為系統試算之參考金額，實際費用需視現場丈量、施工工法與布料選配而定，正式報價將於到府丈量後提供。</p>
-        <div class="quote-cta">
-          <p class="quote-cta-hint" id="quoteLineCtaHint"></p>
-          <a class="btn-line" id="quoteLineCta" href="https://lin.ee/5Y7AiI6" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 5.86 2 10.6c0 4.24 3.54 7.79 8.32 8.47.32.07.76.21.87.49.1.25.06.65.03.9l-.14.86c-.04.25-.2.99.87.54 1.06-.45 5.74-3.38 7.83-5.79C21.29 13.86 22 12.3 22 10.6 22 5.86 17.52 2 12 2zm-3.6 11.02H6.98a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.42a.4.4 0 0 1 .4.4v3.7h1.6a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4zm2.02 0h-.42a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.42a.4.4 0 0 1 .4.4v4.52a.4.4 0 0 1-.4.4zm4.6 0h-.42a.4.4 0 0 1-.34-.18l-2.02-2.75v2.53a.4.4 0 0 1-.4.4h-.42a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.44a.4.4 0 0 1 .33.18l2 2.73V8.1a.4.4 0 0 1 .4-.4h.43a.4.4 0 0 1 .4.4v4.52a.4.4 0 0 1-.4.4zm4.6-3.7h-1.83v.72h1.83a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4h-1.83v.72h1.83a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4h-2.65a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h2.65a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4z"/></svg>
-            <span id="quoteLineCtaLabel" data-cid="QUOTE-LINE-CTA">加入 LINE 官方了解更多優惠</span>
-          </a>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -1406,8 +1411,8 @@
         <h4 data-cid="FOOTER-LINKS-H4">快速連結</h4>
         <ul>
           <li><a href="#categories" data-cid="FOOTER-LINK1">窗簾分類</a></li>
-          <li><a href="#booking" data-cid="FOOTER-LINK2">預約丈量</a></li>
-          <li><a href="#quote" data-cid="FOOTER-LINK3">線上報價</a></li>
+          <li><a href="#quote" data-cid="FOOTER-LINK2">線上報價</a></li>
+          <li><a href="#booking" data-cid="FOOTER-LINK3">預約丈量</a></li>
         </ul>
       </div>
       <div>
