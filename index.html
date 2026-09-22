@@ -626,7 +626,7 @@
 
   /* ---------- STICKY 浮動按鈕群組（LINE聯絡＋IG作品集，捲動時常駐） ---------- */
   .sticky-actions{
-    position:fixed; right:24px; bottom:24px; z-index:60;
+    position:fixed; right:max(24px, env(safe-area-inset-right)); bottom:max(24px, env(safe-area-inset-bottom)); z-index:60;
     display:flex; flex-direction:column; align-items:flex-end; gap:12px;
   }
   .sticky-btn{
@@ -674,7 +674,7 @@
     .chat-bubble{ transition:none; }
   }
   @media (max-width:480px){
-    .sticky-actions{ right:16px; bottom:16px; gap:10px; }
+    .sticky-actions{ right:max(16px, env(safe-area-inset-right)); bottom:max(16px, env(safe-area-inset-bottom)); gap:10px; }
     .sticky-btn{ padding:12px; }
     .sticky-btn span{ display:none; } /* 手機版縮成純圖示，避免佔用太多畫面 */
     .chat-bubble{ width:188px; font-size:0.78rem; padding:14px 24px 14px 16px; right:-6px; }
