@@ -615,10 +615,41 @@
   .sticky-line:hover{ background:#05a648; }
   .sticky-ig{ background:var(--navy-deep); }
   .sticky-ig:hover{ background:var(--gold-deep); }
+  /* ---------- LINE 仿真對話泡泡提示（吸引點擊） ---------- */
+  .sticky-ig-wrap, .sticky-line-wrap{ position:relative; }
+  .chat-bubble{
+    position:absolute; right:0; bottom:calc(100% + 16px);
+    width:224px; background:var(--paper); color:var(--ink);
+    padding:16px 28px 16px 18px; border-radius:16px 16px 4px 16px;
+    box-shadow:0 14px 32px rgba(35,30,20,0.26);
+    font-size:0.84rem; line-height:1.65; cursor:pointer;
+    opacity:0; visibility:hidden; transform:translateY(10px) scale(0.95);
+    transition:opacity .35s ease, transform .35s ease, visibility 0s linear .35s;
+  }
+  .chat-bubble.show{
+    opacity:1; visibility:visible; transform:translateY(0) scale(1);
+    transition:opacity .35s ease, transform .35s ease;
+  }
+  .chat-bubble p{ margin:0; font-weight:500; }
+  .chat-bubble-close{
+    position:absolute; top:6px; right:6px; width:22px; height:22px;
+    border:none; background:transparent; color:var(--ink-soft); font-size:1.1rem;
+    line-height:1; cursor:pointer; padding:0; display:flex; align-items:center; justify-content:center;
+    border-radius:50%; transition:background .2s ease, color .2s ease;
+  }
+  .chat-bubble-close:hover{ background:var(--bg-soft); color:var(--ink); }
+  .chat-bubble-tail{
+    position:absolute; bottom:-6px; right:22px; width:13px; height:13px;
+    background:var(--paper); transform:rotate(45deg);
+  }
+  @media (prefers-reduced-motion: reduce){
+    .chat-bubble{ transition:none; }
+  }
   @media (max-width:480px){
     .sticky-actions{ right:16px; bottom:16px; gap:10px; }
     .sticky-btn{ padding:12px; }
     .sticky-btn span{ display:none; } /* 手機版縮成純圖示，避免佔用太多畫面 */
+    .chat-bubble{ width:188px; font-size:0.78rem; padding:14px 24px 14px 16px; right:-6px; }
   }
 
   /* ---------- BREAKPOINT: TABLET (≤1024px) ---------- */
@@ -702,6 +733,11 @@
   .faq-layout{ display:grid; grid-template-columns:0.85fr 1.4fr; gap:var(--grid-gap); align-items:start; }
   .faq-layout .section-head{ margin-bottom:0; position:sticky; top:110px; }
   .faq-list{ display:grid; gap:1px; background:var(--line); border:1px solid var(--line); }
+  .faq-category{
+    background:var(--bg); padding:14px 32px;
+    font-family:var(--font-base); font-weight:700; font-size:0.78rem;
+    letter-spacing:0.12em; color:var(--gold-deep); text-transform:uppercase;
+  }
   .faq-item{ background:var(--paper); transition:background .3s ease; }
   .faq-item:hover{ background:var(--bg-soft); }
   .faq-item h3{ margin:0; font-weight:500; }
@@ -731,6 +767,7 @@
   @media (max-width:480px){
     .faq-question{ padding:22px 20px; }
     .faq-answer p{ padding:0 20px 22px 54px; }
+    .faq-category{ padding:12px 20px; }
   }
 </style>
 <script type="application/ld+json">
@@ -1220,6 +1257,7 @@
       <h2 data-cid="FAQ-H2">常見問題</h2>
     </div>
     <div class="faq-list">
+      <div class="faq-category"><span data-cid="CAT-SERVICE">服務與預約</span></div>
       <div class="faq-item">
         <h3>
           <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-panel-1" id="faq-btn-1">
@@ -1242,6 +1280,18 @@
           <p data-cid="FAQ-A2">織光窗簾目前採無門市、全省到府服務，全台皆可預約丈量與安裝，服務範圍涵蓋台北、新北、基隆、桃園、新竹、苗栗、台中等彰化以北地區，皆可安排到府免費丈量。</p>
         </div>
       </div>
+      <div class="faq-item">
+        <h3>
+          <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-panel-16" id="faq-btn-16">
+            <span class="q-wrap"><span class="q-mark">Q.</span><span data-cid="FAQ-Q16">無門市如何挑選布料？</span></span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="faq-answer" id="faq-panel-16" role="region" aria-labelledby="faq-btn-16">
+          <p data-cid="FAQ-A16">無門市代表沒有店租、裝潢等管銷成本，我們把省下來的費用回饋到報價上，提供更有競爭力的價格。而且無論有沒有門市，最終都需要專人到府丈量才能確保裁切準確；與其先請您跑一趟門市看布料、再另約時間到府丈量，不如直接把布料樣品帶到您家，在自己實際的採光環境下比對顏色與質感。門市燈光經常跟居家環境不同，在家挑選反而更貼近真實效果。</p>
+        </div>
+      </div>
+      <div class="faq-category"><span data-cid="CAT-PRICING">報價與費用</span></div>
       <div class="faq-item">
         <h3>
           <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-panel-3" id="faq-btn-3">
@@ -1286,6 +1336,7 @@
           <p data-cid="FAQ-A6">預算會依窗戶數量、款式與材質等級而不同，建議先用線上報價試算單一窗戶的參考金額，或於預約丈量時告知坪數與需求，讓規劃師協助抓出整體預算範圍。</p>
         </div>
       </div>
+      <div class="faq-category"><span data-cid="CAT-STYLE">款式挑選建議</span></div>
       <div class="faq-item">
         <h3>
           <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-panel-7" id="faq-btn-7">
@@ -1363,6 +1414,7 @@
           <p data-cid="FAQ-A13">落地窗或陽台門建議選擇折景簾，獨立分片設計不必整片拉開就能進出陽台；布簾搭配寬軌道也是常見做法，可依空間動線與風格需求選擇。</p>
         </div>
       </div>
+      <div class="faq-category"><span data-cid="CAT-PROCESS">丈量與安裝流程</span></div>
       <div class="faq-item">
         <h3>
           <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-panel-14" id="faq-btn-14">
@@ -1385,17 +1437,6 @@
           <p data-cid="FAQ-A15">一般而言，從到府丈量到完成安裝，依訂製款式與布料到貨時間，約需 2 至 4 週，實際時程會在丈量後由專人依現場狀況與訂製內容告知確切時間。</p>
         </div>
       </div>
-      <div class="faq-item">
-        <h3>
-          <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-panel-16" id="faq-btn-16">
-            <span class="q-wrap"><span class="q-mark">Q.</span><span data-cid="FAQ-Q16">無門市如何挑選布料？</span></span>
-            <span class="faq-icon" aria-hidden="true"></span>
-          </button>
-        </h3>
-        <div class="faq-answer" id="faq-panel-16" role="region" aria-labelledby="faq-btn-16">
-          <p data-cid="FAQ-A16">無門市代表沒有店租、裝潢等管銷成本，我們把省下來的費用回饋到報價上，提供更有競爭力的價格。而且無論有沒有門市，最終都需要專人到府丈量才能確保裁切準確；與其先請您跑一趟門市看布料、再另約時間到府丈量，不如直接把布料樣品帶到您家，在自己實際的採光環境下比對顏色與質感。門市燈光經常跟居家環境不同，在家挑選反而更貼近真實效果。</p>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -1416,21 +1457,19 @@
         </ul>
       </div>
       <div>
-        <h4 data-cid="FOOTER-CONTACT-H4">聯絡我們</h4>
+        <h4 data-cid="FOOTER-CONTACT-H4">織光窗簾｜服務專線</h4>
         <ul>
-          <li data-cid="FOOTER-ADDR">織光窗簾目前採「無門市、全省到府」服務，將資源專注於提升客製化品質。無門市代表沒有店租等管銷費用，我們把省下的成本回饋到報價，提供更具競爭力的價格。我們的規劃師皆出身專業門市訓練，直接到府為您進行精準的光影丈量與布料比對，省去您往返門市的時間，讓整體規劃更高效、更貼近實際需求。</li>
-          <li data-cid="FOOTER-HOURS">服務時間｜週一至週六 10:00–19:00</li>
-          <li data-cid="FOOTER-PHONE">織光窗簾服務專線｜唐先生 <a href="tel:0986295548">0986-295-548</a>（來電請主動告知是從官網上來的）</li>
+          <li data-cid="FOOTER-PHONE">唐經理 <a href="tel:0986295548">0986-295-548</a></li>
           <li>
             <a class="ig-link" href="https://www.instagram.com/glowcurtain/" target="_blank" rel="noopener" data-cid="FOOTER-IG">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
-              @glowcurtain｜立即觀看更多作品集
+              Instagram｜查看更多案例
             </a>
           </li>
           <li>
             <a class="footer-line-link" href="https://lin.ee/5Y7AiI6" target="_blank" rel="noopener" data-cid="FOOTER-LINE">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 5.86 2 10.6c0 4.24 3.54 7.79 8.32 8.47.32.07.76.21.87.49.1.25.06.65.03.9l-.14.86c-.04.25-.2.99.87.54 1.06-.45 5.74-3.38 7.83-5.79C21.29 13.86 22 12.3 22 10.6 22 5.86 17.52 2 12 2zm-3.6 11.02H6.98a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.42a.4.4 0 0 1 .4.4v3.7h1.6a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4zm2.02 0h-.42a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.42a.4.4 0 0 1 .4.4v4.52a.4.4 0 0 1-.4.4zm4.6 0h-.42a.4.4 0 0 1-.34-.18l-2.02-2.75v2.53a.4.4 0 0 1-.4.4h-.42a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.44a.4.4 0 0 1 .33.18l2 2.73V8.1a.4.4 0 0 1 .4-.4h.43a.4.4 0 0 1 .4.4v4.52a.4.4 0 0 1-.4.4zm4.6-3.7h-1.83v.72h1.83a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4h-1.83v.72h1.83a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4h-2.65a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h2.65a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4z"/></svg>
-              LINE 官方帳號｜立即預約丈量
+              LINE｜立即預約免費丈量
             </a>
           </li>
         </ul>
@@ -1444,14 +1483,28 @@
 </footer>
 
 <div class="sticky-actions">
-  <a class="sticky-btn sticky-ig" href="https://www.instagram.com/glowcurtain/" target="_blank" rel="noopener" aria-label="Instagram 作品集">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
-    <span data-cid="STICKY-IG-LABEL">IG 作品集</span>
-  </a>
-  <a class="sticky-btn sticky-line" href="#booking" aria-label="前往預約到府丈量表單">
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 5.86 2 10.6c0 4.24 3.54 7.79 8.32 8.47.32.07.76.21.87.49.1.25.06.65.03.9l-.14.86c-.04.25-.2.99.87.54 1.06-.45 5.74-3.38 7.83-5.79C21.29 13.86 22 12.3 22 10.6 22 5.86 17.52 2 12 2zm-3.6 11.02H6.98a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.42a.4.4 0 0 1 .4.4v3.7h1.6a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4zm2.02 0h-.42a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.42a.4.4 0 0 1 .4.4v4.52a.4.4 0 0 1-.4.4zm4.6 0h-.42a.4.4 0 0 1-.34-.18l-2.02-2.75v2.53a.4.4 0 0 1-.4.4h-.42a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.44a.4.4 0 0 1 .33.18l2 2.73V8.1a.4.4 0 0 1 .4-.4h.43a.4.4 0 0 1 .4.4v4.52a.4.4 0 0 1-.4.4zm4.6-3.7h-1.83v.72h1.83a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4h-1.83v.72h1.83a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4h-2.65a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h2.65a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4z"/></svg>
-    <span data-cid="STICKY-LINE-LABEL">LINE 聯絡我們</span>
-  </a>
+  <div class="sticky-ig-wrap">
+    <div class="chat-bubble" id="igChatBubble" role="status">
+      <button type="button" class="chat-bubble-close" id="igBubbleClose" aria-label="關閉提示">&times;</button>
+      <p data-cid="STICKY-IG-BUBBLE">更多真實案例都在這裡，立即觀看作品集！</p>
+      <span class="chat-bubble-tail" aria-hidden="true"></span>
+    </div>
+    <a class="sticky-btn sticky-ig" href="https://www.instagram.com/glowcurtain/" target="_blank" rel="noopener" aria-label="Instagram 作品集">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+      <span data-cid="STICKY-IG-LABEL">IG 作品集</span>
+    </a>
+  </div>
+  <div class="sticky-line-wrap">
+    <div class="chat-bubble" id="lineChatBubble" role="status">
+      <button type="button" class="chat-bubble-close" id="chatBubbleClose" aria-label="關閉提示">&times;</button>
+      <p data-cid="STICKY-LINE-BUBBLE">您的專屬窗簾規劃師已經上線待命囉，現在預約丈量還能拿優惠唷！</p>
+      <span class="chat-bubble-tail" aria-hidden="true"></span>
+    </div>
+    <a class="sticky-btn sticky-line" href="#booking" aria-label="前往預約到府丈量表單">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 5.86 2 10.6c0 4.24 3.54 7.79 8.32 8.47.32.07.76.21.87.49.1.25.06.65.03.9l-.14.86c-.04.25-.2.99.87.54 1.06-.45 5.74-3.38 7.83-5.79C21.29 13.86 22 12.3 22 10.6 22 5.86 17.52 2 12 2zm-3.6 11.02H6.98a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.42a.4.4 0 0 1 .4.4v3.7h1.6a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4zm2.02 0h-.42a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.42a.4.4 0 0 1 .4.4v4.52a.4.4 0 0 1-.4.4zm4.6 0h-.42a.4.4 0 0 1-.34-.18l-2.02-2.75v2.53a.4.4 0 0 1-.4.4h-.42a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.44a.4.4 0 0 1 .33.18l2 2.73V8.1a.4.4 0 0 1 .4-.4h.43a.4.4 0 0 1 .4.4v4.52a.4.4 0 0 1-.4.4zm4.6-3.7h-1.83v.72h1.83a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4h-1.83v.72h1.83a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4h-2.65a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h2.65a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4z"/></svg>
+      <span data-cid="STICKY-LINE-LABEL">LINE 聯絡我們</span>
+    </a>
+  </div>
 </div>
 
 <script>
@@ -1837,6 +1890,85 @@
   window.addEventListener('resize', () => {
     if(window.innerWidth > 860) setMenu(false);
   });
+
+  // IG／LINE 仿真對話泡泡：進場動畫結束後才依序出現（IG 先、LINE 後），避免跟 Splash 搶注意力，
+  // 也避免兩個泡泡同時顯示時互相重疊（兩顆按鈕距離很近）；使用者各自關閉後 24 小時內不再顯示該泡泡
+  (function(){
+    const igBubble = document.getElementById('igChatBubble');
+    const igCloseBtn = document.getElementById('igBubbleClose');
+    const lineBubble = document.getElementById('lineChatBubble');
+    const lineCloseBtn = document.getElementById('chatBubbleClose');
+    if (!igBubble && !lineBubble) return;
+
+    const DISMISS_HOURS = 24;
+    function isDismissed(key){
+      try {
+        const last = localStorage.getItem(key);
+        return !!(last && (Date.now() - Number(last)) < DISMISS_HOURS * 3600 * 1000);
+      } catch (e) { return false; /* localStorage 不可用時，直接照正常流程顯示 */ }
+    }
+    function remember(key){
+      try { localStorage.setItem(key, String(Date.now())); } catch (e) {}
+    }
+
+    const IG_KEY = 'glowcurtain_ig_bubble_dismissed_at';
+    const LINE_KEY = 'glowcurtain_line_bubble_dismissed_at';
+    const igEnabled = !!igBubble && !isDismissed(IG_KEY);
+    const lineEnabled = !!lineBubble && !isDismissed(LINE_KEY);
+
+    function hideIg(shouldRemember){
+      if (!igBubble) return;
+      igBubble.classList.remove('show');
+      if (shouldRemember) remember(IG_KEY);
+    }
+    function hideLine(shouldRemember){
+      if (!lineBubble) return;
+      lineBubble.classList.remove('show');
+      if (shouldRemember) remember(LINE_KEY);
+    }
+    function showLine(){
+      if (lineEnabled) lineBubble.classList.add('show');
+    }
+
+    if (igEnabled) {
+      setTimeout(() => {
+        igBubble.classList.add('show');
+        // IG 泡泡顯示一段時間後自動收合（不記憶為已關閉），接著換 LINE 泡泡出場，兩者錯開不重疊
+        setTimeout(() => { hideIg(false); setTimeout(showLine, 450); }, 5000);
+      }, 2800);
+    } else if (lineEnabled) {
+      setTimeout(showLine, 2800);
+    }
+
+    if (igCloseBtn) {
+      igCloseBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        hideIg(true);
+        setTimeout(showLine, 450);
+      });
+    }
+    if (igBubble) {
+      igBubble.addEventListener('click', () => {
+        hideIg(true);
+        window.open('https://www.instagram.com/glowcurtain/', '_blank', 'noopener');
+      });
+    }
+
+    if (lineCloseBtn) {
+      lineCloseBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        hideLine(true);
+      });
+    }
+    if (lineBubble) {
+      lineBubble.addEventListener('click', () => {
+        hideLine(true);
+        document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+  })();
 </script>
 
 </body>
