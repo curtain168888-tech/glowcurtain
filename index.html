@@ -1970,6 +1970,11 @@
     }
 
     addBtn.addEventListener('click', () => {
+      // 手機版「開始試算」是手動觸發（不像桌機版即時更新），若使用者調整完寬高等欄位後
+      // 沒有先按「開始試算」就直接按「加入清單」，畫面上顯示的金額會是上一次試算的舊結果，
+      // 跟目前欄位內容（寬高／款式／數量）對不上——這裡在加入清單前一律強制重新試算一次，
+      // 確保加入清單的金額永遠對應「當下」的欄位內容，桌機／手機行為一致，不會有落差
+      calcQuote();
       const opt = qType.selectedOptions[0];
       const typeName = opt.textContent.trim();
       const tierName = qTier.selectedOptions[0].textContent.trim();
