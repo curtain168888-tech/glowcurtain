@@ -492,6 +492,13 @@
   }
   input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--gold-deep); }
   select:disabled{ opacity:0.55; cursor:not-allowed; }
+  /* 表單紅字提醒：必填未填或格式不符時，欄位標籤／底線變紅，下方顯示原因 */
+  .field.has-error label{ color:#B3261E; }
+  .field.has-error input, .field.has-error select{ border-bottom-color:#B3261E; }
+  .field-error{ margin:6px 0 0; font-size:0.8rem; line-height:1.5; color:#B3261E; font-weight:600; }
+  .form-error-summary{ margin:0 0 12px; padding:10px 14px; background:#FBEAE8; border-left:3px solid #B3261E;
+    color:#B3261E; font-size:0.85rem; font-weight:600; line-height:1.6; }
+  .form-error-summary[hidden]{ display:none; }
   .form-hint{ font-size:0.8rem; color:var(--ink-soft); line-height:1.6; margin:0 0 14px; }
   .note-paste-row{
     display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
@@ -1329,6 +1336,7 @@
       </div>
       <p class="form-hint form-hint-mobile" data-cid="BOOK-SUBMIT-HINT-MOBILE">使用手機瀏覽器直接送出，內容將直接跳轉至 LINE 官方，小編會立即接手為您安排丈量時間</p>
       <p class="form-hint form-hint-desktop" data-cid="BOOK-SUBMIT-HINT-DESKTOP">建議使用手機瀏覽器填寫，送出後將直接跳轉至 LINE 官方，我們會立即與您聯繫預約丈量事宜</p>
+      <p class="form-error-summary" id="bookingErrorSummary" role="alert" hidden data-cid="BOOK-ERROR-SUMMARY">還有欄位尚未完成，請依紅字提示補齊後再送出。</p>
       <button class="submit-btn" type="submit" data-cid="BOOK-SUBMIT">送出預約</button>
       <div class="confirm-box" id="bookingConfirm" role="status" aria-live="polite"></div>
     </form>
@@ -1850,10 +1858,88 @@
     return lines.join('\n');
   }
 
+  // ===== 表單紅字提醒（預約丈量、線上報價試算共用） =====
+  function setFieldError(input, msg){
+    const field = input.closest('.field');
+    if (!field) return;
+    let el = field.querySelector('.field-error');
+    if (msg) {
+      if (!el) {
+        el = document.createElement('p');
+        el.className = 'field-error';
+        el.id = input.id + '-error';
+        field.appendChild(el);
+      }
+      el.textContent = msg;
+      field.classList.add('has-error');
+      input.setAttribute('aria-invalid', 'true');
+      input.setAttribute('aria-describedby', el.id);
+    } else {
+      if (el) el.remove();
+      field.classList.remove('has-error');
+      input.removeAttribute('aria-invalid');
+      input.removeAttribute('aria-describedby');
+    }
+  }
+  function scrollToField(input){
+    const header = document.getElementById('siteHeader');
+    const offset = (header ? header.getBoundingClientRect().height : 80) + 24;
+    const target = input.closest('.field') || input;
+    window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
+    setTimeout(() => { try { input.focus({ preventScroll: true }); } catch (e) {} }, 450);
+  }
+
+  // 預約表單：各必填欄位的紅字內容
+  const bookingErrorSummary = document.getElementById('bookingErrorSummary');
+  const bookingControls = ['b-name', 'b-phone', 'b-city', 'b-district', 'b-date'].map(id => document.getElementById(id));
+  const BOOKING_MISSING_MSG = {
+    'b-name': '請填寫姓名',
+    'b-phone': '請填寫聯絡電話',
+    'b-city': '請選擇安裝縣市',
+    'b-district': '請選擇行政區',
+    'b-date': '請選擇偏好日期'
+  };
+  function bookingFieldMessage(el){
+    if (el.disabled || el.validity.valid) return '';
+    if (el.validity.valueMissing) return BOOKING_MISSING_MSG[el.id] || '此欄位為必填';
+    if (el.id === 'b-date') {
+      if (el.validity.rangeUnderflow) {
+        const m = el.min.split('-');
+        return '最早可預約 ' + Number(m[1]) + '/' + Number(m[2]) + '（明天）起的日期';
+      }
+      return '請選擇完整的日期';
+    }
+    return el.validationMessage || '請確認此欄位內容';
+  }
+  // show=true：顯示所有錯誤；show=false：只更新／清除已經出現的紅字（輸入中不會一直跳紅字）
+  function validateBooking(show){
+    let first = null;
+    bookingControls.forEach(el => {
+      const msg = bookingFieldMessage(el);
+      if (show || el.closest('.field').classList.contains('has-error')) setFieldError(el, msg);
+      if (msg && !first) first = el;
+    });
+    if (show) bookingErrorSummary.hidden = !first;
+    else if (!first) bookingErrorSummary.hidden = true;
+    return first;
+  }
+  bookingControls.forEach(el => {
+    ['input', 'change'].forEach(evt => el.addEventListener(evt, () => validateBooking(false)));
+  });
+  bookingForm.addEventListener('reset', () => setTimeout(() => {
+    bookingControls.forEach(el => setFieldError(el, ''));
+    bookingErrorSummary.hidden = true;
+  }, 0));
+
   bookingForm.addEventListener('submit', async function(e){
     e.preventDefault();
     setMinBookingDate();
     validatePhone();
+    const firstInvalid = validateBooking(true);
+    if (firstInvalid) {
+      scrollToField(firstInvalid);
+      return;
+    }
     if(!bookingForm.checkValidity()){
       bookingForm.reportValidity();
       return;
@@ -1941,7 +2027,41 @@
     return Math.ceil((cm / CM_PER_CHI) - 1e-9);
   }
 
+  // 報價試算欄位檢查（寬、高、數量）：空白或超出範圍時顯示紅字，且不計算金額、不能加入清單
+  const QUOTE_RULES = {
+    'q-width':  { min: 30, max: 1000, missing: '請填寫窗戶寬度（公分）', range: '窗戶寬度請介於 30～1000 公分' },
+    'q-height': { min: 30, max: 500,  missing: '請填寫窗戶高度（公分）', range: '窗戶高度請介於 30～500 公分' },
+    'q-qty':    { min: 1,  max: 30,   missing: '請填寫窗戶數量',         range: '窗戶數量請介於 1～30 面（更多請直接預約丈量）' }
+  };
+  function quoteFieldMessage(el){
+    const r = QUOTE_RULES[el.id];
+    const raw = el.value.trim();
+    if (raw === '') return r.missing;
+    const n = Number(raw);
+    if (!isFinite(n)) return '請輸入數字';
+    if (el.id === 'q-qty' && !Number.isInteger(n)) return '窗戶數量請輸入整數';
+    if (n < r.min || n > r.max) return r.range;
+    return '';
+  }
+  function validateQuote(show){
+    let first = null;
+    [qWidth, qHeight, qQty].forEach(el => {
+      const msg = quoteFieldMessage(el);
+      if (show || el.closest('.field').classList.contains('has-error')) setFieldError(el, msg);
+      if (msg && !first) first = el;
+    });
+    return first;
+  }
+
   function calcQuote(){
+    if (validateQuote(false)) {
+      // 欄位有誤時不顯示金額，避免出現 NT$ 0 或錯誤金額
+      rArea.textContent = '—';
+      rUnit.textContent = '—';
+      rQty.textContent = '—';
+      rTotal.textContent = 'NT$ —';
+      return;
+    }
     const opt = qType.selectedOptions[0];
     const calc = opt.dataset.calc;
     const widthCm = Math.max(parseFloat(qWidth.value) || 0, 0);
@@ -1991,7 +2111,9 @@
   const quoteResultBox = document.querySelector('.quote-result');
 
   quoteSubmit.addEventListener('click', () => {
+    const firstInvalid = validateQuote(true);
     calcQuote();
+    if (firstInvalid) { scrollToField(firstInvalid); return; }
     // 手機／平板（結果卡片不是 sticky 顯示）時，自動捲動到結果，不用使用者自己往下滑
     if (window.innerWidth <= 860) {
       quoteResultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1999,8 +2121,14 @@
   });
   // 桌機版仍即時更新，方便一邊調整一邊看變化；手機版靠上方按鈕觸發+捲動
   [qType, qWidth, qHeight, qTier, qQty].forEach(el => {
-    el.addEventListener('input', () => { if (window.innerWidth > 860) { calcQuote(); } });
-    el.addEventListener('change', () => { if (window.innerWidth > 860) { calcQuote(); } });
+    el.addEventListener('input', () => {
+      validateQuote(false);  // 修正後紅字立即消失（輸入中不新增紅字）
+      if (window.innerWidth > 860) { calcQuote(); }
+    });
+    el.addEventListener('change', () => {
+      // 桌機版離開欄位時就提示錯誤；手機版等按「開始試算」或「加入清單」時再提示
+      if (window.innerWidth > 860) { validateQuote(true); calcQuote(); }
+    });
   });
   calcQuote();
 
@@ -2105,7 +2233,9 @@
       // 沒有先按「開始試算」就直接按「加入清單」，畫面上顯示的金額會是上一次試算的舊結果，
       // 跟目前欄位內容（寬高／款式／數量）對不上——這裡在加入清單前一律強制重新試算一次，
       // 確保加入清單的金額永遠對應「當下」的欄位內容，桌機／手機行為一致，不會有落差
+      const firstInvalid = validateQuote(true);
       calcQuote();
+      if (firstInvalid) { scrollToField(firstInvalid); return; }
       const opt = qType.selectedOptions[0];
       const typeName = opt.textContent.trim();
       const tierName = qTier.selectedOptions[0].textContent.trim();
