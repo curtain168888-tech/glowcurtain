@@ -550,6 +550,9 @@
     min-height:50px; /* 觸控目標高度 */
   }
   .quote-submit-btn:hover{ opacity:0.88; transform:translateY(-1px); }
+  /* 桌機版（寬度 > 860px）欄位變動即時試算，「開始試算」按鈕沒有作用，直接隱藏；
+     分界與 JS 即時試算的判斷（window.innerWidth > 860）一致，避免出現「按鈕不見卻不會自動更新」的情況 */
+  @media (min-width: 861px){ .quote-submit-btn{ display:none; } }
   .quote-result{
     background:var(--bg-soft);
     color:var(--ink); padding:48px; position:sticky; top:96px;
