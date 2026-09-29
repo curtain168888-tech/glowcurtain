@@ -491,6 +491,7 @@
     transition:border-color .3s ease;
   }
   input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--gold-deep); }
+  select:disabled{ opacity:0.55; cursor:not-allowed; }
   .form-hint{ font-size:0.8rem; color:var(--ink-soft); line-height:1.6; margin:0 0 14px; }
   .note-paste-row{
     display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
@@ -1243,9 +1244,23 @@
           <input id="b-phone" name="phone" type="tel" required placeholder="09xx-xxx-xxx" autocomplete="tel" inputmode="tel">
         </div>
       </div>
+      <div class="form-row">
+        <div class="field">
+          <label for="b-city" data-cid="BOOK-LBL-REGION">安裝地區</label>
+          <select id="b-city" name="city" required autocomplete="address-level1">
+            <option value="" data-cid="BOOK-CITY-PLACEHOLDER">請選擇縣市</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="b-district" data-cid="BOOK-LBL-DISTRICT">行政區</label>
+          <select id="b-district" name="district" required disabled autocomplete="address-level2">
+            <option value="">請先選擇縣市</option>
+          </select>
+        </div>
+      </div>
       <div class="field">
-        <label for="b-address" data-cid="BOOK-LBL-ADDR">安裝地址</label>
-        <input id="b-address" name="address" type="text" required placeholder="請輸入丈量地址（含縣市）" autocomplete="street-address">
+        <label for="b-address" data-cid="BOOK-LBL-ADDR">詳細地址（選填）</label>
+        <input id="b-address" name="address" type="text" placeholder="詳細路名／門牌等，亦可等規劃師與您聯繫後再提供" autocomplete="street-address">
       </div>
       <div class="form-row">
         <div class="field">
@@ -1705,15 +1720,76 @@
     }[c]));
   }
 
-  function buildLineMessage({name, phone, address, date, time, space, status, note}){
+  // 安裝地區：縣市 → 行政區 連動下拉選單（僅台灣本島，不含澎湖／金門／連江，
+  // 以及小琉球、綠島、蘭嶼等離島鄉鎮）
+  const TW_REGIONS = {
+    '基隆市': ['仁愛區','信義區','中正區','中山區','安樂區','暖暖區','七堵區'],
+    '台北市': ['中正區','大同區','中山區','松山區','大安區','萬華區','信義區','士林區','北投區','內湖區','南港區','文山區'],
+    '新北市': ['板橋區','三重區','中和區','永和區','新莊區','新店區','樹林區','鶯歌區','三峽區','淡水區','汐止區','瑞芳區','土城區','蘆洲區','五股區','泰山區','林口區','深坑區','石碇區','坪林區','三芝區','石門區','八里區','平溪區','雙溪區','貢寮區','金山區','萬里區','烏來區'],
+    '桃園市': ['桃園區','中壢區','大溪區','楊梅區','蘆竹區','大園區','龜山區','八德區','龍潭區','平鎮區','新屋區','觀音區','復興區'],
+    '新竹市': ['東區','北區','香山區'],
+    '新竹縣': ['竹北市','竹東鎮','新埔鎮','關西鎮','湖口鄉','新豐鄉','芎林鄉','橫山鄉','北埔鄉','寶山鄉','峨眉鄉','尖石鄉','五峰鄉'],
+    '苗栗縣': ['苗栗市','頭份市','竹南鎮','後龍鎮','通霄鎮','苑裡鎮','卓蘭鎮','造橋鄉','西湖鄉','頭屋鄉','公館鄉','銅鑼鄉','三義鄉','大湖鄉','獅潭鄉','三灣鄉','南庄鄉','泰安鄉'],
+    '台中市': ['中區','東區','南區','西區','北區','北屯區','西屯區','南屯區','太平區','大里區','霧峰區','烏日區','豐原區','后里區','石岡區','東勢區','和平區','新社區','潭子區','大雅區','神岡區','大肚區','沙鹿區','龍井區','梧棲區','清水區','大甲區','外埔區','大安區'],
+    '彰化縣': ['彰化市','員林市','和美鎮','鹿港鎮','溪湖鎮','二林鎮','田中鎮','北斗鎮','花壇鄉','芬園鄉','大村鄉','永靖鄉','伸港鄉','線西鄉','福興鄉','秀水鄉','埔心鄉','埔鹽鄉','大城鄉','芳苑鄉','竹塘鄉','社頭鄉','二水鄉','田尾鄉','埤頭鄉','溪州鄉'],
+    '南投縣': ['南投市','埔里鎮','草屯鎮','竹山鎮','集集鎮','名間鄉','鹿谷鄉','中寮鄉','魚池鄉','國姓鄉','水里鄉','信義鄉','仁愛鄉'],
+    '雲林縣': ['斗六市','斗南鎮','虎尾鎮','西螺鎮','土庫鎮','北港鎮','古坑鄉','大埤鄉','莿桐鄉','林內鄉','二崙鄉','崙背鄉','麥寮鄉','東勢鄉','褒忠鄉','台西鄉','元長鄉','四湖鄉','口湖鄉','水林鄉'],
+    '嘉義市': ['東區','西區'],
+    '嘉義縣': ['太保市','朴子市','布袋鎮','大林鎮','民雄鄉','溪口鄉','新港鄉','六腳鄉','東石鄉','義竹鄉','鹿草鄉','水上鄉','中埔鄉','竹崎鄉','梅山鄉','番路鄉','大埔鄉','阿里山鄉'],
+    '台南市': ['中西區','東區','南區','北區','安平區','安南區','永康區','歸仁區','新化區','左鎮區','玉井區','楠西區','南化區','仁德區','關廟區','龍崎區','官田區','麻豆區','佳里區','西港區','七股區','將軍區','學甲區','北門區','新營區','後壁區','白河區','東山區','六甲區','下營區','柳營區','鹽水區','善化區','大內區','山上區','新市區','安定區'],
+    '高雄市': ['新興區','前金區','苓雅區','鹽埕區','鼓山區','旗津區','前鎮區','三民區','楠梓區','小港區','左營區','仁武區','大社區','岡山區','路竹區','阿蓮區','田寮區','燕巢區','橋頭區','梓官區','彌陀區','永安區','湖內區','鳳山區','大寮區','林園區','鳥松區','大樹區','旗山區','美濃區','六龜區','內門區','杉林區','甲仙區','桃源區','那瑪夏區','茂林區','茄萣區'],
+    '屏東縣': ['屏東市','潮州鎮','東港鎮','恆春鎮','萬丹鄉','長治鄉','麟洛鄉','九如鄉','里港鄉','鹽埔鄉','高樹鄉','萬巒鄉','內埔鄉','竹田鄉','新埤鄉','枋寮鄉','新園鄉','崁頂鄉','林邊鄉','南州鄉','佳冬鄉','車城鄉','滿州鄉','枋山鄉','三地門鄉','霧臺鄉','瑪家鄉','泰武鄉','來義鄉','春日鄉','獅子鄉','牡丹鄉'],
+    '宜蘭縣': ['宜蘭市','羅東鎮','蘇澳鎮','頭城鎮','礁溪鄉','壯圍鄉','員山鄉','冬山鄉','五結鄉','三星鄉','大同鄉','南澳鄉'],
+    '花蓮縣': ['花蓮市','鳳林鎮','玉里鎮','新城鄉','吉安鄉','壽豐鄉','光復鄉','豐濱鄉','瑞穗鄉','富里鄉','秀林鄉','萬榮鄉','卓溪鄉'],
+    '台東縣': ['台東市','成功鎮','關山鎮','卑南鄉','大武鄉','太麻里鄉','東河鄉','長濱鄉','鹿野鄉','池上鄉','延平鄉','海端鄉','達仁鄉','金峰鄉']
+  };
+  const bCity = document.getElementById('b-city');
+  const bDistrict = document.getElementById('b-district');
+  const bAddress = document.getElementById('b-address');
+
+  function fillCityOptions(){
+    Object.keys(TW_REGIONS).forEach(city => {
+      const o = document.createElement('option');
+      o.value = city;
+      o.textContent = city;
+      bCity.appendChild(o);
+    });
+  }
+  function updateDistrictOptions(){
+    const city = bCity.value;
+    bDistrict.innerHTML = '';
+    const ph = document.createElement('option');
+    ph.value = '';
+    if (!city) {
+      ph.textContent = '請先選擇縣市';
+      bDistrict.appendChild(ph);
+      bDistrict.disabled = true;
+      return;
+    }
+    ph.textContent = '請選擇行政區';
+    bDistrict.appendChild(ph);
+    TW_REGIONS[city].forEach(d => {
+      const o = document.createElement('option');
+      o.value = d; o.textContent = d;
+      bDistrict.appendChild(o);
+    });
+    bDistrict.disabled = false;
+  }
+  fillCityOptions();
+  bCity.addEventListener('change', updateDistrictOptions);
+  // 送出成功後表單 reset，行政區選單需同步回到初始狀態
+  bookingForm.addEventListener('reset', () => setTimeout(updateDistrictOptions, 0));
+
+  function buildLineMessage({name, phone, region, address, date, time, space, status, note}){
     const lines = [
       `您好，我是 ${name}，想預約到府丈量：`,
       `電話：${phone}`,
-      `地址：${address}`,
+      `安裝地區：${region}`,
       `日期／時段：${date || '未指定'} ／ ${time}`,
       `空間類型：${space}`,
       `房屋狀態：${status}`
     ];
+    if (address) lines.splice(3, 0, `詳細地址：${address}`);
     if (note) lines.push(`備註：${note}`);
     return lines.join('\n');
   }
@@ -1727,7 +1803,8 @@
     const submitBtn = bookingForm.querySelector('.submit-btn');
     const name = document.getElementById('b-name').value;
     const phone = document.getElementById('b-phone').value;
-    const address = document.getElementById('b-address').value;
+    const address = bAddress.value.trim();
+    const region = bCity.value + bDistrict.value;
     const date = document.getElementById('b-date').value;
     const time = document.getElementById('b-time').value;
     const space = document.getElementById('b-space').value;
@@ -1747,7 +1824,7 @@
       const result = await res.json();
 
       if(result.success){
-        const lineText = buildLineMessage({name, phone, address, date, time, space, status, note});
+        const lineText = buildLineMessage({name, phone, region, address, date, time, space, status, note});
         const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
         // oaMessage 這種帶預填訊息的深連結，只有手機能正確跳轉進 LINE App；
         // 桌機瀏覽器沒有對應的處理方式，硬用會被導去 LINE 的通用首頁（line.me/tw/），等於無效畫面，
@@ -1757,7 +1834,7 @@
         const lineUrl = isMobile ? lineDeepUrl : lineAddFriendUrl;
 
         const nextStepText = isMobile
-          ? '已自動帶入您填寫的姓名、電話、地址與日期時段，接下來會為您開啟 LINE，請在跳出的對話框中點擊「傳送」即可完成最後確認。'
+          ? '已自動帶入您填寫的姓名、電話、安裝地區與日期時段，接下來會為您開啟 LINE，請在跳出的對話框中點擊「傳送」即可完成最後確認。'
           : '請點擊下方按鈕加入我們的 LINE 官方帳號，並將偏好日期時段告訴我們，完成最後確認。';
         const lineBtnText = isMobile ? '點此開啟 LINE，已帶入預約內容' : '加入 LINE 官方帳號，聯繫我們確認';
 
