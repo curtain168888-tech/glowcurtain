@@ -703,6 +703,17 @@
     .about-scene{ display:none; }
   }
   .about-item::before{ content:""; position:absolute; top:-1px; left:0; width:36px; height:2px; background:var(--gold-deep); }
+  /* 捲動進場效果：文字由下往上淡入。只有在 JS 啟用時（html.reveal-ready）才先隱藏，
+     避免 JS 沒載入時文字看不到；內容始終存在於 HTML 中，不影響 SEO／GEO */
+  /* 動畫只寫在「顯示」狀態上：隱藏是瞬間完成（不會先看到文字淡出），只有進場時才有滑入效果 */
+  html.reveal-ready [data-reveal]{ opacity:0; transform:translateY(28px); }
+  html.reveal-ready [data-reveal].is-revealed{
+    opacity:1; transform:none;
+    transition:opacity .9s ease, transform .9s cubic-bezier(.16,.84,.44,1);
+  }
+  @media (prefers-reduced-motion: reduce){
+    html.reveal-ready [data-reveal]{ opacity:1; transform:none; transition:none; }
+  }
   .about-item h3{ font-size:1.08rem; margin-bottom:12px; font-weight:500; }
   .about-item p{ color:var(--ink-soft); font-size:0.93rem; margin:0; line-height:1.85; }
 
@@ -1349,26 +1360,26 @@
       <div class="section-head">
         <span class="eyebrow" data-cid="ABOUT-EYEBROW">04 — About Glow</span>
         <h2 data-cid="ABOUT-H2">關於織光窗簾</h2>
-        <p data-cid="ABOUT-DESC">織光窗簾相信，家的優雅，藏在光線被溫柔安放的細節裡。</p>
-        <p data-cid="ABOUT-DESC-2">專注訂製窗簾與居家窗飾，織光以多年累積的職人經驗，細讀每個空間的採光、比例與生活習慣，讓布料的肌理、色澤與垂墜，融入家的日常。從布料選配、到府丈量到細緻安裝，每一道工序，都為了讓窗飾與空間自然相襯。</p>
-        <p data-cid="ABOUT-DESC-3">隨著簾幕輕啟，光穿過織紋，褪去直射的銳利，在牆面與家具間緩緩暈開。織光窗簾將光影織入生活，讓明亮與靜謐各得其所，也讓優雅在每一天的起居之間，自然流露。</p>
+        <p data-cid="ABOUT-DESC">我們相信，家的優雅，藏在光被溫柔安放的地方。</p>
+        <p data-cid="ABOUT-DESC-2">織光專注訂製窗簾與窗飾。每一次到府，我們先看光從哪裡進來、家人怎麼生活，再為這個家挑選合適的布料與款式。</p>
+        <p data-cid="ABOUT-DESC-3">簾幕輕啟，刺眼的光變得柔和，在牆上、在沙發邊慢慢暈開——這是我們想為您留下的日常。</p>
       </div>
       <div class="about-items-head">
         <h3 data-cid="ABOUT-ITEMS-H3">讓家的理想模樣，從一扇窗開始</h3>
-        <p data-cid="ABOUT-ITEMS-LEAD">窗簾選得好，改變的不只是光線，更是整個家的質感。織光窗簾從您的空間與生活習慣出發，將美感、採光與隱私一併考量，讓每一次拉開與闔上，都恰如您所想。</p>
+        <p data-cid="ABOUT-ITEMS-LEAD">好的窗簾，改變的不只是光線，而是整個家的感覺。我們從您的生活出發，把美感、採光與隱私一起想好，讓每一次拉開與闔上，都剛剛好。</p>
       </div>
       <div class="about-grid">
         <div class="about-item">
-          <h3 data-cid="ABOUT-ITEM1-TITLE">全台免費到府丈量・把專業帶進您家</h3>
-          <p data-cid="ABOUT-ITEM1-DESC">深耕台中，服務全台。不必自行估尺寸、憑想像挑款式，讓織光親自到府，依照窗型、採光與居家風格，提供合適的窗飾規劃。從一開始，就為您把細節想周全。</p>
+          <h3 data-cid="ABOUT-ITEM1-TITLE">全台免費到府丈量</h3>
+          <p data-cid="ABOUT-ITEM1-DESC">深耕台中，服務全台。不用自己量尺寸、憑想像挑款式，我們親自到府，依窗型與採光給您合適的建議。</p>
         </div>
         <div class="about-item">
-          <h3 data-cid="ABOUT-ITEM2-TITLE">專業選布搭配・讓質感真正融入生活</h3>
-          <p data-cid="ABOUT-ITEM2-DESC">好看的布料，更要適合您的家。織光細膩搭配色澤、肌理與垂墜線條，同時考量遮光、透光與隱私需求，讓窗簾與家具、牆面自然相襯，織出耐看，也住得舒服的日常。</p>
+          <h3 data-cid="ABOUT-ITEM2-TITLE">專業選布搭配</h3>
+          <p data-cid="ABOUT-ITEM2-DESC">好看，也要適合您的家。從色澤、質感到遮光與隱私，陪您挑出耐看又住得舒服的那塊布。</p>
         </div>
         <div class="about-item">
-          <h3 data-cid="ABOUT-ITEM3-TITLE">丈量到安裝一條龍・安心交給織光</h3>
-          <p data-cid="ABOUT-ITEM3-DESC">從諮詢丈量、選布搭配、報價確認到施工安裝，皆由專人全程跟進。您的期待有人理解，每個環節有人照料，讓理想中的窗景，妥貼落實在家中。</p>
+          <h3 data-cid="ABOUT-ITEM3-TITLE">丈量到安裝，一條龍</h3>
+          <p data-cid="ABOUT-ITEM3-DESC">從丈量、選布、報價到安裝，都有專人全程跟進。細節交給我們，您只需要期待新的窗景。</p>
         </div>
       </div>
       <div class="about-closing">
@@ -2596,6 +2607,25 @@
         document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     }
+  })();
+
+  // 「關於織光窗簾」文字捲動進場：進入畫面時由下往上淡入；同一時間進入畫面的多段文字依序浮現（每段間隔 0.12 秒）
+  (function(){
+    const targets = document.querySelectorAll('#about .section-head > *, #about .about-items-head > *, #about .about-item, #about .about-closing > *');
+    if (!targets.length || !('IntersectionObserver' in window)) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    targets.forEach(el => el.setAttribute('data-reveal', ''));
+    document.documentElement.classList.add('reveal-ready');
+    const io = new IntersectionObserver(entries => {
+      let n = 0;
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.style.transitionDelay = (n++ * 0.12) + 's';
+        entry.target.classList.add('is-revealed');
+        io.unobserve(entry.target);
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+    targets.forEach(el => io.observe(el));
   })();
 </script>
 
