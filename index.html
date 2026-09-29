@@ -603,7 +603,20 @@
     display:flex; justify-content:space-between; align-items:baseline; gap:12px;
     font-weight:700; font-size:0.85rem; letter-spacing:0.02em; color:var(--ink); margin-bottom:14px;
   }
-  .quote-list-grand{ font-family:var(--font-display); font-size:1.2rem; color:var(--gold-deep); }
+  .quote-list-grand{ font-family:var(--font-display); font-size:1.2rem; color:var(--gold-deep); white-space:nowrap; }
+  .quote-list-head{ align-items:center; }
+  .quote-list-title{ display:inline-flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  /* 回到上方「窗簾款式」繼續試算下一面窗戶 */
+  .quote-list-back{
+    display:inline-flex; align-items:center; min-height:34px; padding:0 12px;
+    background:transparent; color:var(--gold-deep); border:1px solid var(--gold-soft); border-radius:999px;
+    font-family:var(--font-base); font-size:0.78rem; font-weight:700; letter-spacing:0.02em; cursor:pointer;
+    transition:background .25s ease, color .25s ease, border-color .25s ease;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .quote-list-back:hover{ background:var(--gold-soft); color:var(--navy-deep); border-color:var(--gold-soft); }
+  .quote-list-back{ position:relative; white-space:nowrap; }
+  .quote-list-back::before{ content:""; position:absolute; inset:-5px 0; } /* 可點高度約 44px */
   .quote-list-items{ list-style:none; margin:0; padding:0; display:grid; gap:10px; }
   .quote-list-item{
     display:flex; justify-content:space-between; align-items:flex-start; gap:10px;
@@ -1199,7 +1212,10 @@
           </button>
           <div class="quote-list" id="quoteList" hidden>
             <div class="quote-list-head">
-              <span data-cid="QUOTE-LIST-H4">已加入清單</span>
+              <span class="quote-list-title">
+                <span data-cid="QUOTE-LIST-H4">已加入清單</span>
+                <button type="button" class="quote-list-back" id="quoteListBackBtn" data-cid="QUOTE-LIST-BACK-BTN">＋ 繼續試算</button>
+              </span>
               <span class="quote-list-grand" id="quoteListGrand">NT$ 0</span>
             </div>
             <ul class="quote-list-items" id="quoteListItems"></ul>
@@ -2108,6 +2124,16 @@
         if (addBtnIcon) addBtnIcon.textContent = addBtnDefaultIcon;
         if (addBtnLabel) addBtnLabel.textContent = addBtnDefaultLabel;
       }, 1600);
+    });
+
+    // 「＋ 繼續試算」：捲回上方「窗簾款式」欄位並聚焦，方便直接試算下一面窗戶
+    const backBtn = document.getElementById('quoteListBackBtn');
+    if (backBtn) backBtn.addEventListener('click', () => {
+      const typeField = qType.closest('.field') || qType;
+      const header = document.querySelector('header.site');
+      const offset = (header ? header.getBoundingClientRect().height : 80) + 20;
+      window.scrollTo({ top: typeField.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
+      setTimeout(() => { try { qType.focus({ preventScroll: true }); } catch (e) {} }, 450);
     });
 
     clearBtn.addEventListener('click', () => {
