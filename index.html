@@ -573,6 +573,10 @@
     display:flex; justify-content:space-between; gap:12px; padding:14px 0;
     border-top:1px solid var(--line); font-size:0.92rem; color:var(--ink-soft);
   }
+  .quote-line > span:first-child{ white-space:nowrap; }
+  .quote-line[hidden]{ display:none; }
+  .field-note{ margin:8px 0 0; font-size:0.75rem; line-height:1.6; color:var(--ink-soft); }
+  .quote-line > span:last-child{ text-align:right; }
   .quote-line.total{
     border-top:1px solid rgba(54,72,82,0.3); margin-top:8px; padding-top:20px;
     font-family:var(--font-display); font-size:1.55rem; font-weight:500;
@@ -1188,8 +1192,11 @@
             <option value="cai" data-calc="cai" data-base="175" data-adv="300" data-cid="QUOTE-TYPE-OPT4">調光簾</option>
             <option value="cai" data-calc="cai" data-base="280" data-adv="400" data-cid="QUOTE-TYPE-OPT5">風琴簾</option>
             <option value="cai" data-calc="cai" data-base="300" data-adv="500" data-cid="QUOTE-TYPE-OPT6">穿透簾</option>
+            <option value="cai" data-calc="cai" data-base="200" data-adv="300" data-cid="QUOTE-TYPE-OPT11">片簾</option>
             <option value="linear" data-calc="linear" data-base="200" data-adv="200" data-cid="QUOTE-TYPE-OPT7">布簾</option>
+            <option value="linear" data-calc="linear" data-mult="3" data-base="200" data-adv="200" data-cid="QUOTE-TYPE-OPT9">蛇簾</option>
             <option value="linear" data-calc="linear" data-base="200" data-adv="200" data-cid="QUOTE-TYPE-OPT8">紗簾</option>
+            <option value="linear" data-calc="linear" data-combo="QUOTE-TYPE-OPT7,QUOTE-TYPE-OPT8" data-tracks="2" data-cid="QUOTE-TYPE-OPT10">一布一紗</option>
           </select>
         </div>
         <div class="form-row">
@@ -1210,6 +1217,15 @@
           </select>
         </div>
         <div class="field">
+          <label for="q-motor" data-cid="QUOTE-LBL-MOTOR">升級電動窗簾</label>
+          <select id="q-motor">
+            <option value="0" data-cid="QUOTE-MOTOR-OPT1">不需要</option>
+            <option value="10000" data-motor="single" data-cid="QUOTE-MOTOR-OPT2">單開・1 顆電機（每面 +NT$ 10,000）</option>
+            <option value="20000" data-motor="double" data-cid="QUOTE-MOTOR-OPT3">雙開・2 顆電機（每面 +NT$ 20,000）</option>
+          </select>
+          <p class="field-note" data-cid="QUOTE-MOTOR-NOTE">※ 任何款式皆可升級電動。每面窗原則上 1 顆電機，左右對開（雙開）需 2 顆；一布一紗為雙層（2 條軌道），電機數量加倍。各款窗簾的電機、作動方式與系統不同，此為預估金額，實際費用需依使用需求與現場環境確認。</p>
+        </div>
+        <div class="field">
           <label for="q-qty" data-cid="QUOTE-LBL-QTY">窗戶數量</label>
           <input id="q-qty" type="number" min="1" max="30" value="1" inputmode="numeric">
         </div>
@@ -1222,6 +1238,7 @@
         <div class="quote-line"><span data-cid="QUOTE-RESULT-LBL1" id="r-area-label">面積（每窗）</span><span id="r-area">— m²</span></div>
         <div class="quote-line"><span data-cid="QUOTE-RESULT-LBL2" id="r-unit-label">單價</span><span id="r-unit">— NT$</span></div>
         <div class="quote-line"><span data-cid="QUOTE-RESULT-LBL3">窗戶數量</span><span id="r-qty">—</span></div>
+        <div class="quote-line" id="r-motor-line" hidden><span data-cid="QUOTE-RESULT-LBL-MOTOR">電動升級</span><span id="r-motor">—</span></div>
         <div class="quote-line total"><span data-cid="QUOTE-RESULT-LBL4">預估總價</span><span id="r-total">NT$ —</span></div>
         <p class="quote-note" data-cid="QUOTE-NOTE">此報價為系統試算之參考金額，實際費用需視現場丈量、施工工法與布料選配而定，正式報價將於到府丈量後提供。</p>
 
@@ -1736,7 +1753,7 @@
       <p data-cid="STICKY-LINE-BUBBLE">立即聯絡您專屬的窗簾規劃師，1 對 1 深入了解您的需求，預約丈量還能獲取折扣！</p>
       <span class="chat-bubble-tail" aria-hidden="true"></span>
     </div>
-    <a class="sticky-btn sticky-line" href="#booking" aria-label="前往預約到府丈量表單">
+    <a class="sticky-btn sticky-line" data-line-add href="https://lin.ee/5Y7AiI6" target="_blank" rel="noopener" aria-label="加入 LINE 官方帳號，直接與窗簾規劃師聯絡">
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#icon-line"/></svg>
       <span data-cid="STICKY-LINE-LABEL">LINE 聯絡我們</span>
     </a>
@@ -2026,6 +2043,44 @@
   const qHeight = document.getElementById('q-height');
   const qTier = document.getElementById('q-tier');
   const qQty = document.getElementById('q-qty');
+  const qMotor = document.getElementById('q-motor');
+  const rMotorLine = document.getElementById('r-motor-line');
+  const rMotor = document.getElementById('r-motor');
+  // 升級電動窗簾：每面窗加價，金額寫在 #q-motor 選項的 value
+  // 單開 1 顆電機 NT$10,000／面；雙開（左右對開）2 顆電機 NT$20,000／面
+  // 一布一紗等雙層款式（data-tracks="2"）：每條軌道各需 1 顆電機，電機數量與加價都乘以軌道數
+  const MOTOR_FEE_PER_UNIT = 10000;  // 每顆電機加價
+  function trackCount(){ return parseInt(qType.selectedOptions[0].dataset.tracks, 10) || 1; }
+  function motorType(){ return qMotor.selectedOptions[0].dataset.motor || ''; }
+  function motorCount(){
+    const t = motorType();
+    return t ? (t === 'double' ? 2 : 1) * trackCount() : 0;
+  }
+  function motorFeePerWindow(){ return motorCount() * MOTOR_FEE_PER_UNIT; }
+  function motorTag(){
+    const t = motorType();
+    return t ? ((t === 'double' ? '電動雙開' : '電動單開') + '（' + motorCount() + ' 顆電機）') : '';
+  }
+  // 依目前款式更新電動選項文字（例：一布一紗時顯示「單開・2 顆電機（每面 +NT$ 20,000）」）
+  function refreshMotorOptions(){
+    Array.from(qMotor.options).forEach(o => {
+      if (!o.dataset.motor) return;
+      const n = (o.dataset.motor === 'double' ? 2 : 1) * trackCount();
+      const label = (o.dataset.motor === 'double' ? '雙開' : '單開') + '・' + n + ' 顆電機（每面 +NT$ ' + (n * MOTOR_FEE_PER_UNIT).toLocaleString() + '）';
+      o.textContent = label;
+      o.value = String(n * MOTOR_FEE_PER_UNIT);
+    });
+  }
+  function updateMotorLine(qty){
+    const fee = motorFeePerWindow();
+    // 欄位有誤（qty 為 0）時不顯示電動加價，避免出現不完整的金額
+    rMotorLine.hidden = !(fee > 0 && qty);
+    rMotor.textContent = (fee > 0 && qty)
+      ? (motorCount() + ' 顆 +' + fee.toLocaleString() + ' × ' + qty + ' 面')
+      : '—';
+  }
+  qType.addEventListener('change', refreshMotorOptions);
+  refreshMotorOptions();
   const rArea = document.getElementById('r-area');
   const rAreaLabel = document.getElementById('r-area-label');
   const rUnit = document.getElementById('r-unit');
@@ -2071,6 +2126,7 @@
       rUnit.textContent = '—';
       rQty.textContent = '—';
       rTotal.textContent = 'NT$ —';
+      updateMotorLine(0);
       return;
     }
     const opt = qType.selectedOptions[0];
@@ -2080,26 +2136,46 @@
     const qty = Math.max(parseInt(qQty.value) || 1, 1);
     const wChi = cmToChiCeil(widthCm);
     const hChi = cmToChiCeil(heightCm);
-    const unitPrice = qTier.value === 'adv' ? parseFloat(opt.dataset.adv) : parseFloat(opt.dataset.base);
+    const tierKey = qTier.value === 'adv' ? 'adv' : 'base';
+    // 組合款（例如一布一紗）：不另設牌價，直接取「布簾」＋「紗簾」選項的牌價相加，
+    // 日後調整布簾或紗簾牌價時，一布一紗會自動跟著變動
+    let comboParts = null;
+    if (opt.dataset.combo) {
+      comboParts = opt.dataset.combo.split(',').map(cid => {
+        const o = Array.from(qType.options).find(x => x.dataset.cid === cid.trim());
+        return { name: o.textContent.trim().replace(/簾$/, ''), price: parseFloat(o.dataset[tierKey]) };
+      });
+    }
+    const unitPrice = comboParts
+      ? comboParts.reduce((s, c) => s + c.price, 0)
+      : parseFloat(opt.dataset[tierKey]);
+    const unitText = comboParts
+      ? comboParts.map(c => c.name + ' ' + Math.round(c.price).toLocaleString()).join(' ＋ ')
+      : 'NT$ ' + Math.round(unitPrice).toLocaleString();
 
     if (calc === 'linear') {
-      // 布／紗計算：該窗價格 = 寬(尺,無條件進位) × 2 × 牌價，限高度 9 尺以內
+      // 布／紗／蛇簾計算：該窗價格 = 寬(尺,無條件進位) × 倍數 × 牌價，限高度 9 尺以內
+      // 倍數由選項的 data-mult 決定：布簾、紗簾預設 2 倍；蛇簾 3 倍（波浪摺用布較多）
+      // 一布一紗：寬 × 2 × 布簾牌價 ＋ 寬 × 2 × 紗簾牌價（＝ 寬 × 2 ×（布＋紗牌價））
+      const mult = parseFloat(opt.dataset.mult) || 2;
       if (hChi > 9) {
         rAreaLabel.textContent = '尺寸';
         rArea.textContent = wChi + '尺 × ' + hChi + '尺（高度超過9尺）';
         rUnitLabel.textContent = '牌價（每尺）';
-        rUnit.textContent = 'NT$ ' + Math.round(unitPrice).toLocaleString();
+        rUnit.textContent = unitText;
         rQty.textContent = qty + ' 面';
         rTotal.textContent = '請洽詢客服報價';
+        updateMotorLine(qty);
         return;
       }
-      const pricePerWindow = wChi * 2 * unitPrice;
+      const pricePerWindow = wChi * mult * unitPrice + motorFeePerWindow();
       const total = pricePerWindow * qty;
+      updateMotorLine(qty);
 
       rAreaLabel.textContent = '寬度（每窗）';
-      rArea.textContent = wChi + '尺 × 2 × 牌價';
+      rArea.textContent = wChi + '尺 × ' + mult + ' × 牌價';
       rUnitLabel.textContent = '牌價（每尺）';
-      rUnit.textContent = 'NT$ ' + Math.round(unitPrice).toLocaleString();
+      rUnit.textContent = unitText;
       rQty.textContent = qty + ' 面';
       rTotal.textContent = 'NT$ ' + Math.round(total).toLocaleString();
       return;
@@ -2107,8 +2183,9 @@
 
     // 才數計算：才 = 寬(尺,無條件進位) × 高(尺,無條件進位)
     const cai = wChi * hChi;
-    const pricePerWindow = cai * unitPrice;
+    const pricePerWindow = cai * unitPrice + motorFeePerWindow();
     const total = pricePerWindow * qty;
+    updateMotorLine(qty);
 
     rAreaLabel.textContent = '面積（每窗）';
     rArea.textContent = cai > 0 ? (wChi + '尺 × ' + hChi + '尺 = ' + cai + ' 才') : '— 才';
@@ -2131,7 +2208,7 @@
     }
   });
   // 桌機版仍即時更新，方便一邊調整一邊看變化；手機版靠上方按鈕觸發+捲動
-  [qType, qWidth, qHeight, qTier, qQty].forEach(el => {
+  [qType, qWidth, qHeight, qTier, qMotor, qQty].forEach(el => {
     el.addEventListener('input', () => {
       validateQuote(false);  // 修正後紅字立即消失（輸入中不新增紅字）
       if (window.innerWidth > 860) { calcQuote(); }
@@ -2180,7 +2257,7 @@
 
     function itemLineText(it, idx){
       const priceText = it.subtotalNum !== null ? ('NT$ ' + it.subtotalNum.toLocaleString()) : it.subtotalText;
-      return (idx + 1) + '. ' + it.typeName + '｜寬' + it.widthCm + 'cm×高' + it.heightCm + 'cm｜' + it.tierName + '｜共' + it.qty + '面 → ' + priceText;
+      return (idx + 1) + '. ' + it.typeName + '｜寬' + it.widthCm + 'cm×高' + it.heightCm + 'cm｜' + it.tierName + (it.motor ? '｜' + (it.motor === true ? '升級電動' : it.motor) : '') + '｜共' + it.qty + '面 → ' + priceText;
     }
 
     function buildMessage(){
@@ -2213,7 +2290,7 @@
         const priceText = it.subtotalNum !== null ? ('NT$ ' + it.subtotalNum.toLocaleString()) : it.subtotalText;
         const textSpan = document.createElement('span');
         textSpan.className = 'qli-text';
-        textSpan.innerHTML = '<b>' + it.typeName + '</b>｜寬' + it.widthCm + 'cm×高' + it.heightCm + 'cm｜' + it.tierName + '｜共' + it.qty + '面';
+        textSpan.innerHTML = '<b>' + it.typeName + '</b>｜寬' + it.widthCm + 'cm×高' + it.heightCm + 'cm｜' + it.tierName + (it.motor ? '｜' + (it.motor === true ? '升級電動' : it.motor) : '') + '｜共' + it.qty + '面';
         const priceSpan = document.createElement('span');
         priceSpan.className = 'qli-price';
         priceSpan.textContent = priceText;
@@ -2256,7 +2333,7 @@
       const totalText = rTotal.textContent.trim();
       items.push({
         typeName: typeName, tierName: tierName, widthCm: widthCm, heightCm: heightCm,
-        qty: qty, subtotalText: totalText, subtotalNum: parsePrice(totalText)
+        qty: qty, motor: motorTag() || false, subtotalText: totalText, subtotalNum: parsePrice(totalText)
       });
       persist();
       render();
@@ -2331,7 +2408,7 @@
 
     function itemLineText(it, idx){
       const priceText = it.subtotalNum !== null && it.subtotalNum !== undefined ? ('NT$ ' + it.subtotalNum.toLocaleString()) : it.subtotalText;
-      return (idx + 1) + '. ' + it.typeName + '｜寬' + it.widthCm + 'cm×高' + it.heightCm + 'cm｜' + it.tierName + '｜共' + it.qty + '面 → ' + priceText;
+      return (idx + 1) + '. ' + it.typeName + '｜寬' + it.widthCm + 'cm×高' + it.heightCm + 'cm｜' + it.tierName + (it.motor ? '｜' + (it.motor === true ? '升級電動' : it.motor) : '') + '｜共' + it.qty + '面 → ' + priceText;
     }
 
     function refresh(){
@@ -2602,9 +2679,10 @@
       });
     }
     if (lineBubble) {
+      // 點對話泡泡：直接開啟 LINE 官方帳號（加好友／聊天），不用先填預約表單
       lineBubble.addEventListener('click', () => {
         hideLine();
-        document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        window.open(LINE_ADD_FRIEND_URL, '_blank', 'noopener');
       });
     }
   })();
