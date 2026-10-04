@@ -2571,6 +2571,39 @@
     track.addEventListener('scroll', updateNavState);
     window.addEventListener('resize', updateNavState);
     updateNavState();
+
+    // 手機／平板（≤ 860px）自動輪播：每 3.5 秒往右一張，到最後一張後回到第一張。
+    // 使用者一碰觸卡片（滑動）或點左右箭頭就暫停，放開 6 秒後才恢復自動播放；
+    // 只在輪播區出現在畫面上、且分頁在前景時播放；系統開啟「減少動態效果」時不自動播放。
+    const AUTO_INTERVAL = 3500;
+    const RESUME_DELAY = 6000;
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let inView = false;
+    let pausedUntil = 0;
+    let touching = false;
+    function autoplayAllowed(){
+      return !reduceMotion && window.innerWidth <= 860 && inView && !document.hidden && !touching
+        && Date.now() >= pausedUntil && !(carousel && carousel.classList.contains('no-scroll'));
+    }
+    function pauseAutoplay(){ pausedUntil = Date.now() + RESUME_DELAY; }
+    setInterval(() => {
+      if (!autoplayAllowed()) return;
+      const maxScroll = track.scrollWidth - track.clientWidth - 2;
+      if (track.scrollLeft >= maxScroll) track.scrollTo({ left: 0, behavior: 'smooth' });
+      else scrollByCard(1);
+    }, AUTO_INTERVAL);
+    track.addEventListener('touchstart', () => { touching = true; pauseAutoplay(); }, { passive: true });
+    track.addEventListener('touchend', () => { touching = false; pauseAutoplay(); }, { passive: true });
+    track.addEventListener('touchcancel', () => { touching = false; pauseAutoplay(); }, { passive: true });
+    track.addEventListener('pointerdown', pauseAutoplay);
+    track.addEventListener('wheel', pauseAutoplay, { passive: true });
+    prevBtn.addEventListener('click', pauseAutoplay);
+    nextBtn.addEventListener('click', pauseAutoplay);
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(entries => { inView = entries[0].isIntersecting; }, { threshold: 0.3 }).observe(track);
+    } else {
+      inView = true;
+    }
   })();
 
   // FAQ 收合／展開（點問題切換答案顯示，可同時展開多題）
