@@ -248,6 +248,10 @@
     transition:width .3s ease;
   }
   nav.links a:hover::after{ width:100%; }
+  /* 選單多了「空間作品集」：平板寬度縮小間距，避免文字換行 */
+  nav.links a{ white-space:nowrap; }
+  @media (max-width:1180px) and (min-width:861px){ nav.links{ gap:22px; } }
+  @media (max-width:980px) and (min-width:861px){ nav.links{ gap:14px; font-size:0.88rem; } header.site .nav-cta{ padding:9px 14px; } }
   header.site .nav-cta{
     border:1px solid var(--navy-deep); background:var(--navy-deep); color:#FFFFFF; padding:9px 20px;
     text-decoration:none; font-size:0.88rem; font-weight:700; letter-spacing:0.03em; white-space:nowrap;
@@ -411,6 +415,13 @@
   /* 內容已完整置中、不需要捲動時，由 JS（.cat-carousel.no-scroll）隱藏箭頭與邊緣漸層 */
   .cat-carousel.no-scroll::before, .cat-carousel.no-scroll::after,
   .cat-carousel.no-scroll .cat-nav-btn{ display:none; }
+  /* 窗簾分類下方：連到空間作品集（/portfolio/） */
+  .cat-portfolio{ text-align:center; padding-top:34px; }
+  .cat-portfolio-link{ display:inline-flex; align-items:center; gap:12px; color:var(--navy); text-decoration:none; font-size:0.98rem; letter-spacing:0.04em;
+    border-bottom:1px solid var(--gold); padding-bottom:6px; line-height:1.6; }
+  .cat-portfolio-link .arrow{ color:var(--gold-deep); transition:transform .25s ease; }
+  .cat-portfolio-link:hover .arrow{ transform:translateX(4px); }
+  @media (max-width:480px){ .cat-portfolio-link{ font-size:0.92rem; text-align:left; } }
   .cat-card:hover, .cat-card:focus-within{
     background:var(--bg-soft); transform:translateY(-4px); box-shadow:var(--shadow-soft); z-index:1;
   }
@@ -1052,6 +1063,7 @@
     </div>
     <nav class="links" id="navLinks">
       <a href="#categories" data-cid="NAV-L1">窗簾分類</a>
+      <a href="/portfolio/" data-cid="NAV-L6">空間作品集</a>
       <a href="#quote" data-cid="NAV-L2">線上報價</a>
       <a href="#booking" data-cid="NAV-L3">預約丈量</a>
       <a href="#about" data-cid="NAV-L4">關於我們</a>
@@ -1194,6 +1206,9 @@
 
 
   </div>
+  </div>
+  <div class="wrap cat-portfolio">
+    <a class="cat-portfolio-link" href="/portfolio/" data-cid="CAT-PORTFOLIO-LINK"><span data-cid="CAT-PORTFOLIO-TEXT">想看實際裝起來的樣子？翻閱空間作品集，從客廳、臥室到商業空間的安裝案例</span><span class="arrow" aria-hidden="true">→</span></a>
   </div>
 </section>
 
@@ -1745,6 +1760,7 @@
         <h4 data-cid="FOOTER-LINKS-H4">快速連結</h4>
         <ul>
           <li><a href="#categories" data-cid="FOOTER-LINK1">窗簾分類</a></li>
+          <li><a href="/portfolio/" data-cid="FOOTER-LINK4">空間作品集</a></li>
           <li><a href="#quote" data-cid="FOOTER-LINK2">線上報價</a></li>
           <li><a href="#booking" data-cid="FOOTER-LINK3">預約丈量</a></li>
         </ul>
@@ -2784,6 +2800,27 @@
       });
     }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
     targets.forEach(el => io.observe(el));
+  })();
+</script>
+
+<script>
+  // 從空間作品集（/portfolio/）的「用這款試算」帶入款式：/?style=roller#quote；電動升級頁：/?motor=1#quote
+  // 用選項的 data-cid 對應（選項 value 會重複，不能用 value 選）
+  (function(){
+    var params = new URLSearchParams(location.search);
+    var MAP = { roller:'QUOTE-TYPE-OPT1', alu:'QUOTE-TYPE-OPT2', wood:'QUOTE-TYPE-OPT3', zebra:'QUOTE-TYPE-OPT4', honey:'QUOTE-TYPE-OPT5', sheerv:'QUOTE-TYPE-OPT6',
+                panel:'QUOTE-TYPE-OPT11', drape:'QUOTE-TYPE-OPT7', wave:'QUOTE-TYPE-OPT9', sheer:'QUOTE-TYPE-OPT8', combo:'QUOTE-TYPE-OPT10' };
+    var typeSel = document.getElementById('q-type'), motorSel = document.getElementById('q-motor');
+    if (!typeSel) return;
+    var cid = MAP[params.get('style')];
+    if (cid) {
+      var opt = typeSel.querySelector('option[data-cid="' + cid + '"]');
+      if (opt) { typeSel.selectedIndex = opt.index; typeSel.dispatchEvent(new Event('change', { bubbles: true })); }
+    }
+    if (params.get('motor') === '1' && motorSel) {
+      var m = motorSel.querySelector('option[data-motor="single"]');
+      if (m) { motorSel.selectedIndex = m.index; motorSel.dispatchEvent(new Event('change', { bubbles: true })); }
+    }
   })();
 </script>
 
