@@ -755,7 +755,7 @@
   .footer-line-link:hover{ color:var(--gold-soft); }
   .footer-line-link svg{ width:16px; height:16px; flex-shrink:0; }
 
-  /* ---------- STICKY 浮動按鈕群組（LINE聯絡＋IG作品集，捲動時常駐） ---------- */
+  /* ---------- STICKY 浮動按鈕群組（線上作品集＋IG 官方帳號＋LINE 聯絡，捲動時常駐） ---------- */
   .sticky-actions{
     position:fixed; right:max(24px, env(safe-area-inset-right)); bottom:max(24px, env(safe-area-inset-bottom)); z-index:60;
     display:flex; flex-direction:column; align-items:flex-end; gap:12px;
@@ -774,19 +774,21 @@
   .sticky-line:hover{ background:#05a648; }
   .sticky-ig{ background:var(--gold); color:var(--navy-deep); }
   .sticky-ig:hover{ background:var(--navy-deep); color:var(--gold); }
-  /* ---------- LINE 仿真對話泡泡提示（吸引點擊） ---------- */
-  .sticky-ig-wrap, .sticky-line-wrap{ position:relative; }
+  .sticky-portfolio{ background:var(--navy-deep); color:#fff; }
+  .sticky-portfolio:hover{ background:var(--navy); color:#fff; }
+  /* ---------- 仿真對話泡泡提示（吸引點擊）：出現在按鈕左側，不會蓋住上方其他浮動按鈕 ---------- */
+  .sticky-portfolio-wrap, .sticky-ig-wrap, .sticky-line-wrap{ position:relative; }
   .chat-bubble{
-    position:absolute; right:0; bottom:calc(100% + 16px);
+    position:absolute; right:calc(100% + 14px); bottom:0;
     width:224px; background:var(--paper); color:var(--ink);
     padding:16px 28px 16px 18px; border-radius:16px 16px 4px 16px;
     box-shadow:0 14px 32px rgba(35,30,20,0.26);
     font-size:0.84rem; line-height:1.65; cursor:pointer;
-    opacity:0; visibility:hidden; transform:translateY(10px) scale(0.95);
+    opacity:0; visibility:hidden; transform:translateX(10px) scale(0.95); transform-origin:right bottom;
     transition:opacity .35s ease, transform .35s ease, visibility 0s linear .35s;
   }
   .chat-bubble.show{
-    opacity:1; visibility:visible; transform:translateY(0) scale(1);
+    opacity:1; visibility:visible; transform:translateX(0) scale(1);
     transition:opacity .35s ease, transform .35s ease;
   }
   .chat-bubble p{ margin:0; font-weight:500; }
@@ -800,7 +802,7 @@
   /* 關閉鈕外觀維持 22px，但用透明延伸區把實際可點範圍放大到 44×44px */
   .chat-bubble-close::before{ content:""; position:absolute; inset:-11px; }
   .chat-bubble-tail{
-    position:absolute; bottom:-6px; right:22px; width:13px; height:13px;
+    position:absolute; bottom:16px; right:-6px; width:13px; height:13px;
     background:var(--paper); transform:rotate(45deg);
   }
   @media (prefers-reduced-motion: reduce){
@@ -810,7 +812,7 @@
     .sticky-actions{ right:max(16px, env(safe-area-inset-right)); bottom:max(16px, env(safe-area-inset-bottom)); gap:10px; }
     .sticky-btn{ padding:12px; }
     .sticky-btn span{ display:none; } /* 手機版縮成純圖示，避免佔用太多畫面 */
-    .chat-bubble{ width:188px; font-size:0.78rem; padding:14px 24px 14px 16px; right:-6px; }
+    .chat-bubble{ width:188px; font-size:0.78rem; padding:14px 24px 14px 16px; right:calc(100% + 12px); }
   }
 
   /* ---------- BREAKPOINT: TABLET (≤1024px) ---------- */
@@ -1792,15 +1794,21 @@
 </footer>
 
 <div class="sticky-actions">
-  <div class="sticky-ig-wrap">
-    <div class="chat-bubble" id="igChatBubble" role="status">
-      <button type="button" class="chat-bubble-close" id="igBubbleClose" aria-label="關閉提示">&times;</button>
-      <p data-cid="STICKY-IG-BUBBLE">更多實際施工成品案例都在這裡，立即觀看作品集！</p>
+  <div class="sticky-portfolio-wrap">
+    <div class="chat-bubble" id="pfChatBubble" role="status">
+      <button type="button" class="chat-bubble-close" id="pfBubbleClose" aria-label="關閉提示">&times;</button>
+      <p data-cid="STICKY-PORTFOLIO-BUBBLE">更多實際施工成品案例都在這裡，立即觀看作品集！</p>
       <span class="chat-bubble-tail" aria-hidden="true"></span>
     </div>
-    <a class="sticky-btn sticky-ig" href="https://www.instagram.com/glowcurtain/" target="_blank" rel="noopener" aria-label="Instagram 作品集">
+    <a class="sticky-btn sticky-portfolio" href="/portfolio/" aria-label="線上作品集：翻閱實際安裝案例">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5.5c2.6-1 5.6-1 9 1 3.4-2 6.4-2 9-1v13c-2.6-1-5.6-1-9 1-3.4-2-6.4-2-9-1z"/><path d="M12 6.5v13"/></svg>
+      <span data-cid="STICKY-PORTFOLIO-LABEL">線上作品集</span>
+    </a>
+  </div>
+  <div class="sticky-ig-wrap">
+    <a class="sticky-btn sticky-ig" href="https://www.instagram.com/glowcurtain/" target="_blank" rel="noopener" aria-label="織光窗簾 Instagram 官方帳號">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
-      <span data-cid="STICKY-IG-LABEL">IG 作品集</span>
+      <span data-cid="STICKY-IG-LABEL">IG 官方帳號</span>
     </a>
   </div>
   <div class="sticky-line-wrap">
@@ -2721,18 +2729,18 @@
     if(window.innerWidth > 860) setMenu(false);
   });
 
-  // IG／LINE 仿真對話泡泡：進場動畫結束後才依序出現（IG 先、LINE 後），避免跟 Splash 搶注意力，
-  // 也避免兩個泡泡同時顯示時互相重疊（兩顆按鈕距離很近）；每次載入頁面都會顯示，關閉只影響當次瀏覽，不會記憶
+  // 作品集／LINE 仿真對話泡泡：進場動畫結束後才依序出現（作品集先、LINE 後），避免跟 Splash 搶注意力，
+  // 也避免兩個泡泡同時顯示時互相重疊（按鈕距離很近）；每次載入頁面都會顯示，關閉只影響當次瀏覽，不會記憶
   (function(){
-    const igBubble = document.getElementById('igChatBubble');
-    const igCloseBtn = document.getElementById('igBubbleClose');
+    const pfBubble = document.getElementById('pfChatBubble');
+    const pfCloseBtn = document.getElementById('pfBubbleClose');
     const lineBubble = document.getElementById('lineChatBubble');
     const lineCloseBtn = document.getElementById('chatBubbleClose');
-    if (!igBubble && !lineBubble) return;
+    if (!pfBubble && !lineBubble) return;
 
-    function hideIg(){
-      if (!igBubble) return;
-      igBubble.classList.remove('show');
+    function hidePf(){
+      if (!pfBubble) return;
+      pfBubble.classList.remove('show');
     }
     function hideLine(){
       if (!lineBubble) return;
@@ -2742,28 +2750,29 @@
       if (lineBubble) lineBubble.classList.add('show');
     }
 
-    if (igBubble) {
+    if (pfBubble) {
       setTimeout(() => {
-        igBubble.classList.add('show');
-        // IG 泡泡顯示一段時間後自動收合，接著換 LINE 泡泡出場，兩者錯開不重疊
-        setTimeout(() => { hideIg(); setTimeout(showLine, 450); }, 5000);
+        pfBubble.classList.add('show');
+        // 作品集泡泡顯示一段時間後自動收合，接著換 LINE 泡泡出場，兩者錯開不重疊
+        setTimeout(() => { hidePf(); setTimeout(showLine, 450); }, 5000);
       }, 2800);
     } else if (lineBubble) {
       setTimeout(showLine, 2800);
     }
 
-    if (igCloseBtn) {
-      igCloseBtn.addEventListener('click', (e) => {
+    if (pfCloseBtn) {
+      pfCloseBtn.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
-        hideIg();
+        hidePf();
         setTimeout(showLine, 450);
       });
     }
-    if (igBubble) {
-      igBubble.addEventListener('click', () => {
-        hideIg();
-        window.open('https://www.instagram.com/glowcurtain/', '_blank', 'noopener');
+    if (pfBubble) {
+      // 點對話泡泡：直接打開線上作品集（同一個分頁）
+      pfBubble.addEventListener('click', () => {
+        hidePf();
+        window.location.href = '/portfolio/';
       });
     }
 

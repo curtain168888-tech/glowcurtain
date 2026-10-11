@@ -37,22 +37,45 @@
 <script>
 /* 決定閱讀模式（在畫面出現前）：寬 900 以下＝手機版排版；電腦、平板橫放＝翻頁；螢幕太矮或 ?view=scroll＝整頁上下捲動 */
 (function(){var d=document.documentElement,w=window.innerWidth,h=window.innerHeight,
-f=w>=900&&Math.min((w-120)/1400,(h-120)/1000)>=0.5,v=/[?&]view=scroll\b/.test(location.search);
+f=w>=900&&Math.min((w-120)/1400,(h-150)/1000)>=0.5,v=/[?&]view=scroll\b/.test(location.search);
 d.setAttribute('data-mode',w<900?'reflow':(f&&!v)?'flip':'scroll');d.setAttribute('data-canflip',f?'1':'0');})();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500&family=Noto+Serif+TC:wght@600&display=swap">
-<link rel="stylesheet" href="portfolio.css?v=149a3122">
+<link rel="stylesheet" href="portfolio.css?v=aeaf5c5f">
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="icon-line" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 5.86 2 10.6c0 4.24 3.54 7.79 8.32 8.47.32.07.76.21.87.49.1.25.06.65.03.9l-.14.86c-.04.25-.2.99.87.54 1.06-.45 5.74-3.38 7.83-5.79C21.29 13.86 22 12.3 22 10.6 22 5.86 17.52 2 12 2zm-3.6 11.02H6.98a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.42a.4.4 0 0 1 .4.4v3.7h1.6a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4zm2.02 0h-.42a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.42a.4.4 0 0 1 .4.4v4.52a.4.4 0 0 1-.4.4zm4.6 0h-.42a.4.4 0 0 1-.34-.18l-2.02-2.75v2.53a.4.4 0 0 1-.4.4h-.42a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.44a.4.4 0 0 1 .33.18l2 2.73V8.1a.4.4 0 0 1 .4-.4h.43a.4.4 0 0 1 .4.4v4.52a.4.4 0 0 1-.4.4zm4.6-3.7h-1.83v.72h1.83a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4h-1.83v.72h1.83a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4h-2.65a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h2.65a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4z"/></symbol></svg>
 <a class="skip goto" data-goto="3" href="#p3">跳到目錄</a>
+<header class="site" id="siteHeader">
+  <div class="nav-inner">
+    <div class="logo">
+      <a class="logo-home" href="/" aria-label="回織光窗簾首頁"><img class="logo-mark" src="https://raw.githubusercontent.com/curtain168888-tech/glowcurtain/main/images/logo-horizontal.png" alt="織光窗簾 GlowCurtain 品牌標誌" width="220" height="44"></a>
+    </div>
+    <nav class="links" id="navLinks">
+      <a href="/#categories">窗簾分類</a>
+      <a href="/portfolio/" class="is-current" aria-current="page">空間作品集</a>
+      <a href="/#quote">線上報價</a>
+      <a href="/#booking">預約丈量</a>
+      <a href="/#about">關於我們</a>
+      <a href="/#contact">聯絡方式</a>
+      <a class="nav-cta" href="/#booking">立即預約免費丈量</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="開啟選單" aria-expanded="false" aria-controls="navLinks">
+      <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+</header>
+<div class="pf-viewer" id="viewer">
 <header class="tb" id="tb">
   <a class="tb-brand" href="/" data-cta="home" aria-label="回織光窗簾首頁"><b>織光窗簾</b><span>空間作品集</span></a>
   <div class="tb-mid">
     <button class="tb-btn round" id="prev" type="button" aria-label="上一頁">‹</button>
     <div class="tb-where" id="where" aria-live="polite"><b>01<i>/</i>70</b><span>封面</span></div>
     <button class="tb-btn round" id="next" type="button" aria-label="下一頁">›</button>
+    <input class="tb-rng" type="range" id="rng" min="1" max="70" value="1" aria-label="拖曳跳頁">
   </div>
   <div class="tb-tools">
     <button class="tb-btn" id="back" type="button" hidden></button>
@@ -675,8 +698,49 @@ d.setAttribute('data-mode',w<900?'reflow':(f&&!v)?'flip':'scroll');d.setAttribut
   <button class="side side-next" id="snext" type="button" aria-label="下一頁">›</button>
   <p class="fb-loading" id="loading">作品集載入中…</p>
 </main>
-<div class="scrub" id="scrub"><span>01</span><input type="range" id="rng" min="1" max="70" value="1" aria-label="拖曳跳頁"><span>70</span></div>
-<p class="pf-note">照片皆為織光窗簾實際施工案例，版權所有，請勿轉載。<a href="/">回官網首頁</a></p>
+</div>
+<p class="pf-note">照片皆為織光窗簾實際施工案例，版權所有，請勿轉載。</p>
+<footer id="contact">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <img class="footer-logo-mark" src="https://raw.githubusercontent.com/curtain168888-tech/glowcurtain/main/images/logo-horizontal.png" alt="織光窗簾 GlowCurtain 品牌標誌（頁尾）" width="220" height="40">
+        <p>深耕窗飾設計多年，我們以透明誠信與專業規劃為本，完美演繹空間中的窗簾美學。</p>
+      </div>
+      <div>
+        <h4>快速連結</h4>
+        <ul>
+          <li><a href="/#categories">窗簾分類</a></li>
+          <li><a href="/portfolio/">空間作品集</a></li>
+          <li><a href="/#quote">線上報價</a></li>
+          <li><a href="/#booking">預約丈量</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>織光窗簾｜服務專線</h4>
+        <ul>
+          <li>唐經理 <a href="tel:0986295548">0986-295-548</a></li>
+          <li>
+            <a class="ig-link" href="https://www.instagram.com/glowcurtain/" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+              Instagram｜查看更多案例
+            </a>
+          </li>
+          <li>
+            <a class="footer-line-link" data-line-add href="https://lin.ee/5Y7AiI6" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#icon-line"/></svg>
+              LINE｜立即預約免費丈量
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 織光窗簾 GlowCurtain. All rights reserved.</span>
+      <a class="footer-biz-link" href="https://findbiz.nat.gov.tw/fts/business/61048852/61700000000027439869" target="_blank" rel="noopener">統一編號 61048852｜商業登記資料查詢</a>
+    </div>
+  </div>
+</footer>
 <nav class="actbar" aria-label="預約與估價"><a href="https://lin.ee/5Y7AiI6" target="_blank" rel="noopener" data-cta="line">LINE 預約丈量</a><a class="primary" id="cta2" href="/#quote" data-cta="quote">線上試算報價</a></nav>
 <div class="scrim" id="scrim" hidden></div>
 <aside class="drawer" id="toc" hidden aria-label="作品集目錄">
@@ -694,6 +758,6 @@ d.setAttribute('data-mode',w<900?'reflow':(f&&!v)?'flip':'scroll');d.setAttribut
 </aside>
 <script type="application/json" id="pf-meta">[{"l":"封面","s":""},{"l":"關於織光","s":""},{"l":"目錄","s":""},{"l":"空間 × 窗簾對照表","s":""},{"l":"窗簾種類一覽","s":""},{"l":"電動升級","s":"motor"},{"l":"電動升級・款式與情境","s":"motor"},{"l":"窗簾特色・捲簾","s":"roller"},{"l":"窗簾特色・鋁百葉","s":"alu"},{"l":"窗簾特色・木百葉／仿木百葉","s":"wood"},{"l":"窗簾特色・調光簾","s":"zebra"},{"l":"窗簾特色・風琴簾","s":"honey"},{"l":"窗簾特色・穿透簾","s":"sheerv"},{"l":"窗簾特色・布簾","s":"drape"},{"l":"窗簾特色・紗簾","s":"sheer"},{"l":"窗簾特色・片簾","s":"panel"},{"l":"窗簾特色・蛇形簾","s":"wave"},{"l":"窗簾特色・一布一紗","s":"combo"},{"l":"客廳","s":""},{"l":"客廳・一布一紗","s":"combo"},{"l":"客廳・一布一紗","s":"combo"},{"l":"客廳・一布一紗","s":"combo"},{"l":"客廳・布簾","s":"drape"},{"l":"客廳・布簾","s":"drape"},{"l":"客廳・蛇形簾","s":"wave"},{"l":"客廳・風琴簾","s":"honey"},{"l":"客廳・風琴簾","s":"honey"},{"l":"客廳・穿透簾","s":"sheerv"},{"l":"客廳・穿透簾","s":"sheerv"},{"l":"客廳・紗簾","s":"sheer"},{"l":"客廳・羅馬簾","s":""},{"l":"臥室","s":""},{"l":"臥室・一布一紗","s":"combo"},{"l":"臥室・一布一紗","s":"combo"},{"l":"臥室・布簾","s":"drape"},{"l":"臥室・布簾","s":"drape"},{"l":"臥室・風琴簾","s":"honey"},{"l":"臥室・風琴簾","s":"honey"},{"l":"臥室・調光簾","s":"zebra"},{"l":"臥室・調光簾","s":"zebra"},{"l":"臥室・捲簾","s":"roller"},{"l":"臥室・蛇形簾","s":"wave"},{"l":"臥室・片簾","s":"panel"},{"l":"兒童房・次臥","s":""},{"l":"兒童房・次臥・調光簾","s":"zebra"},{"l":"兒童房・次臥・一布一紗","s":"combo"},{"l":"兒童房・次臥・風琴簾","s":"honey"},{"l":"兒童房・次臥・捲簾","s":"roller"},{"l":"書房・工作區","s":""},{"l":"書房・工作區・風琴簾","s":"honey"},{"l":"書房・工作區・調光簾","s":"zebra"},{"l":"書房・工作區・調光簾","s":"zebra"},{"l":"書房・工作區・木百葉／仿木百葉","s":"wood"},{"l":"餐廳・廚房","s":""},{"l":"餐廳・廚房・調光簾","s":"zebra"},{"l":"餐廳・廚房・捲簾","s":"roller"},{"l":"餐廳・廚房・捲簾","s":"roller"},{"l":"餐廳・廚房・一布一紗","s":"combo"},{"l":"浴室","s":""},{"l":"浴室・鋁百葉","s":"alu"},{"l":"浴室・鋁百葉","s":"alu"},{"l":"浴室・捲簾","s":"roller"},{"l":"浴室・木百葉／仿木百葉","s":"wood"},{"l":"商業空間","s":""},{"l":"商業空間・捲簾","s":"roller"},{"l":"商業空間・風琴簾","s":"honey"},{"l":"商業空間・紗簾","s":"sheer"},{"l":"商業空間・布簾","s":"drape"},{"l":"服務流程","s":""},{"l":"聯絡我們","s":""}]</script>
 <script>window.PF_LIB='page-flip.browser.js?v=c3be7d8f';</script>
-<script src="portfolio.js?v=a95be89d" defer></script>
+<script src="portfolio.js?v=49d83e6d" defer></script>
 </body>
 </html>

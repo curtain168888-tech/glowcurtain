@@ -1,0 +1,6 @@
+/* 作品集頁上的官網 header／footer：基本設定（首頁原本由全站 body、a、img 規則提供，這裡只套用在 header／footer 內） */
+header.site, footer { font-family: var(--font-base); line-height: 1.7; -webkit-font-smoothing: antialiased; color: var(--ink); }
+header.site *, footer * { box-sizing: border-box; }
+header.site img, footer img { max-width: 100%; display: block; }
+header.site a, footer a { color: inherit; }
+header.site button { font-family: inherit; }

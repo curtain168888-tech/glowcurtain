@@ -162,7 +162,7 @@
   /* ---------- 模式切換：裝置轉向或視窗大小跨過門檻時，保留頁碼重新整理 ---------- */
   function modeFor() {
     var w = window.innerWidth, h = window.innerHeight;
-    var f = w >= 900 && Math.min((w - 120) / 1400, (h - 120) / 1000) >= 0.5;
+    var f = w >= 900 && Math.min((w - 120) / 1400, (h - 150) / 1000) >= 0.5;
     return w < 900 ? 'reflow' : (f && !/[?&]view=scroll\b/.test(location.search)) ? 'flip' : 'scroll';
   }
   var rzT = null;
@@ -170,6 +170,7 @@
     clearTimeout(rzT);
     rzT = setTimeout(function () {
       if (modeFor() !== mode) { replaceHash(cur, true); location.reload(); return; }
+      setSiteH();
       if (mode === 'flip') layoutFlip();
       else if (mode === 'scroll') zoomScroll();
     }, 160);
@@ -274,9 +275,27 @@
     PAGES.forEach(function (p) { io.observe(p); });
   }
 
+  /* ---------- 官網 header：量高度給翻頁區用、手機選單開合（同首頁） ---------- */
+  var siteHeader = $('siteHeader'), menuToggle = $('menuToggle'), navLinks = $('navLinks');
+  function setSiteH() { if (siteHeader) root.style.setProperty('--site-h', siteHeader.offsetHeight + 'px'); }
+  if (siteHeader && menuToggle && navLinks) {
+    var setMenu = function (open) { siteHeader.classList.toggle('nav-open', open); menuToggle.setAttribute('aria-expanded', String(open)); setSiteH(); };
+    menuToggle.addEventListener('click', function () { setMenu(!siteHeader.classList.contains('nav-open')); });
+    Array.prototype.forEach.call(navLinks.querySelectorAll('a'), function (a) { a.addEventListener('click', function () { setMenu(false); }); });
+    d.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
+    window.addEventListener('resize', function () { if (window.innerWidth > 860) setMenu(false); });
+  }
+
   /* ---------- 啟動 ---------- */
+  setSiteH();
   showBack(); status();
-  if (mode === 'flip') initFlip();
+  if (mode === 'flip') {
+    // 翻頁模式由程式切換頁面：拿掉各頁的 id，避免瀏覽器依網址 #pN 自動把整頁往下捲（header 會被捲走）
+    PAGES.forEach(function (p) { var sec = p.firstElementChild; if (sec && sec.id) { sec.setAttribute('data-pid', sec.id); sec.removeAttribute('id'); } });
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+    initFlip();
+  }
   else {
     if (mode === 'scroll') zoomScroll();
     var start = cur;

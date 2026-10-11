@@ -23,3 +23,9 @@ node portfolio-src/build_web.js
 - 案例頁的「線上試算」會帶 `/?style=款式#quote`，首頁報價表會自動選好款式；電動升級頁帶 `/?motor=1#quote`。
 - GA4 事件：`portfolio_open`、`portfolio_page`（停留 1.2 秒以上的頁）、`portfolio_cta`（quote／line／phone／ig／home）、`portfolio_toc`。
 - 翻頁套件：StPageFlip（page-flip 2.0.7，MIT），檔案在 `portfolio/page-flip.browser.js`。
+
+## 官網 header／footer
+
+作品集頁上方的官網選單、下方的頁尾，是 `build_web.js` 建置時從首頁 `index.html` 擷取的（HTML ＋ 相關 CSS，`data-cid` 會拿掉、首頁錨點改成 `/#...`）。
+**首頁的選單或頁尾改了以後，要重跑一次 `node portfolio-src/build_web.js`，作品集才會同步。**
+作品集頁專用的調整在 `site-chrome.css`（基本設定）與 `site-chrome-after.css`（header 不黏頂、logo 不跑進場動畫、標示目前頁面）。

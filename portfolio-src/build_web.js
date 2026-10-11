@@ -93,7 +93,39 @@ drawer += D.spaces.map((s, i) => {
 drawer += `<li class="ch">${A(first('process'), `<span class="n">—</span><span>服務流程・聯絡</span><span class="pnum">${pad2(first('process'))}</span>`)}</li>`;
 
 // 靜態檔版本號（內容雜湊），避免快取舊檔
-const css = read('core.css') + '\n' + read('web.css');
+// ---- 官網 header／footer：建置時直接從首頁 index.html 擷取，首頁改了重跑就會同步 ----
+const HOME = fs.readFileSync(path.join(SRC, '..', 'index.html'), 'utf8');
+const grab = (re, what) => { const m = HOME.match(re); if (!m) throw new Error('首頁找不到 ' + what); return m[0]; };
+const chromeHtml = h => h
+  .replace(/\s+data-cid(?:-alt)?="[^"]*"/g, '')          // data-cid 只留在首頁，避免對照表重複
+  .replace(/(<a\b[^>]*?\s)href="#([^"]+)"/g, '$1href="/#$2"'); // 首頁錨點（只改 <a>，不動 <use href="#icon">）改成回首頁的連結
+let siteHeader = chromeHtml(grab(/<header class="site" id="siteHeader">[\s\S]*?<\/header>/, 'header'))
+  .replace('<a href="/portfolio/">空間作品集</a>', '<a href="/portfolio/" class="is-current" aria-current="page">空間作品集</a>')
+  .replace(/(<img class="logo-mark"[^>]*>)/, '<a class="logo-home" href="/" aria-label="回織光窗簾首頁">$1</a>');
+const siteFooter = chromeHtml(grab(/<footer id="contact">[\s\S]*?<\/footer>/, 'footer'));
+const siteSprite = grab(/<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">[\s\S]*?<\/svg>/, 'icon sprite');
+// 首頁 CSS：只取 :root 變數與 header／footer 用到的規則（含 @media 內的）
+const homeCss = HOME.match(/<style>([\s\S]*?)<\/style>/)[1].replace(/\/\*[\s\S]*?\*\//g, '');
+function cssBlocks(text) {
+  const out = []; let i = 0;
+  while (i < text.length) {
+    const open = text.indexOf('{', i); if (open < 0) break;
+    const sel = text.slice(i, open).trim();
+    let depth = 1, j = open + 1;
+    while (j < text.length && depth) { if (text[j] === '{') depth++; else if (text[j] === '}') depth--; j++; }
+    out.push({ sel, body: text.slice(open + 1, j - 1) }); i = j;
+  }
+  return out;
+}
+const WANT = /(^|[\s,>+~])(:root|header\.site|\.nav-inner|\.logo(?!-)|\.logo-mark|\.logo-home|nav\.links|\.nav-cta|\.menu-toggle|footer|\.footer-|\.flogo|\.ig-link|\.wrap\b)/;
+const pickRules = blocks => blocks.filter(b => !b.sel.startsWith('@') && WANT.test(b.sel) && !/intro/.test(b.sel)).map(b => `${b.sel}{${b.body}}`);
+const chromeCss = cssBlocks(homeCss).map(b => {
+  if (b.sel.startsWith('@media')) { const inner = pickRules(cssBlocks(b.body)); return inner.length ? `${b.sel}{\n${inner.join('\n')}\n}` : ''; }
+  if (b.sel.startsWith('@')) return '';
+  return pickRules([b]).join('');
+}).filter(Boolean).join('\n');
+
+const css = read('core.css') + '\n' + read('web.css') + '\n/* ===== 官網 header／footer（build_web.js 從首頁 index.html 擷取，請改首頁後重跑） ===== */\n' + read('site-chrome.css') + '\n' + chromeCss + '\n' + read('site-chrome-after.css');
 fs.writeFileSync(path.join(OUT, 'portfolio.css'), '/* 織光窗簾 空間作品集（網頁翻閱版）— 頁面版型 core.css ＋ 翻閱器／手機版 web.css，由 build_web.js 產生 */\n' + css);
 fs.copyFileSync(path.join(SRC, 'web.js'), path.join(OUT, 'portfolio.js'));
 const ver = f => crypto.createHash('md5').update(fs.readFileSync(path.join(OUT, f))).digest('hex').slice(0, 8);
@@ -154,7 +186,7 @@ const out = `<!DOCTYPE html>
 <script>
 /* 決定閱讀模式（在畫面出現前）：寬 900 以下＝手機版排版；電腦、平板橫放＝翻頁；螢幕太矮或 ?view=scroll＝整頁上下捲動 */
 (function(){var d=document.documentElement,w=window.innerWidth,h=window.innerHeight,
-f=w>=900&&Math.min((w-120)/1400,(h-120)/1000)>=0.5,v=/[?&]view=scroll\\b/.test(location.search);
+f=w>=900&&Math.min((w-120)/1400,(h-150)/1000)>=0.5,v=/[?&]view=scroll\\b/.test(location.search);
 d.setAttribute('data-mode',w<900?'reflow':(f&&!v)?'flip':'scroll');d.setAttribute('data-canflip',f?'1':'0');})();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -163,13 +195,17 @@ d.setAttribute('data-mode',w<900?'reflow':(f&&!v)?'flip':'scroll');d.setAttribut
 <link rel="stylesheet" href="portfolio.css?v=${V.css}">
 </head>
 <body>
+${siteSprite}
 <a class="skip goto" data-goto="3" href="#p3">跳到目錄</a>
+${siteHeader}
+<div class="pf-viewer" id="viewer">
 <header class="tb" id="tb">
   <a class="tb-brand" href="/" data-cta="home" aria-label="回織光窗簾首頁"><b>織光窗簾</b><span>空間作品集</span></a>
   <div class="tb-mid">
     <button class="tb-btn round" id="prev" type="button" aria-label="上一頁">‹</button>
     <div class="tb-where" id="where" aria-live="polite"><b>01<i>/</i>${N}</b><span>封面</span></div>
     <button class="tb-btn round" id="next" type="button" aria-label="下一頁">›</button>
+    <input class="tb-rng" type="range" id="rng" min="1" max="${N}" value="1" aria-label="拖曳跳頁">
   </div>
   <div class="tb-tools">
     <button class="tb-btn" id="back" type="button" hidden></button>
@@ -187,8 +223,9 @@ ${pageHtml}
   <button class="side side-next" id="snext" type="button" aria-label="下一頁">›</button>
   <p class="fb-loading" id="loading">作品集載入中…</p>
 </main>
-<div class="scrub" id="scrub"><span>01</span><input type="range" id="rng" min="1" max="${N}" value="1" aria-label="拖曳跳頁"><span>${N}</span></div>
-<p class="pf-note">照片皆為織光窗簾實際施工案例，版權所有，請勿轉載。<a href="/">回官網首頁</a></p>
+</div>
+<p class="pf-note">照片皆為織光窗簾實際施工案例，版權所有，請勿轉載。</p>
+${siteFooter}
 <nav class="actbar" aria-label="預約與估價"><a href="${LINE}" target="_blank" rel="noopener" data-cta="line">LINE 預約丈量</a><a class="primary" id="cta2" href="/#quote" data-cta="quote">線上試算報價</a></nav>
 <div class="scrim" id="scrim" hidden></div>
 <aside class="drawer" id="toc" hidden aria-label="作品集目錄">

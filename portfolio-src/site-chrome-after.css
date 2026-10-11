@@ -1,0 +1,6 @@
+/* 作品集頁：header 不黏在頂部（翻頁區要最大空間）；logo 不跑首頁的進場動畫；目前頁面在選單上標示 */
+header.site { position: relative; }
+.logo-mark { opacity: 1; transform: none; }
+.logo-home { display: block; min-width: 0; }
+nav.links a.is-current { color: var(--gold-deep); }
+nav.links a.is-current::after { width: 100%; }

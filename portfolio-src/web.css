@@ -33,16 +33,22 @@ body { margin: 0; color: #1F272B; background: #EEEFEA;
 .tb-btn[disabled] { opacity: .3; cursor: default; }
 .tb-cta { background: var(--c-gold); border-color: var(--c-gold); color: #fff; font-weight: 500; }
 .tb-cta:hover { background: var(--c-gold-d); }
-@media (max-width: 1180px) { .tb-brand span { display: none; } .hide-sm { display: none !important; } }
+@media (max-width: 1180px) { .hide-sm { display: none !important; } }
+/* 官網 header 已有品牌 logo：作品集工具列左側改顯示「空間作品集」 */
+.tb-brand b { display: none; }
+.tb-brand span { font-size: 13px; color: var(--c-txt); letter-spacing: .16em; }
 
 /* 共用：頁面外的元件預設隱藏，依模式打開 */
-.side, .scrub, .fb-loading, .web-cta, .mx-hint, .actbar { display: none; }
+.side, .tb-rng, .fb-loading, .web-cta, .mx-hint, .actbar { display: none; }
 .pf-note { font-size: 12px; letter-spacing: .06em; text-align: center; color: #7A817D; margin: 0; padding: 18px 20px 26px; }
-.pf-note a { color: inherit; margin-left: 10px; }
 
 /* ===== 翻頁模式 ===== */
-[data-mode="flip"] body { height: 100vh; height: 100dvh; overflow: hidden; display: grid; grid-template-rows: var(--tb-h) minmax(0, 1fr) auto;
+/* 官網 header 在上、footer 在下；中間的翻頁區剛好填滿一個畫面（--site-h 由 JS 量 header 高度） */
+[data-mode="flip"] body { background: #1B2329; }
+[data-mode="flip"] .pf-viewer { height: calc(100vh - var(--site-h, 72px)); height: calc(100dvh - var(--site-h, 72px)); min-height: 460px;
+  display: grid; grid-template-rows: var(--tb-h) minmax(0, 1fr);
   background: radial-gradient(120% 100% at 50% 35%, #40505A 0%, #26323A 55%, #1B2329 100%); }
+[data-mode="flip"] .tb { position: relative; }
 [data-mode="flip"] .stage { position: relative; min-height: 0; display: grid; place-items: center; overflow: hidden; }
 [data-mode="flip"] .fit { position: relative; }
 [data-mode="flip"] .book:not(.stf__parent) { visibility: hidden; }
@@ -61,9 +67,7 @@ body { margin: 0; color: #1F272B; background: #EEEFEA;
 [data-mode="flip"] .side-next { right: max(8px, env(safe-area-inset-right)); }
 [data-mode="flip"] .side:hover { background: rgba(255,255,255,.18); }
 [data-mode="flip"] .side[disabled] { opacity: .15; cursor: default; }
-[data-mode="flip"] .scrub { display: flex; align-items: center; gap: 12px; padding: 4px max(24px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
-  color: var(--c-muted); font-size: 12px; font-variant-numeric: tabular-nums; }
-[data-mode="flip"] .scrub input { flex: 1; accent-color: var(--c-gold); max-width: 1100px; margin: 0 auto; }
+@media (min-width: 1180px) { [data-mode="flip"] .tb-rng { display: block; width: 180px; accent-color: var(--c-gold); margin: 0 4px; } }
 [data-mode="flip"] .pf-note { display: none; }
 
 /* ===== 捲動模式（電腦）：整頁縮放、上下排列 ===== */
