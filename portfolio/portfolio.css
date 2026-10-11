@@ -339,7 +339,7 @@ a.case-type:hover .ft-link { color: var(--brass); border-color: var(--brass); }
 :root { --tb-h: 56px; --c-bar: #232E36; --c-bar-2: #2C3A43; --c-txt: #EEF0EC; --c-muted: #A9B3B0; --c-gold: #C0976A; --c-gold-d: #9C7648;
   --c-line: rgba(255,255,255,.16); color-scheme: light; }
 [hidden] { display: none !important; }
-html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+html, .pg { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body { margin: 0; color: #1F272B; background: #EEEFEA;
   font-family: "Noto Sans TC", "Noto Sans CJK TC", "PingFang TC", "Microsoft JhengHei", sans-serif; }
 :focus-visible { outline: 2px solid var(--c-gold); outline-offset: 2px; }
@@ -382,10 +382,8 @@ body { margin: 0; color: #1F272B; background: #EEEFEA;
 [data-mode="flip"] .book:not(.stf__parent) { visibility: hidden; }
 [data-mode="flip"] .book:not(.stf__parent) .page { display: none; }
 [data-mode="flip"] .page { background: #EEEFEA; overflow: hidden; }
-[data-mode="flip"] .page > .pg, [data-mode="scroll"] .page > .pg { zoom: var(--z, .5); }
-@supports not (zoom: 1) {
-  [data-mode="flip"] .page > .pg, [data-mode="scroll"] .page > .pg { transform: scale(var(--z, .5)); transform-origin: 0 0; }
-}
+/* 頁面縮放用 transform（不用 CSS zoom）：iPad Safari 的 zoom 只縮外框、不縮字，文字會變大擠爆版面（WebKit bug 206550） */
+[data-mode="flip"] .page > .pg, [data-mode="scroll"] .page > .pg { transform: scale(var(--z, .5)); transform-origin: 0 0; }
 [data-mode="flip"] .stf__parent { touch-action: pan-y pinch-zoom; }
 [data-mode="flip"] .stf__block { box-shadow: 0 24px 70px rgba(0,0,0,.45); }
 [data-mode="flip"] .book a.goto *, [data-mode="flip"] .book a[href] * { pointer-events: none; }
