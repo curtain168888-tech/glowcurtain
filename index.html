@@ -2814,7 +2814,7 @@
     if (!typeSel) return;
     var cid = MAP[params.get('style')];
     if (cid) {
-      var opt = typeSel.querySelector('option[data-cid="' + cid + '"]');
+      var opt = Array.prototype.find.call(typeSel.options, function (o) { return o.dataset.cid === cid; });
       if (opt) { typeSel.selectedIndex = opt.index; typeSel.dispatchEvent(new Event('change', { bubbles: true })); }
     }
     if (params.get('motor') === '1' && motorSel) {
