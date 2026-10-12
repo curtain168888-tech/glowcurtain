@@ -813,6 +813,7 @@ footer ul a, .footer-biz-link{ display:inline-flex; align-items:center; min-heig
     border-top:1px solid rgba(251,248,243,0.12); padding-top:24px;
     display:flex; justify-content:space-between; font-size:0.8rem; color:#7C8B92; flex-wrap:wrap; gap:10px;
   }
+.footer-legal{ display:inline-flex; flex-wrap:wrap; column-gap:18px; }
 .footer-biz-link{ text-decoration:underline; text-underline-offset:2px; transition:color .25s ease; }
 .footer-biz-link:hover{ color:var(--gold-soft); }
 .ig-link{ display:inline-flex; align-items:center; gap:8px; }
