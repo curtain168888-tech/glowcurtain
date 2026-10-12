@@ -50,7 +50,8 @@
   li{ margin-bottom:6px; }
   table{ width:100%; border-collapse:collapse; margin:8px 0 16px; font-size:0.95rem; background:#fff; }
   th, td{ text-align:left; vertical-align:top; padding:10px 12px; border:1px solid var(--line); }
-  th{ width:30%; background:var(--bg); color:var(--navy-deep); font-weight:600; }
+  th{ width:28%; background:var(--bg); color:var(--navy-deep); font-weight:600; }
+  code{ font-size:0.88em; background:var(--bg); padding:1px 5px; border-radius:3px; }
   footer{ background:var(--navy-deep); color:#AFBAC0; font-size:0.85rem; }
   footer .bar{ padding:24px 20px; flex-wrap:wrap; }
   footer a{ color:#D7DEE2; }
@@ -73,7 +74,7 @@
 <main>
   <span class="eyebrow">Privacy Policy</span>
   <h1>隱私權政策</h1>
-  <p class="updated">生效日期：2026 年 10 月 13 日</p>
+  <p class="updated">生效日期：2026 年 10 月 13 日（同日修訂）</p>
 
   <p class="lead">織光窗簾（統一編號 61048852，以下稱「本店」）重視您的個人資料。本政策說明您使用本網站（www.glowcurtain.com.tw）預約丈量、線上報價試算與瀏覽網站時，本店如何依《個人資料保護法》蒐集、處理及利用您的資料。</p>
 
@@ -81,31 +82,46 @@
   <table>
     <tr><th>預約丈量表單</th><td>姓名、聯絡電話、安裝地區（縣市、行政區）、詳細地址（選填）、偏好日期與時段、空間類型、房屋狀態、需求備註</td></tr>
     <tr><th>線上報價試算</th><td>窗戶尺寸、款式與數量等試算條件只在您的瀏覽器中計算，不會自動送出；只有在您將結果貼入預約表單或 LINE 訊息時，本店才會收到</td></tr>
-    <tr><th>網站瀏覽紀錄</th><td>透過 Google Analytics 4 蒐集的匿名使用統計，例如瀏覽頁面、停留時間、裝置與瀏覽器類型、概略地區</td></tr>
+    <tr><th>網站瀏覽統計</th><td>透過 Google Analytics 4 蒐集瀏覽頁面、停留時間、捲動深度、裝置與瀏覽器類型、由 IP 推估的概略地區等資料。GA4 以 Cookie 中的隨機識別碼區分訪客與工作階段，屬假名化資料，不含您的姓名或電話；Google 表示 GA4 不記錄或儲存 IP 位址</td></tr>
+    <tr><th>連線技術紀錄</th><td>網站主機為提供網頁與維護安全，會自動記錄 IP 位址、瀏覽器類型、請求時間等連線資料</td></tr>
   </table>
 
   <h2><span class="num">02</span>使用目的</h2>
   <ul>
     <li>與您聯繫、安排到府丈量、提供報價、施工安裝及售後保固服務。</li>
     <li>回覆您透過 LINE、電話或 Instagram 提出的詢問。</li>
-    <li>以匿名統計資料改善網站內容與使用體驗。</li>
+    <li>以統計資料了解網站使用情形，改善內容與使用體驗。</li>
+    <li>維護網站正常運作與資訊安全。</li>
   </ul>
   <p>本店不會將您的資料出售、出租，也不會用於與上述目的無關的行銷。</p>
 
   <h2><span class="num">03</span>資料如何傳送</h2>
-  <p><strong>表單送出：</strong>預約表單透過第三方表單服務 Web3Forms 加密傳送，再以電子郵件轉寄至本店信箱。Web3Forms 的基礎設施可能於台灣以外的地區處理資料，相關處理方式適用 <a href="https://web3forms.com/privacy" target="_blank" rel="noopener">Web3Forms 隱私權政策</a>。</p>
-  <p><strong>LINE 確認訊息：</strong>以手機送出表單後，網站會開啟 LINE 並預先帶入您在表單填寫的預約內容（姓名、電話、地區、日期時段、備註等）。這則訊息<strong>不會自動傳送</strong>，須由您確認內容後自行按下「傳送」，才會送到本店 LINE 官方帳號。傳送後的對話內容適用 LINE 的隱私權政策。</p>
-  <p><strong>瀏覽統計：</strong>Google Analytics 會使用 Cookie 蒐集匿名統計資料。您可以在瀏覽器設定中封鎖 Cookie，或安裝 Google 提供的 <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">停用 Google Analytics 外掛程式</a>。</p>
-
-  <h2><span class="num">04</span>保存期間</h2>
+  <p><strong>表單送出：</strong>預約表單透過第三方表單服務 Web3Forms 以加密連線傳送，再以電子郵件轉寄至本店信箱。</p>
+  <p><strong>LINE 確認訊息：</strong>以手機送出表單後，網站會開啟 LINE 並預先帶入您在表單填寫的預約內容（姓名、電話、地區、日期時段、備註等）。這則訊息<strong>不會自動傳送</strong>，須由您確認內容後自行按下「傳送」，才會送到本店 LINE 官方帳號。</p>
+  <p><strong>瀏覽統計 Cookie：</strong>本站使用 Google Analytics 4 的第一方 Cookie（<code>_ga</code>、<code>_ga_6PKFR414KT</code>），用來區分訪客與工作階段，預設有效期為 2 年。這些 Cookie 不影響網站功能，您可以透過以下方式拒絕：</p>
   <ul>
-    <li>本店於上述目的存續期間內保存您的資料，包括聯繫、丈量、報價、施工及保固服務期間；目的消失後即予刪除，但法令另有保存規定者（例如交易憑證）依其規定。</li>
-    <li>Web3Forms 端：依其服務政策，表單送出紀錄最長保存三年，免費方案後台可查閱的送出紀錄為 30 天。</li>
-    <li>您也可以隨時要求本店提前刪除您的資料（見第 06 點）。</li>
+    <li>在瀏覽器設定中封鎖或刪除 Cookie；</li>
+    <li>安裝 Google 提供的 <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">停用 Google Analytics 外掛程式</a>。</li>
   </ul>
 
+  <h2><span class="num">04</span>保存期間</h2>
+  <table>
+    <tr><th>未成交的預約與詢問</th><td>自最後一次聯繫起保存 1 年，期滿刪除本店信箱與 LINE 中的相關紀錄</td></tr>
+    <tr><th>已成交的客戶資料</th><td>保存至保固與售後服務結束後 1 年；交易憑證依《商業會計法》保存 5 年</td></tr>
+    <tr><th>Web3Forms</th><td>依其政策，表單送出紀錄最長保存 3 年（免費方案後台可查閱的紀錄為 30 天）</td></tr>
+    <tr><th>Google Analytics</th><td>事件層級資料依 GA4 資料保留設定保存（GA4 預設為 2 個月）</td></tr>
+  </table>
+  <p>您也可以隨時要求本店提前刪除您的資料（見第 06 點）。</p>
+
   <h2><span class="num">05</span>資料的使用對象與地區</h2>
-  <p>您的預約資料僅由本店人員為提供服務而使用。為完成上述服務，資料會經由 Web3Forms、電子郵件服務及 LINE 等服務供應商處理；除依法令要求外，不會提供給其他第三人。</p>
+  <p>您的預約資料僅由本店人員為提供服務而使用；除下列服務供應商及依法令要求外，不會提供給其他第三人。</p>
+  <table>
+    <tr><th>Web3Forms</th><td>表單傳送。營運主體位於印度，基礎設施（AWS、Cloudflare、Hetzner）可能於多個地區處理資料。<a href="https://web3forms.com/privacy" target="_blank" rel="noopener">隱私權政策</a></td></tr>
+    <tr><th>LINE</th><td>您主動傳送的預約訊息與後續對話，由 LINE 官方帳號服務處理，處理地區依 LINE（LY Corporation）隱私權政策所列</td></tr>
+    <tr><th>電子郵件服務</th><td>接收 Web3Forms 轉寄的預約通知，存放於本店信箱服務商的伺服器</td></tr>
+    <tr><th>Google Analytics</th><td>網站瀏覽統計。由 Google 處理，資料可能儲存於美國及其他 Google 資料中心所在地區。<a href="https://support.google.com/analytics/answer/6004245?hl=zh-Hant" target="_blank" rel="noopener">Google 資料保護說明</a></td></tr>
+    <tr><th>Vercel</th><td>網站主機與連線技術紀錄，服務商位於美國，可能於全球節點處理連線資料</td></tr>
+  </table>
 
   <h2><span class="num">06</span>您的權利</h2>
   <p>依《個人資料保護法》第 3 條，您可以向本店請求：</p>
