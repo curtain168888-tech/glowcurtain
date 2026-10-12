@@ -415,13 +415,29 @@
   /* 內容已完整置中、不需要捲動時，由 JS（.cat-carousel.no-scroll）隱藏箭頭與邊緣漸層 */
   .cat-carousel.no-scroll::before, .cat-carousel.no-scroll::after,
   .cat-carousel.no-scroll .cat-nav-btn{ display:none; }
-  /* 窗簾分類下方：連到空間作品集（/portfolio/） */
-  .cat-portfolio{ text-align:center; padding-top:34px; }
-  .cat-portfolio-link{ display:inline-flex; align-items:center; gap:12px; color:var(--navy); text-decoration:none; font-size:0.98rem; letter-spacing:0.04em;
-    border-bottom:1px solid var(--gold); padding-bottom:6px; line-height:1.6; }
-  .cat-portfolio-link .arrow{ color:var(--gold-deep); transition:transform .25s ease; }
-  .cat-portfolio-link:hover .arrow{ transform:translateX(4px); }
-  @media (max-width:480px){ .cat-portfolio-link{ font-size:0.92rem; text-align:left; } }
+  /* 窗簾分類下方：空間作品集 CTA（/portfolio/）——說明文字＋實心按鈕，桌機左右排、手機上下排 */
+  .cat-portfolio{ padding-top:40px; }
+  .cat-portfolio-box{
+    max-width:880px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:28px;
+    background:var(--bg-soft); border:1px solid var(--line); border-left:3px solid var(--gold); padding:26px 30px;
+  }
+  .cat-portfolio-text{ margin:0; font-size:1.02rem; line-height:1.8; color:var(--ink); letter-spacing:0.02em; text-wrap:balance; }
+  .cat-portfolio-btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:10px; flex-shrink:0;
+    background:var(--navy-deep); color:var(--paper); border:1px solid var(--navy-deep);
+    padding:16px 30px; text-decoration:none; font-size:1rem; font-weight:700; letter-spacing:0.06em; white-space:nowrap;
+    box-shadow:0 10px 24px rgba(35,46,54,0.18);
+    transition:background .25s ease, color .25s ease, border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+  }
+  .cat-portfolio-btn svg{ width:20px; height:20px; flex-shrink:0; }
+  .cat-portfolio-btn .arrow{ color:var(--gold-soft); transition:transform .25s ease, color .25s ease; }
+  .cat-portfolio-btn:hover{ background:var(--gold); border-color:var(--gold); color:var(--navy-deep); transform:translateY(-2px); box-shadow:0 14px 30px rgba(35,46,54,0.22); }
+  .cat-portfolio-btn:hover .arrow{ color:var(--navy-deep); transform:translateX(4px); }
+  @media (max-width:760px){
+    .cat-portfolio-box{ flex-direction:column; align-items:stretch; text-align:center; gap:18px; padding:24px 20px; }
+    .cat-portfolio-text{ font-size:0.96rem; }
+    .cat-portfolio-btn{ width:100%; padding:16px 20px; }
+  }
   .cat-card:hover, .cat-card:focus-within{
     background:var(--bg-soft); transform:translateY(-4px); box-shadow:var(--shadow-soft); z-index:1;
   }
@@ -1210,7 +1226,13 @@
   </div>
   </div>
   <div class="wrap cat-portfolio">
-    <a class="cat-portfolio-link" href="/portfolio/" data-cid="CAT-PORTFOLIO-LINK"><span data-cid="CAT-PORTFOLIO-TEXT">想看實際裝起來的樣子？翻閱空間作品集，從客廳、臥室到商業空間的安裝案例</span><span class="arrow" aria-hidden="true">→</span></a>
+    <div class="cat-portfolio-box">
+      <p class="cat-portfolio-text" data-cid="CAT-PORTFOLIO-TEXT">想看實際裝起來的樣子？從客廳、臥室到商業空間的安裝案例，都整理在空間作品集。</p>
+      <a class="cat-portfolio-btn" href="/portfolio/" data-cid="CAT-PORTFOLIO-LINK">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5.5c2.6-1 5.6-1 9 1 3.4-2 6.4-2 9-1v13c-2.6-1-5.6-1-9 1-3.4-2-6.4-2-9-1z"/><path d="M12 6.5v13"/></svg>
+        <span data-cid="CAT-PORTFOLIO-BTN">翻閱空間作品集</span><span class="arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
   </div>
 </section>
 
