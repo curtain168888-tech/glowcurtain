@@ -562,13 +562,15 @@
     min-height:50px; /* 觸控目標高度 */
   }
   .submit-btn:hover{ opacity:0.88; transform:translateY(-1px); }
+  /* 送出後的確認訊息：#booking 是深色區塊、文字預設白色，這裡明確指定深色文字，避免白字疊在淺底上看不清楚 */
   .confirm-box{
-    display:none; margin-top:22px; padding:22px 24px; background:var(--bg-soft);
-    border-left:2px solid var(--gold-deep); font-size:0.92rem; line-height:1.75;
+    display:none; margin-top:22px; padding:22px 24px; background:#FFFFFF; color:var(--ink);
+    border:1px solid var(--gold-soft); border-left:4px solid var(--gold-deep);
+    box-shadow:var(--shadow); font-size:0.95rem; line-height:1.8;
   }
   .confirm-box.show{ display:block; }
-  .confirm-box b{ font-family:var(--font-display); }
-  .confirm-next-step{ display:block; margin-top:10px; color:var(--gold-deep); font-weight:500; }
+  .confirm-box b{ font-family:var(--font-display); color:var(--navy-deep); font-size:1.05rem; }
+  .confirm-next-step{ display:block; margin-top:12px; padding-top:12px; border-top:1px solid var(--line); color:var(--gold-deep); font-weight:700; }
   .confirm-box .btn-line{ margin-top:16px; }
 
   /* ---------- QUOTE ----------
