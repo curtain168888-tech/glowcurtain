@@ -9,6 +9,13 @@
   gtag('js', new Date());
 
   gtag('config', 'G-6PKFR414KT');
+
+  // 轉換追蹤：統一由 gcTrack 送出 GA4 事件（gtag 未載入或被擋時安靜略過）
+  window.gcTrack = function(name, params){
+    try { if (typeof gtag === 'function') gtag('event', name, Object.assign({ transport_type: 'beacon' }, params || {})); } catch (e) {}
+  };
+  // 開場動畫同一個工作階段只播一次：之前看過就直接略過（從作品集返回、重新整理都不會再等）
+  try { if (sessionStorage.getItem('gc_intro_seen')) document.documentElement.classList.add('intro-skip'); } catch (e) {}
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -47,7 +54,7 @@
     --ink: #362A2C;
     --ink-soft: #746264;
     --gold: #C0976A;
-    --gold-deep: #9C7648;
+    --gold-deep: #7E5F3A; /* 文字用深金：原 #9C7648 在米色底對比僅 3.3，調深至 4.7 以上（WCAG AA） */
     --gold-soft: #E4C9A9;
     --navy: #364852;
     --navy-deep: #232E36;
@@ -222,6 +229,9 @@
     .intro-overlay{ display:none; }
     .logo-mark{ opacity:1; transform:none; }
   }
+  /* 同一工作階段已看過開場動畫：直接顯示頁面與 Logo */
+  html.intro-skip .intro-overlay{ display:none; }
+  html.intro-skip .logo-mark{ opacity:1; transform:none; animation:none; }
   @media (max-width: 480px){
     .logo-mark{ width:170px; height:36px; }
   }
@@ -306,6 +316,8 @@
   }
   .hero-content .box{ max-width:620px; }
   .hero .eyebrow{ color:var(--gold-soft); }
+  /* H1 開頭的關鍵字小標：沿用 eyebrow 樣式，獨立一行、不吃 H1 的字級與陰影；中文不用斜體 */
+  .hero h1 .hero-kicker{ display:flex; width:fit-content; font-size:0.95rem; line-height:1.5; font-weight:400; font-style:normal; text-shadow:none; margin-bottom:0.9rem; }
   .hero .eyebrow::before{ background:var(--gold-soft); }
   .hero-trust{ display:flex; gap:24px; flex-wrap:wrap; margin-top:32px; font-size:0.82rem; color:rgba(255,255,255,0.78); letter-spacing:0.02em; text-shadow:0 1px 12px rgba(0,0,0,0.35); }
   .hero-scroll{
@@ -764,7 +776,7 @@
   footer ul a, .footer-biz-link{ display:inline-flex; align-items:center; min-height:44px; }
   .footer-bottom{
     border-top:1px solid rgba(251,248,243,0.12); padding-top:24px;
-    display:flex; justify-content:space-between; font-size:0.8rem; color:#7C8B92; flex-wrap:wrap; gap:10px;
+    display:flex; justify-content:space-between; font-size:0.8rem; color:#8E9CA3; flex-wrap:wrap; gap:10px;
   }
   .footer-legal{ display:inline-flex; flex-wrap:wrap; column-gap:18px; }
   .footer-biz-link{ text-decoration:underline; text-underline-offset:2px; transition:color .25s ease; }
@@ -974,7 +986,17 @@
   "description": "織光窗簾提供捲簾、鋁百葉、木百葉、調光簾（斑馬簾）、風琴簾（蜂巢簾）、穿透簾、片簾、布簾（折景簾）、紗簾、蛇形簾、一布一紗等11款窗飾，全台到府免費丈量與線上估價服務。",
   "areaServed": {"@type": "Country", "name": "台灣"},
   "telephone": "0986-295-548",
-  "sameAs": ["https://www.instagram.com/glowcurtain/"]
+  "sameAs": ["https://www.instagram.com/glowcurtain/", "https://www.threads.com/@glowcurtain"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "織光窗簾 GlowCurtain",
+  "alternateName": ["織光窗簾", "GlowCurtain"],
+  "url": "https://www.glowcurtain.com.tw/",
+  "inLanguage": "zh-Hant-TW"
 }
 </script>
 <script type="application/ld+json">
@@ -1014,7 +1036,7 @@
     {"@type":"Question","name":"蜂巢簾真的比較隔熱嗎？","acceptedAnswer":{"@type":"Answer","text":"蜂巢結構會在簾片間形成中空氣層，具有實際的隔熱效果，有助於夏季隔絕熱氣、冬季減少熱能散失。"}},
     {"@type":"Question","name":"調光簾晚上看得到裡面嗎？","acceptedAnswer":{"@type":"Answer","text":"若簾片角度未完全閉合，夜間開燈時仍有一定透視可能，建議晚間調整至完全閉合角度，或搭配遮光簾使用。"}},
     {"@type":"Question","name":"租屋適合裝什麼窗簾？","acceptedAnswer":{"@type":"Answer","text":"租屋族群可考慮捲簾、風琴簾等安裝較單純、退租時較好復原的輕量款式，建議丈量時告知是租屋使用。"}},
-    {"@type":"Question","name":"落地窗適合哪種窗簾？","acceptedAnswer":{"@type":"Answer","text":"落地窗或陽台門建議選擇折景簾，獨立分片設計不必整片拉開就能進出陽台，布簾搭配寬軌道也是常見做法。"}},
+    {"@type":"Question","name":"落地窗適合哪種窗簾？","acceptedAnswer":{"@type":"Answer","text":"落地窗或陽台門常見三種做法：布簾（折景簾）可選左右對開，從中間拉開就能進出陽台；片簾是大片布面左右滑動開合，線條俐落，特別適合大面落地窗；想兼顧白天透光與夜晚遮光，可選一布一紗雙軌搭配。實際建議依空間動線與風格，丈量時由規劃師評估。"}},
     {"@type":"Question","name":"窗簾可以自己量尺寸嗎？","acceptedAnswer":{"@type":"Answer","text":"可以先自行測量抓概略預算，但正式訂製建議以到府丈量為準，專人丈量能確保裁切與安裝的準確度，且丈量服務完全免費。"}},
     {"@type":"Question","name":"丈量到安裝通常需要多久？","acceptedAnswer":{"@type":"Answer","text":"一般而言約需 2 至 4 週，依訂製款式與布料到貨時間而定，實際時程會在丈量後由專人告知。"}},
     {"@type":"Question","name":"無門市如何挑選布料？","acceptedAnswer":{"@type":"Answer","text":"無門市代表沒有店租等管銷成本，我們把省下的費用回饋到報價，提供更有競爭力的價格；丈量時規劃師會攜帶布料樣品到府，在您家中實際的採光環境下比對顏色與質感，反而比門市燈光更準確。"}}
@@ -1031,7 +1053,7 @@
   <span class="intro-curtain intro-curtain-r"></span>
   <span class="intro-seam"></span>
   <span class="intro-logo-wrap">
-    <img src="/images/logo-horizontal.png" alt="" width="320" height="64">
+    <img src="/images/logo-horizontal-web.webp" alt="" width="320" height="64">
   </span>
 </div>
 <noscript><style>.intro-overlay{ display:none !important; } .logo-mark{ opacity:1 !important; transform:none !important; }</style></noscript>
@@ -1043,6 +1065,8 @@
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     return; // CSS 已處理 reduced-motion，直接不啟動計時，避免多餘動畫
   }
+  if (html.classList.contains('intro-skip')) return; // 本工作階段已播過
+  try { sessionStorage.setItem('gc_intro_seen', '1'); } catch (e) {}
   var MIN_MS = 2050;  // 最短顯示時間：讓「窗簾拉開」＋ Logo 波光掃過的進場動畫（約 2 秒）完整播完，太快收合會被截斷
   var MAX_MS = 3200;  // 最長等待時間：即使圖片一直沒載完，也不讓使用者卡住太久
   var startTime = Date.now();
@@ -1072,7 +1096,7 @@
 <header class="site" id="siteHeader">
   <div class="nav-inner">
     <div class="logo">
-      <img class="logo-mark" src="/images/logo-horizontal.png" alt="織光窗簾 GlowCurtain 品牌標誌" width="220" height="44" data-cid="IMG-001" data-cid-alt="IMG-001-ALT">
+      <img class="logo-mark" src="/images/logo-horizontal-web.webp" alt="織光窗簾 GlowCurtain 品牌標誌" width="220" height="44" data-cid="IMG-001" data-cid-alt="IMG-001-ALT">
     </div>
     <nav class="links" id="navLinks">
       <a href="#categories" data-cid="NAV-L1">窗簾分類</a>
@@ -1095,15 +1119,14 @@
   <div class="hero-scrim" aria-hidden="true"></div>
   <div class="hero-content">
     <div class="box">
-      <span class="eyebrow" data-cid="HERO-EYEBROW">Glow Curtain · Custom Window Dressing</span>
-      <h1 data-cid="HERO-H1">讓光線，<em>溫柔穿透</em></h1>
+      <h1 data-cid="HERO-H1"><span class="eyebrow hero-kicker" data-cid="HERO-EYEBROW">織光窗簾 · 全台到府訂製窗簾</span>讓光線，<em>溫柔穿透</em></h1>
       <p class="lead" data-cid="HERO-LEAD">織光窗簾專注訂製窗簾與居家窗飾，擁有多年的窗飾職人規劃經驗，從布料選配、到府丈量到安裝，一次為您的空間織出剛好的光影層次。</p>
       <div class="hero-actions">
         <a class="btn-primary" href="#booking" data-cid="HERO-CTA1">預約到府丈量</a>
         <a class="btn-secondary" href="#quote" data-cid="HERO-CTA2">立即試算報價</a>
       </div>
       <div class="hero-trust">
-        <span data-cid="HERO-TRUST1">✓ 全省到府</span>
+        <span data-cid="HERO-TRUST1">✓ 全台到府</span>
         <span data-cid="HERO-TRUST2">✓ 免費丈量</span>
         <span data-cid="HERO-TRUST3">✓ MIT 嚴選</span>
       </div>
@@ -1131,7 +1154,7 @@
 
     <div class="cat-card">
       <span class="num">01</span>
-      <img class="cat-icon" src="/images/%E9%A6%96%E9%A0%81%E5%9C%96-%E6%8D%B2%E7%B0%BE.png" alt="捲簾示意圖" width="80" height="80" loading="lazy" data-cid="CAT-01-ICON">
+      <img class="cat-icon" src="/images/%E9%A6%96%E9%A0%81%E5%9C%96-%E6%8D%B2%E7%B0%BE.webp" alt="捲簾示意圖" width="80" height="80" loading="lazy" data-cid="CAT-01-ICON">
       <h3 data-cid="CAT-01-TITLE">捲簾</h3>
       <span class="cat-en" data-cid="CAT-01-EN">Roller Blinds</span>
       <p data-cid="CAT-01-DESC">極簡俐落，操作簡便好清潔，遮光與透光款式皆備，兼顧美觀機能。</p>
@@ -1139,7 +1162,7 @@
 
     <div class="cat-card">
       <span class="num">02</span>
-      <img class="cat-icon" src="/images/%E9%A6%96%E9%A0%81%E5%9C%96-%E9%8B%81%E7%99%BE%E8%91%89.png" alt="鋁百葉示意圖" width="80" height="80" loading="lazy" data-cid="CAT-02-ICON">
+      <img class="cat-icon" src="/images/%E9%A6%96%E9%A0%81%E5%9C%96-%E9%8B%81%E7%99%BE%E8%91%89.webp" alt="鋁百葉示意圖" width="80" height="80" loading="lazy" data-cid="CAT-02-ICON">
       <h3 data-cid="CAT-02-TITLE">鋁百葉</h3>
       <span class="cat-en" data-cid="CAT-02-EN">Aluminum Blinds</span>
       <p data-cid="CAT-02-DESC">輕量鋁百葉耐潮防塵，可調角度精準控光，適合廚房、衛浴等潮濕空間。</p>
@@ -1147,7 +1170,7 @@
 
     <div class="cat-card">
       <span class="num">03</span>
-      <img class="cat-icon" src="/images/%E9%A6%96%E9%A0%81%E5%9C%96-%E6%9C%A8%E7%99%BE%E8%91%89.png" alt="木百葉/仿木百葉示意圖" width="80" height="80" loading="lazy" data-cid="CAT-03-ICON">
+      <img class="cat-icon" src="/images/%E9%A6%96%E9%A0%81%E5%9C%96-%E6%9C%A8%E7%99%BE%E8%91%89.webp" alt="木百葉/仿木百葉示意圖" width="80" height="80" loading="lazy" data-cid="CAT-03-ICON">
       <h3 data-cid="CAT-03-TITLE">木百葉/仿木百葉</h3>
       <span class="cat-en" data-cid="CAT-03-EN">Wood Blinds</span>
       <p data-cid="CAT-03-DESC">天然木質或仿木質感，可調角度控制光線與隱私，耐用且富設計感。</p>
@@ -1155,7 +1178,7 @@
 
     <div class="cat-card">
       <span class="num">04</span>
-      <img class="cat-icon" src="/images/%E9%A6%96%E9%A0%81%E5%9C%96-%E8%AA%BF%E5%85%89%E7%B0%BE.png" alt="調光簾示意圖" width="80" height="80" loading="lazy" data-cid="CAT-04-ICON">
+      <img class="cat-icon" src="/images/%E9%A6%96%E9%A0%81%E5%9C%96-%E8%AA%BF%E5%85%89%E7%B0%BE.webp" alt="調光簾示意圖" width="80" height="80" loading="lazy" data-cid="CAT-04-ICON">
       <h3 data-cid="CAT-04-TITLE">調光簾（斑馬簾）</h3>
       <span class="cat-en" data-cid="CAT-04-EN">Zebra Blinds</span>
       <p data-cid="CAT-04-DESC">層次分明，可自由調整光線通透度，兼顧採光與隱私，適合需要彈性控光的空間。</p>
@@ -1163,7 +1186,7 @@
 
     <div class="cat-card">
       <span class="num">05</span>
-      <img class="cat-icon" src="/images/%E9%A6%96%E9%A0%81%E5%9C%96-%E8%9C%82%E5%B7%A2%E7%B0%BE.png" alt="風琴簾示意圖" width="80" height="80" loading="lazy" data-cid="CAT-05-ICON">
+      <img class="cat-icon" src="/images/%E9%A6%96%E9%A0%81%E5%9C%96-%E8%9C%82%E5%B7%A2%E7%B0%BE.webp" alt="風琴簾示意圖" width="80" height="80" loading="lazy" data-cid="CAT-05-ICON">
       <h3 data-cid="CAT-05-TITLE">風琴簾（蜂巢簾）</h3>
       <span class="cat-en" data-cid="CAT-05-EN">Cellular Shades</span>
       <p data-cid="CAT-05-DESC">風琴簾又稱蜂巢簾，其結構能有效隔熱節能，線條簡約俐落，適合現代居家與辦公空間。</p>
@@ -1171,7 +1194,7 @@
 
     <div class="cat-card">
       <span class="num">06</span>
-      <img class="cat-icon" src="/images/%E9%A6%96%E9%A0%81%E5%9C%96-%E7%A9%BF%E9%80%8F%E7%B0%BE.png" alt="穿透簾示意圖" width="80" height="80" loading="lazy" data-cid="CAT-06-ICON">
+      <img class="cat-icon" src="/images/%E9%A6%96%E9%A0%81%E5%9C%96-%E7%A9%BF%E9%80%8F%E7%B0%BE.webp" alt="穿透簾示意圖" width="80" height="80" loading="lazy" data-cid="CAT-06-ICON">
       <h3 data-cid="CAT-06-TITLE">穿透簾</h3>
       <span class="cat-en" data-cid="CAT-06-EN">Sheer Shades</span>
       <p data-cid="CAT-06-DESC">輕盈紗感搭配立體皺褶，光影朦朧夢幻，可自由調節光線通透度與角度，為空間增添柔美浪漫氛圍。</p>
@@ -1179,7 +1202,7 @@
 
     <div class="cat-card">
       <span class="num">07</span>
-      <img class="cat-icon" src="/images/%E9%A6%96%E9%A0%81%E5%9C%96-%E8%A8%82%E8%A3%BD%E5%B8%83%E7%B0%BE.png" alt="布簾（折景簾）示意圖" width="80" height="80" loading="lazy" data-cid="CAT-07-ICON">
+      <img class="cat-icon" src="/images/%E9%A6%96%E9%A0%81%E5%9C%96-%E8%A8%82%E8%A3%BD%E5%B8%83%E7%B0%BE.webp" alt="布簾（折景簾）示意圖" width="80" height="80" loading="lazy" data-cid="CAT-07-ICON">
       <h3 data-cid="CAT-07-TITLE">布簾（折景簾）</h3>
       <span class="cat-en" data-cid="CAT-07-EN">Custom Drapery</span>
       <p data-cid="CAT-07-DESC">多樣布料花色，垂墜自然，適合客廳、臥室，營造最佳的空間光影氛圍。</p>
@@ -1187,7 +1210,7 @@
 
     <div class="cat-card">
       <span class="num">08</span>
-      <img class="cat-icon" src="/images/%E9%A6%96%E9%A0%81%E5%9C%96-%E7%B4%97%E7%B0%BE.png" alt="紗簾示意圖" width="80" height="80" loading="lazy" data-cid="CAT-08-ICON">
+      <img class="cat-icon" src="/images/%E9%A6%96%E9%A0%81%E5%9C%96-%E7%B4%97%E7%B0%BE.webp" alt="紗簾示意圖" width="80" height="80" loading="lazy" data-cid="CAT-08-ICON">
       <h3 data-cid="CAT-08-TITLE">紗簾</h3>
       <span class="cat-en" data-cid="CAT-08-EN">Sheer Curtains</span>
       <p data-cid="CAT-08-DESC">柔光細紗透出朦朧光影，日夜氛圍皆宜，適合搭配其他窗簾做雙層層次。</p>
@@ -1195,7 +1218,7 @@
 
     <div class="cat-card">
       <span class="num">09</span>
-      <img class="cat-icon" src="/images/%E9%A6%96%E9%A0%81%E5%9C%96-%E7%89%87%E7%B0%BE.png" alt="片簾示意圖" width="80" height="80" loading="lazy" data-cid="CAT-09-ICON">
+      <img class="cat-icon" src="/images/%E9%A6%96%E9%A0%81%E5%9C%96-%E7%89%87%E7%B0%BE.webp" alt="片簾示意圖" width="80" height="80" loading="lazy" data-cid="CAT-09-ICON">
       <h3 data-cid="CAT-09-TITLE">片簾</h3>
       <span class="cat-en" data-cid="CAT-09-EN">Panel Track Blinds</span>
       <p data-cid="CAT-09-DESC">大片布面平整垂掛，可左右滑動開合，線條俐落簡約，特別適合大面落地窗與空間隔間。</p>
@@ -1203,7 +1226,7 @@
 
     <div class="cat-card">
       <span class="num">10</span>
-      <img class="cat-icon" src="/images/%E9%A6%96%E9%A0%81%E5%9C%96-%E8%9B%87%E5%BD%A2%E7%B0%BE.png" alt="蛇形簾示意圖" width="80" height="80" loading="lazy" data-cid="CAT-10-ICON">
+      <img class="cat-icon" src="/images/%E9%A6%96%E9%A0%81%E5%9C%96-%E8%9B%87%E5%BD%A2%E7%B0%BE.webp" alt="蛇形簾示意圖" width="80" height="80" loading="lazy" data-cid="CAT-10-ICON">
       <h3 data-cid="CAT-10-TITLE">蛇形簾</h3>
       <span class="cat-en" data-cid="CAT-10-EN">Wave Curtains</span>
       <p data-cid="CAT-10-DESC">規律的波浪褶線條優雅大方，收合整齊不佔空間，搭配專用軌道，呈現俐落的飯店質感。</p>
@@ -1211,7 +1234,7 @@
 
     <div class="cat-card">
       <span class="num">11</span>
-      <img class="cat-icon" src="/images/%E9%A6%96%E9%A0%81%E5%9C%96-%E4%B8%80%E5%B8%83%E4%B8%80%E7%B4%97.png" alt="一布一紗示意圖" width="80" height="80" loading="lazy" data-cid="CAT-11-ICON">
+      <img class="cat-icon" src="/images/%E9%A6%96%E9%A0%81%E5%9C%96-%E4%B8%80%E5%B8%83%E4%B8%80%E7%B4%97.webp" alt="一布一紗示意圖" width="80" height="80" loading="lazy" data-cid="CAT-11-ICON">
       <h3 data-cid="CAT-11-TITLE">一布一紗</h3>
       <span class="cat-en" data-cid="CAT-11-EN">Drapery & Sheer</span>
       <p data-cid="CAT-11-DESC">布簾與紗簾雙軌搭配，白天拉上紗簾透光又保有隱私，夜晚闔上布簾遮光好眠。</p>
@@ -1474,11 +1497,11 @@
       <span class="eyebrow" data-cid="STATS-EYEBROW">Our Track Record</span>
       <div class="stats-grid">
         <div class="stat-item">
-          <div class="num" data-target="1000" data-suffix="+" data-cid="STATS-1-NUM">0+</div>
+          <div class="num" data-target="1000" data-suffix="+" data-cid="STATS-1-NUM">1000+</div>
           <div class="label" data-cid="STATS-1-LABEL">每年安裝實績（扇窗）</div>
         </div>
         <div class="stat-item">
-          <div class="num" data-target="24" data-suffix="小時內" data-cid="STATS-2-NUM">0小時內</div>
+          <div class="num" data-target="24" data-suffix="小時內" data-cid="STATS-2-NUM">24小時內</div>
           <div class="label" data-cid="STATS-2-LABEL">客服效率回覆</div>
         </div>
       </div>
@@ -1735,7 +1758,7 @@
           </button>
         </h3>
         <div class="faq-answer" id="faq-panel-13" role="region" aria-labelledby="faq-btn-13">
-          <p data-cid="FAQ-A13">落地窗或陽台門建議選擇折景簾，獨立分片設計不必整片拉開就能進出陽台；布簾搭配寬軌道也是常見做法，可依空間動線與風格需求選擇。</p>
+          <p data-cid="FAQ-A13">落地窗或陽台門常見三種做法：布簾（折景簾）可選左右對開，從中間拉開就能進出陽台；片簾是大片布面左右滑動開合，線條俐落，特別適合大面落地窗；想兼顧白天透光與夜晚遮光，可選一布一紗雙軌搭配。實際建議依空間動線與風格，丈量時由規劃師評估。</p>
         </div>
       </div>
       </div><button type="button" class="faq-category" data-cat="process" aria-expanded="false" aria-controls="faq-cat-process">
@@ -1773,7 +1796,7 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <img class="footer-logo-mark" src="/images/logo-horizontal.png" alt="織光窗簾 GlowCurtain 品牌標誌（頁尾）" width="220" height="40" data-cid="IMG-002" data-cid-alt="IMG-002-ALT">
+        <img class="footer-logo-mark" src="/images/logo-horizontal-web.webp" alt="織光窗簾 GlowCurtain 品牌標誌（頁尾）" width="220" height="40" data-cid="IMG-002" data-cid-alt="IMG-002-ALT">
         <p data-cid="FOOTER-TAGLINE">深耕窗飾設計多年，我們以透明誠信與專業規劃為本，完美演繹空間中的窗簾美學。</p>
       </div>
       <div>
@@ -2081,6 +2104,8 @@
       const result = await res.json();
 
       if(result.success){
+        // GA4 名單事件（不含姓名、電話等個資）
+        window.gcTrack && window.gcTrack('generate_lead', { lead_source: 'booking_form', install_city: bCity.value, space_type: space, house_status: status, has_quote_note: /NT\$/.test(note) ? 'yes' : 'no' });
         const lineText = buildLineMessage({name, phone, region, address, date, time, space, status, note});
         const isMobile = IS_MOBILE;
         // oaMessage 這種帶預填訊息的深連結，只有手機能正確跳轉進 LINE App；
@@ -2108,10 +2133,12 @@
           try{ window.open(lineUrl, '_blank'); }catch(_){}
         }
       } else {
+        window.gcTrack && window.gcTrack('booking_submit_error', { error_type: 'api' });
         bookingConfirm.innerHTML = `<b>送出失敗，</b> 請稍後再試一次，或直接透過 LINE 官方帳號與我們聯繫。`;
         bookingConfirm.classList.add('show');
       }
     } catch(err){
+      window.gcTrack && window.gcTrack('booking_submit_error', { error_type: 'network' });
       bookingConfirm.innerHTML = `<b>送出失敗，</b> 請確認網路連線後再試一次，或直接透過 LINE 官方帳號與我們聯繫。`;
       bookingConfirm.classList.add('show');
     } finally {
@@ -2223,6 +2250,18 @@
     rUnit.textContent = qWidth.value.trim() + ' × ' + qHeight.value.trim() + ' 公分';
   }
 
+  // 試算事件：使用者動過欄位後才記錄；桌機會邊打邊算，所以停手 1.5 秒、且組合有變才送一次
+  let quoteTouched = false, quoteTrackTimer = null, quoteLastTracked = '';
+  function trackQuoteCalc(style, tier, motor, qty, total){
+    if (!quoteTouched) return;
+    clearTimeout(quoteTrackTimer);
+    quoteTrackTimer = setTimeout(() => {
+      const key = [style, tier, motor, qty, total].join('|');
+      if (key === quoteLastTracked) return;
+      quoteLastTracked = key;
+      window.gcTrack && window.gcTrack('quote_calculate', { curtain_style: style, material_tier: tier, motor_upgrade: motor || 'none', window_qty: qty });
+    }, 1500);
+  }
   function calcQuote(){
     if (validateQuote(false)) {
       // 欄位有誤時不顯示金額，避免出現 NT$ 0 或錯誤金額
@@ -2273,6 +2312,7 @@
       showQuoteSpec();
       rQty.textContent = qty + ' 面';
       rTotal.textContent = 'NT$ ' + Math.round(total).toLocaleString();
+      trackQuoteCalc(opt.textContent.trim(), tierKey, (qMotor.selectedOptions[0] && qMotor.selectedOptions[0].dataset.motor) || 'none', qty, Math.round(total));
       return;
     }
 
@@ -2285,12 +2325,14 @@
     showQuoteSpec();
     rQty.textContent = qty + ' 面';
     rTotal.textContent = 'NT$ ' + Math.round(total).toLocaleString();
+    trackQuoteCalc(opt.textContent.trim(), tierKey, (qMotor.selectedOptions[0] && qMotor.selectedOptions[0].dataset.motor) || 'none', qty, Math.round(total));
   }
 
   const quoteSubmit = document.getElementById('quoteSubmit');
   const quoteResultBox = document.querySelector('.quote-result');
 
   quoteSubmit.addEventListener('click', () => {
+    quoteTouched = true;
     const firstInvalid = validateQuote(true);
     calcQuote();
     if (firstInvalid) { scrollToField(firstInvalid); return; }
@@ -2302,6 +2344,7 @@
   // 桌機版仍即時更新，方便一邊調整一邊看變化；手機版靠上方按鈕觸發+捲動
   [qType, qWidth, qHeight, qTier, qMotor, qQty].forEach(el => {
     el.addEventListener('input', () => {
+      quoteTouched = true;
       validateQuote(false);  // 修正後紅字立即消失（輸入中不新增紅字）
       if (window.innerWidth > 860) { calcQuote(); }
     });
@@ -2413,6 +2456,7 @@
       // 沒有先按「開始試算」就直接按「加入清單」，畫面上顯示的金額會是上一次試算的舊結果，
       // 跟目前欄位內容（寬高／款式／數量）對不上——這裡在加入清單前一律強制重新試算一次，
       // 確保加入清單的金額永遠對應「當下」的欄位內容，桌機／手機行為一致，不會有落差
+      quoteTouched = true;
       const firstInvalid = validateQuote(true);
       calcQuote();
       if (firstInvalid) { scrollToField(firstInvalid); return; }
@@ -2429,6 +2473,7 @@
       });
       persist();
       render();
+      window.gcTrack && window.gcTrack('quote_add_item', { curtain_style: typeName, list_size: items.length });
       addBtn.classList.add('is-added');
       if (addBtnIcon) addBtnIcon.textContent = '✓';
       if (addBtnLabel) addBtnLabel.textContent = '已加入清單，可繼續試算下一面窗戶';
@@ -2594,7 +2639,14 @@
         showingA = !showingA;
         rotating = false;
       }
-      setInterval(rotate, 3000);
+      // 只有 Hero 在畫面內、且分頁在前景時才輪播與預載下一張；
+      // 使用者往下捲去試算／預約時就停下，不再背景下載其餘照片
+      let heroInView = true;
+      const heroSection = container.closest('.hero') || container;
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(entries => { heroInView = entries[0].isIntersecting; }, { threshold: 0.05 }).observe(heroSection);
+      }
+      setInterval(() => { if (heroInView && !document.hidden) rotate(); }, 3000);
     }
   })();
 
@@ -2712,7 +2764,11 @@
       requestAnimationFrame(tick);
     };
 
-    if ('IntersectionObserver' in window) {
+    // HTML 直接寫最終數字（爬蟲、AI 摘要、未執行 JS 時都看得到正確數字），
+    // 支援動畫的瀏覽器才在進入畫面前先歸零、捲到時再跑數字；減少動態效果時維持最終數字
+    const statReduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if ('IntersectionObserver' in window && !statReduceMotion) {
+      statNums.forEach(el => { el.textContent = '0' + (el.dataset.suffix || ''); });
       const observer = new IntersectionObserver((entries, obs) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
@@ -2722,9 +2778,6 @@
         });
       }, { threshold: 0.4 });
       observer.observe(aboutStats);
-    } else {
-      // 不支援 IntersectionObserver 的舊瀏覽器，直接顯示最終數字
-      statNums.forEach(el => { el.textContent = el.dataset.target + (el.dataset.suffix || ''); });
     }
   }
 
@@ -2851,6 +2904,42 @@
       var m = motorSel.querySelector('option[data-motor="single"]');
       if (m) { motorSel.selectedIndex = m.index; motorSel.dispatchEvent(new Event('change', { bubbles: true })); }
     }
+  })();
+</script>
+
+<script>
+  // 點擊追蹤（GA4）：LINE、IG、電話、作品集、預約／試算 CTA 與報價清單按鈕，並記錄按鈕所在位置
+  // 建議在 GA4 把 generate_lead（預約送出成功）與 quote_send_line（報價清單送 LINE）標為「關鍵事件」
+  (function(){
+    function positionOf(el){
+      if (el.closest('.sticky-actions')) return 'floating';
+      if (el.closest('#siteHeader')) return 'header';
+      if (el.closest('.hero')) return 'hero';
+      if (el.closest('#bookingConfirm')) return 'booking_confirm';
+      if (el.closest('#contact')) return 'footer';
+      var s = el.closest('section[id]');
+      return s ? s.id : 'other';
+    }
+    document.addEventListener('click', function(e){
+      var el = e.target.closest && e.target.closest('a, button');
+      if (!el || !window.gcTrack) return;
+      var id = el.id || '', href = el.getAttribute('href') || '', pos = positionOf(el);
+      if (id === 'quoteListSendBtn') {
+        window.gcTrack('quote_send_line', { list_size: document.querySelectorAll('#quoteListItems > li').length });
+      } else if (id === 'quoteListCopyBtn') {
+        window.gcTrack('quote_copy_list', { list_size: document.querySelectorAll('#quoteListItems > li').length });
+      } else if (/lin\.ee|line\.me/.test(href)) {
+        window.gcTrack('line_click', { link_position: pos });
+      } else if (/instagram\.com/.test(href)) {
+        window.gcTrack('ig_click', { link_position: pos });
+      } else if (href.indexOf('tel:') === 0) {
+        window.gcTrack('phone_click', { link_position: pos });
+      } else if (/^\/portfolio\/?/.test(href)) {
+        window.gcTrack('portfolio_click', { link_position: pos });
+      } else if (href === '#booking' || href === '#quote') {
+        window.gcTrack('cta_click', { cta_target: href.slice(1), link_position: pos });
+      }
+    }, true);
   })();
 </script>
 

@@ -704,7 +704,7 @@ header.site button { font-family: inherit; }
     --ink: #362A2C;
     --ink-soft: #746264;
     --gold: #C0976A;
-    --gold-deep: #9C7648;
+    --gold-deep: #7E5F3A; 
     --gold-soft: #E4C9A9;
     --navy: #364852;
     --navy-deep: #232E36;
@@ -811,7 +811,7 @@ footer li{ display:flex; align-items:center; flex-wrap:wrap; column-gap:6px; min
 footer ul a, .footer-biz-link{ display:inline-flex; align-items:center; min-height:44px; }
 .footer-bottom{
     border-top:1px solid rgba(251,248,243,0.12); padding-top:24px;
-    display:flex; justify-content:space-between; font-size:0.8rem; color:#7C8B92; flex-wrap:wrap; gap:10px;
+    display:flex; justify-content:space-between; font-size:0.8rem; color:#8E9CA3; flex-wrap:wrap; gap:10px;
   }
 .footer-legal{ display:inline-flex; flex-wrap:wrap; column-gap:18px; }
 .footer-biz-link{ text-decoration:underline; text-underline-offset:2px; transition:color .25s ease; }
