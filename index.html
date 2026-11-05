@@ -41,10 +41,16 @@
 <meta name="twitter:title" content="織光窗簾｜到府訂製窗簾首選品牌 免費丈量估價">
 <meta name="twitter:description" content="織光窗簾提供捲簾、鋁百葉、木百葉、調光簾（斑馬簾）、風琴簾（蜂巢簾）、穿透簾、片簾、布簾（折景簾）、紗簾、蛇形簾、一布一紗等11款窗飾，全台到府免費丈量、快速線上估價，立即預約規劃您的理想光影生活。">
 <meta name="twitter:image" content="https://www.glowcurtain.com.tw/images/hero-photo1.webp">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" fetchpriority="high" href="/images/hero-photo1.webp">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/noto-serif-tc-gc-500.woff2" crossorigin>
+<style>
+  /* 標題字型：Noto Serif TC 自架子集（只含網站標題實際用到的字，三個字重共約 160KB）
+     原本從 Google Fonts 載入完整中文字型約 1.4MB，且會擋住畫面顯示；授權 SIL OFL，見 /fonts/OFL-NotoSerifTC.txt
+     改了標題文字出現新字時，頁尾程式會自動補載 Google Fonts 版本；建議同時重新產生子集 */
+  @font-face{ font-family:"GC Serif"; src:url("/fonts/noto-serif-tc-gc-400.woff2") format("woff2"); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face{ font-family:"GC Serif"; src:url("/fonts/noto-serif-tc-gc-500.woff2") format("woff2"); font-weight:500; font-style:normal; font-display:swap; }
+  @font-face{ font-family:"GC Serif"; src:url("/fonts/noto-serif-tc-gc-700.woff2") format("woff2"); font-weight:700; font-style:normal; font-display:swap; }
+</style>
 <style>
   :root{
     /* 織光窗簾 CIS 品牌識別色 — 標準色（金）CMYK C31 M45 Y61 K0 / 輔助色（藍灰）CMYK C83 M69 Y60 K23 */
@@ -64,7 +70,7 @@
     --radius: 2px;
     --font-base: Arial, "Microsoft JhengHei", "微軟正黑體", sans-serif;
     --font-serif: Arial, "Microsoft JhengHei", "微軟正黑體", sans-serif;
-    --font-display: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+    --font-display: "GC Serif", "Noto Serif TC", "Songti TC", "PMingLiU", serif;
     /* RWD spacing scale — 依斷點調整，避免手機版留白過大 */
     --section-pad: 136px;
     --wrap-pad: 32px;
@@ -766,7 +772,7 @@
   /* ---------- FOOTER (未調整，維持原架構) ---------- */
   footer{ background:var(--navy-deep); color:var(--bg-soft); padding:70px 0 30px; }
   .footer-grid{ display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:50px; margin-bottom:50px; }
-  footer h4{ font-family:var(--font-serif); font-weight:500; font-size:1rem; margin-bottom:16px; color:var(--paper); }
+  footer h3{ font-family:var(--font-serif); font-weight:500; font-size:1rem; margin-bottom:16px; color:var(--paper); }
   footer p, footer a{ color:#B9C3C7; font-size:0.9rem; text-decoration:none; }
   footer a:hover{ color:var(--gold-soft); }
   footer .flogo{ font-family:var(--font-serif); font-size:1.3rem; color:var(--paper); margin-bottom:14px; }
@@ -1800,7 +1806,7 @@
         <p data-cid="FOOTER-TAGLINE">深耕窗飾設計多年，我們以透明誠信與專業規劃為本，完美演繹空間中的窗簾美學。</p>
       </div>
       <div>
-        <h4 data-cid="FOOTER-LINKS-H4">快速連結</h4>
+        <h3 data-cid="FOOTER-LINKS-H4">快速連結</h3>
         <ul>
           <li><a href="#categories" data-cid="FOOTER-LINK1">窗簾分類</a></li>
           <li><a href="/portfolio/" data-cid="FOOTER-LINK4">空間作品集</a></li>
@@ -1809,7 +1815,7 @@
         </ul>
       </div>
       <div>
-        <h4 data-cid="FOOTER-CONTACT-H4">織光窗簾｜服務專線</h4>
+        <h3 data-cid="FOOTER-CONTACT-H4">織光窗簾｜服務專線</h3>
         <ul>
           <li data-cid="FOOTER-PHONE">唐經理 <a href="tel:0986295548">0986-295-548</a></li>
           <li>
@@ -2904,6 +2910,32 @@
       var m = motorSel.querySelector('option[data-motor="single"]');
       if (m) { motorSel.selectedIndex = m.index; motorSel.dispatchEvent(new Event('change', { bubbles: true })); }
     }
+  })();
+</script>
+
+<script>
+  // 標題字型補字：若標題出現子集沒有的字（例如改了文案），才在頁面載入完成後補載 Google Fonts 的 Noto Serif TC，
+  // 讓新字仍以同一字型顯示；平常不會多下載任何字型。（子集字表與 /fonts/ 內檔案同步，重新產生子集時一起更新）
+  (function(){
+    var COVER = {"400": "—…✓　、。「」・一下不個們光剛只好安家我是替片留的私窗簾而與裝隱！％（）＋，／：；？～", "500": "·×÷–—‘’“”…←↑→↓★☆✓　、。々〇「」『』【】〜・一丈上下不中久交人什付以仿估何作個們值僅價先光免內全再分到剛務只可台合否哪問嗎圍在地基報填境多大好如始安定客室家寫寸專小少尺屋巢差己市布常幾府式形影得從怎您想成我房扇折挑捲搭收斑料新於施明是時晚景曬替會服木柔格條業模樣款正步比求洽測準溫潮濕灣無熱片理琴環留百的看真確礎私租種究穿窗第算範簾約紗細給線總織而臥自與落葉蛇蜂裝裡西要見訂計詢試話認調請諮講讓費跟較透通進適遮選還配量金鋁門開間關限階隔隱電需面預題類風馬麼龍！＃＄％＆（）＋，／０１２３４５６７８９：；＝？＠［］～", "700": "—…✓　、。「」・件位內天小年時！％（）＋，／：；？～"};
+    function check(){
+      try {
+        var need = false, w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT), n, cs, wt, set, t, i;
+        while (!need && (n = w.nextNode())) {
+          t = n.nodeValue; if (!t || !t.trim() || !n.parentElement) continue;
+          cs = getComputedStyle(n.parentElement);
+          if (cs.fontFamily.indexOf('GC Serif') === -1) continue;
+          wt = parseInt(cs.fontWeight, 10); set = COVER[wt <= 450 ? '400' : (wt >= 600 ? '700' : '500')];
+          for (i = 0; i < t.length; i++) { var c = t.charCodeAt(i); if (c > 0x7E && !/\s/.test(t[i]) && set.indexOf(t[i]) === -1) { need = true; break; } }
+        }
+        if (need) {
+          var l = document.createElement('link'); l.rel = 'stylesheet';
+          l.href = 'https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&display=swap';
+          document.head.appendChild(l);
+        }
+      } catch (e) {}
+    }
+    window.addEventListener('load', function(){ (window.requestIdleCallback || function(f){ setTimeout(f, 1200); })(check); });
   })();
 </script>
 
