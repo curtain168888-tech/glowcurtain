@@ -306,7 +306,7 @@
     font-family:var(--font-base); font-style:italic; font-weight:400;
     font-size:0.85rem; color:var(--ink-soft); letter-spacing:0.08em; margin-left:2px;
   }
-  nav.links{ display:flex; align-items:center; gap:30px; font-size:0.95rem; } /* 7 項選單：34px→30px，避免寬螢幕壓縮 Logo */
+  nav.links{ display:flex; align-items:center; gap:20px; font-size:0.92rem; } /* 8 項選單（加入織光手札）：30px→20px、字級略縮，避免壓縮 Logo */
   nav.links a{ text-decoration:none; color:var(--ink); position:relative; padding-bottom:4px; }
   nav.links a::after{
     content:""; position:absolute; left:0; bottom:0; width:0; height:1px; background:var(--gold-deep);
@@ -315,8 +315,7 @@
   nav.links a:hover::after{ width:100%; }
   /* 選單多了「空間作品集」：平板寬度縮小間距，避免文字換行 */
   nav.links a{ white-space:nowrap; }
-  @media (max-width:1180px) and (min-width:961px){ nav.links{ gap:22px; } }
-  @media (max-width:1060px) and (min-width:961px){ nav.links{ gap:14px; font-size:0.88rem; } header.site .nav-cta{ padding:9px 14px; } }
+  @media (max-width:1120px) and (min-width:961px){ nav.links{ gap:12px; font-size:0.84rem; } header.site .nav-cta{ padding:9px 12px; } .logo-mark{ width:180px; height:36px; } }
   header.site .nav-cta{
     border:1px solid var(--navy-deep); background:var(--navy-deep); color:#FFFFFF; padding:9px 20px;
     text-decoration:none; font-size:0.88rem; font-weight:700; letter-spacing:0.03em; white-space:nowrap;
@@ -1169,6 +1168,7 @@
     <nav class="links" id="navLinks">
       <a href="#categories" data-cid="NAV-L1">窗簾分類</a>
       <a href="/portfolio/" data-cid="NAV-L6">空間作品集</a>
+      <a href="/journal/" data-cid="NAV-L8">織光手札</a>
       <a href="#quote" data-cid="NAV-L2">線上報價</a>
       <a href="#booking" data-cid="NAV-L3">預約丈量</a>
       <a href="#about" data-cid="NAV-L4">關於我們</a>
@@ -1886,6 +1886,7 @@
         <ul>
           <li><a href="#categories" data-cid="FOOTER-LINK1">窗簾分類</a></li>
           <li><a href="/portfolio/" data-cid="FOOTER-LINK4">空間作品集</a></li>
+          <li><a href="/journal/" data-cid="FOOTER-LINK6">織光手札</a></li>
           <li><a href="#quote" data-cid="FOOTER-LINK2">線上報價</a></li>
           <li><a href="#booking" data-cid="FOOTER-LINK3">預約丈量</a></li>
           <li><a href="/promo/" data-cid="FOOTER-LINK5">優惠活動</a></li>

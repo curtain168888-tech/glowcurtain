@@ -1,6 +1,6 @@
 // 官網 header（選單）／footer 同步到其他頁面：從首頁 index.html 擷取，寫進各頁的標記區塊。
 // 用法：node tools/sync-site-chrome.js
-// 首頁的選單或頁尾改了以後執行一次，優惠活動頁就會跟首頁一致。
+// 首頁的選單或頁尾改了以後執行一次，優惠活動頁與織光手札就會跟首頁一致。
 // （空間作品集 /portfolio/ 由 portfolio-src/build_web.js 用同一套方式擷取，首頁改了也要重跑那支。）
 //
 // 各頁需要的標記（內容整段由本腳本產生，請勿手改）：
@@ -16,6 +16,8 @@ const HOME = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
 const TARGETS = [
   { file: 'promo/index.html', current: '/promo/', ariaCurrent: true },
   { file: 'promo/resident-share/index.html', current: '/promo/', ariaCurrent: false },
+  { file: 'journal/index.html', current: '/journal/', ariaCurrent: true },
+  { file: 'journal/fabric-vs-dimming/index.html', current: '/journal/', ariaCurrent: false },
 ];
 
 const grab = (re, what) => { const m = HOME.match(re); if (!m) throw new Error('首頁找不到 ' + what); return m[0]; };
