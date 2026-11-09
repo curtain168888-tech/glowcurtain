@@ -48,7 +48,7 @@
 <link rel="preload" as="image" fetchpriority="high" href="/images/hero-photo1.webp">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/noto-serif-tc-gc-500.woff2" crossorigin>
 <style>
-  /* 標題字型：Noto Serif TC 自架子集（只含網站標題實際用到的字，三個字重共約 98KB；涵蓋首頁與 /promo/ 優惠活動頁）
+  /* 標題字型：Noto Serif TC 自架子集（只含網站標題實際用到的字，三個字重共約 102KB；涵蓋首頁與 /promo/ 優惠活動頁）
      原本從 Google Fonts 載入完整中文字型約 1.4MB，且會擋住畫面顯示；授權 SIL OFL，見 /fonts/OFL-NotoSerifTC.txt
      改了標題文字出現新字時，頁尾程式會自動補載 Google Fonts 版本；建議同時重新產生子集 */
   @font-face{ font-family:"GC Serif"; src:url("/fonts/noto-serif-tc-gc-400.woff2") format("woff2"); font-weight:400; font-style:normal; font-display:swap; }
@@ -132,6 +132,7 @@
   .promo-bar .pb-more{ color:var(--gold-soft); white-space:nowrap; border-bottom:1px solid rgba(228,201,169,0.6); }
   .promo-bar:hover .pb-more{ color:#fff; border-bottom-color:#fff; }
   .promo-bar .pb-mobile{ display:none; }
+  @media (max-width:1240px){ .promo-bar .pb-detail{ display:none; } } /* 窄螢幕公告列只留主標，避免換成兩行 */
   @media (max-width:860px){
     .promo-bar{ gap:8px; font-size:0.8rem; padding:8px 14px; flex-wrap:nowrap; }
     .promo-bar .pb-tag{ letter-spacing:0.06em; padding:2px 7px; font-size:0.72rem; }
@@ -150,6 +151,7 @@
   .booking-promo:hover{ background:rgba(228,201,169,0.16); }
   .booking-promo .bp-tag{ display:inline-block; background:var(--gold); color:var(--navy-deep); font-size:0.74rem; font-weight:700; letter-spacing:0.12em; padding:2px 9px; margin-bottom:10px; }
   .booking-promo strong{ display:block; font-family:var(--font-display); font-weight:500; font-size:1.08rem; line-height:1.55; color:var(--paper); }
+  .booking-promo .bp-gifts{ display:block; margin-top:6px; font-size:0.86rem; line-height:1.65; color:rgba(251,248,243,0.82); }
   .booking-promo .bp-more{ display:block; margin-top:6px; font-size:0.84rem; color:var(--gold-soft); }
   .promo-optin{
     display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
@@ -1155,8 +1157,8 @@
 
 <a class="promo-bar js-promo" href="/promo/resident-share/" data-cid="PROMO-BAR">
   <span class="pb-tag" data-cid="PROMO-BAR-TAG">官網預約限定</span>
-  <span class="pb-text pb-desktop" data-cid="PROMO-BAR-TEXT">住戶群組分享名片＋記事本，<b>現折 NT$2,000</b>、好禮再加送｜即日起至 12/31</span>
-  <span class="pb-text pb-mobile" data-cid="PROMO-BAR-TEXT-M">住戶群組分享 <b>現折 NT$2,000</b>＋好禮 →</span>
+  <span class="pb-text pb-desktop" data-cid="PROMO-BAR-TEXT">立即預約，<b>現折 $2,000</b>！好禮再加送 🎁<span class="pb-detail">｜布簾贈高溫定型・調光簾贈五金配件</span>｜即日起至 12/31</span>
+  <span class="pb-text pb-mobile" data-cid="PROMO-BAR-TEXT-M">立即預約 <b>現折 $2,000</b>＋好禮 →</span>
   <span class="pb-more" data-cid="PROMO-BAR-MORE">活動辦法 →</span>
 </a>
 <header class="site" id="siteHeader">
@@ -1434,7 +1436,8 @@
       <p data-cid="BOOK-DESC">填寫您的空間資訊與方便時段，專人將盡速於工作日內致電確認丈量時間，丈量與諮詢皆為免費服務。</p>
       <a class="booking-promo js-promo" href="/promo/resident-share/">
         <span class="bp-tag" data-cid="BOOK-PROMO-TAG">官網預約限定</span>
-        <strong data-cid="BOOK-PROMO-TITLE">住戶群組分享名片＋記事本，現折 NT$2,000、好禮再加送</strong>
+        <strong data-cid="BOOK-PROMO-TITLE">立即預約，現折 $2,000！好禮再加送</strong>
+        <span class="bp-gifts" data-cid="BOOK-PROMO-GIFTS">選布簾贈高溫定型服務、選調光簾贈五金配件（依窗型提供）</span>
         <span class="bp-more" data-cid="BOOK-PROMO-MORE">活動至 2026/12/31｜看活動辦法 →</span>
       </a>
       <ul class="step-list">
@@ -1522,8 +1525,8 @@
       </div>
       <div class="promo-optin js-promo">
         <label class="po-check" for="b-promo">
-          <input id="b-promo" type="checkbox" name="promo" value="參加：官網預約限定（住戶群組分享名片＋記事本，現折 NT$2,000＋好禮）">
-          <span class="po-text"><b data-cid="BOOK-PROMO-OPTIN">參加「官網預約限定」優惠</b><span data-cid="BOOK-PROMO-OPTIN-DESC">住戶群組分享名片＋記事本，確認訂購現折 NT$2,000、好禮再加送（至 2026/12/31）</span></span>
+          <input id="b-promo" type="checkbox" name="promo" value="參加：官網預約限定（安裝日分享名片＋記事本，尾款現折 NT$2,000；布簾贈高溫定型／調光簾贈五金配件）">
+          <span class="po-text"><b data-cid="BOOK-PROMO-OPTIN">參加「官網預約限定」優惠</b><span data-cid="BOOK-PROMO-OPTIN-DESC">安裝日把名片分享到住戶群組＋記事本，尾款現折 NT$2,000；選布簾贈高溫定型服務、選調光簾贈五金配件（至 2026/12/31）</span></span>
         </label>
         <a class="po-link" href="/promo/resident-share/" target="_blank" rel="noopener" data-cid="BOOK-PROMO-OPTIN-LINK">活動辦法</a>
       </div>
@@ -2076,7 +2079,7 @@
       `房屋狀態：${status}`
     ];
     if (address) lines.splice(3, 0, `詳細地址：${address}`);
-    if (promo) lines.push('優惠活動：參加官網預約限定（住戶群組分享名片＋記事本，現折 NT$2,000＋好禮）');
+    if (promo) lines.push('優惠活動：參加官網預約限定（安裝日分享名片＋記事本，尾款現折 NT$2,000；布簾贈高溫定型／調光簾贈五金配件）');
     if (note) lines.push(`備註：${note}`);
     return lines.join('\n');
   }
@@ -3013,7 +3016,7 @@
   // 標題字型補字：若標題出現子集沒有的字（例如改了文案），才在頁面載入完成後補載 Google Fonts 的 Noto Serif TC，
   // 讓新字仍以同一字型顯示；平常不會多下載任何字型。（子集字表與 /fonts/ 內檔案同步，重新產生子集時一起更新）
   (function(){
-    var COVER = {"400": "—…✓　、。「」・一下不個們光剛只好安家我是替片留的私窗簾而與裝隱！％（）＋，／：；？～", "500": "·×÷–—‘’“”…←↑→↓★☆✓　、。々〇「」『』【】〜・一丈上下不中久事交享人什付以仿估住何作個們值僅價優先光免內全再出分到則剛加動務參只可台合名否哪問嗎四圍圖在地基報填境多大好如始安官定客室家寫寸專小少尺屋巢差己已市布常幫幾府式形影得從怎您惠想成我截戶房扇手折挑捲推搭收文斑料新於施明是時晚景曬替會服木本束柔格條業模樣次款正步比求法活洽測準溫潮濕灣無熱片現理琴環留發百的看真確礎示禮私租種究穿窗第算範簾約紗細組結給網線總織群而臥自與落葉薦蛇蜂行裝裡西要見訂計記詢試話認調請諮講讓費跟較輕辦送透通進適遮選還配量金鋁門開間關限階隔隱電需面預題類風馬驟鬆麼龍！＃＄％＆（）＋，／０１２３４５６７８９：；＝？＠［］｜～", "700": "—…✓　、。「」・件位內天小年折時現！％（）＋，／：；？～"};
+    var COVER = {"400": "—…✓　、。「」・一下不個們光剛只好安家我是替片留的私窗簾而與裝隱！％（）＋，／：；？～", "500": "·×÷–—‘’“”…←↑→↓★☆✓　、。々〇「」『』【】〜・一丈上下不中久事交享人什付以仿估住何作個們值僅價優先光免入內全再出分到則剛加動務即參只可台合名否哪問嗎四圍圖在地基報場填境多大好如始安官定客室家寫寸專小少尺尾屋巢差己已市布帶常幫幾府式形影得從怎您惠想成我截戶房扇手折抵挑捲推搭支收文斑料新於施日明是時晚景曬替會服木本束果柔格案條業模樣次款正步比求法活洽測準溫潮濕灣無熱片現理琴環留發百的看真確礎示禮私租種究穿窗立第算範簾約紗細組結給網線總織群而臥自與落葉薦蛇蜂行裝裡西要見訂計記詢試話認調請諮講讓費跟較輕辦送透通進適遮選還配量金鋁門開間關限階隔隱電需面預題類風馬驟鬆麼龍！＃＄％＆（）＋，／０１２３４５６７８９：；＝？＠［］｜～", "700": "—…✓　、。「」・件位傳內劃名天小師年您折時檔片現給規請送！％（）＋，／：；？～"};
     function check(){
       try {
         var need = false, w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT), n, cs, wt, set, t, i;

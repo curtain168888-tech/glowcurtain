@@ -110,6 +110,7 @@
   .pc-days{ color:var(--gold-deep); font-weight:700; }
   .pc-body h3{ font-size:clamp(1.3rem, 2.2vw, 1.6rem); line-height:1.45; margin-bottom:12px; }
   .pc-body h3 .amt{ color:var(--gold-deep); white-space:nowrap; }
+  .pc-body h3 .nw{ white-space:nowrap; }
   .pc-body p{ color:var(--ink-soft); line-height:1.85; font-size:0.95rem; }
   .pc-tags{ list-style:none; margin:18px 0 0; padding:0; display:flex; flex-wrap:wrap; gap:8px; }
   .pc-tags li{ font-size:0.8rem; padding:3px 10px; border:1px solid var(--gold-soft); color:var(--navy); background:var(--bg-soft); }
@@ -198,15 +199,15 @@
     <ul class="promo-list" id="currentList">
       <li class="promo-card" data-id="resident-share" data-end="2026-12-31T23:59:59+08:00">
         <a class="pc-link" href="/promo/resident-share/">
-          <div class="pc-img"><img src="/promo/resident-share/banner.webp" alt="官網預約限定：住戶群組分享，現折 NT$2,000，好禮再加送" width="1200" height="630"></div>
+          <div class="pc-img"><img src="/promo/resident-share/banner.webp" alt="官網預約限定：立即預約，現折 $2,000，好禮再加送；選布簾贈高溫定型服務，選調光簾贈五金配件" width="1200" height="630"></div>
           <div class="pc-body">
-            <p class="pc-meta"><span class="pc-status" data-cid="LIST-CARD1-STATUS">進行中</span><span data-cid="LIST-CARD1-PERIOD">即日起至 2026/12/31（四）</span><span class="pc-days"></span></p>
-            <h3 data-cid="LIST-CARD1-TITLE">官網預約限定｜住戶群組分享，<span class="amt">現折 NT$2,000</span></h3>
-            <p data-cid="LIST-CARD1-DESC">透過官網預約到府丈量，把織光窗簾的 LINE 名片分享到社區住戶群組，並在群組記事本發一則推薦，確認訂購即現折 NT$2,000，好禮再加送。</p>
+            <p class="pc-meta"><span class="pc-status" data-cid="LIST-CARD1-STATUS">進行中</span><span data-cid="LIST-CARD1-PERIOD">即日起至 2026/12/31</span><span class="pc-days"></span></p>
+            <h3 data-cid="LIST-CARD1-TITLE">立即預約，<span class="amt">現折 $2,000！</span><span class="nw">好禮再加送</span></h3>
+            <p data-cid="LIST-CARD1-DESC">透過官網預約到府丈量，安裝日把織光窗簾的名片分享到社區住戶群組與記事本，支付尾款時就現折 NT$2,000；選布簾贈高溫定型服務，選調光簾贈高規五金配件（依窗型提供）。</p>
             <ul class="pc-tags">
               <li data-cid="LIST-CARD1-TAG1">官網預約限定</li>
-              <li data-cid="LIST-CARD1-TAG2">住戶群組分享</li>
-              <li data-cid="LIST-CARD1-TAG3">好禮加送</li>
+              <li data-cid="LIST-CARD1-TAG2">布簾贈高溫定型</li>
+              <li data-cid="LIST-CARD1-TAG3">調光簾贈五金配件</li>
             </ul>
             <span class="pc-more"><span data-cid="LIST-CARD1-MORE">查看活動</span><span class="arrow" aria-hidden="true">→</span></span>
           </div>
@@ -317,7 +318,7 @@
 <script>
   // 標題字型補字：與首頁相同機制，標題出現子集沒有的字時才補載 Google Fonts
   (function(){
-    var COVER = {"400": "—…✓　、。「」・一下不個們光剛只好安家我是替片留的私窗簾而與裝隱！％（）＋，／：；？～", "500": "·×÷–—‘’“”…←↑→↓★☆✓　、。々〇「」『』【】〜・一丈上下不中久事交享人什付以仿估住何作個們值僅價優先光免內全再出分到則剛加動務參只可台合名否哪問嗎四圍圖在地基報填境多大好如始安官定客室家寫寸專小少尺屋巢差己已市布常幫幾府式形影得從怎您惠想成我截戶房扇手折挑捲推搭收文斑料新於施明是時晚景曬替會服木本束柔格條業模樣次款正步比求法活洽測準溫潮濕灣無熱片現理琴環留發百的看真確礎示禮私租種究穿窗第算範簾約紗細組結給網線總織群而臥自與落葉薦蛇蜂行裝裡西要見訂計記詢試話認調請諮講讓費跟較輕辦送透通進適遮選還配量金鋁門開間關限階隔隱電需面預題類風馬驟鬆麼龍！＃＄％＆（）＋，／０１２３４５６７８９：；＝？＠［］｜～", "700": "—…✓　、。「」・件位內天小年折時現！％（）＋，／：；？～"};
+    var COVER = {"400": "—…✓　、。「」・一下不個們光剛只好安家我是替片留的私窗簾而與裝隱！％（）＋，／：；？～", "500": "·×÷–—‘’“”…←↑→↓★☆✓　、。々〇「」『』【】〜・一丈上下不中久事交享人什付以仿估住何作個們值僅價優先光免入內全再出分到則剛加動務即參只可台合名否哪問嗎四圍圖在地基報場填境多大好如始安官定客室家寫寸專小少尺尾屋巢差己已市布帶常幫幾府式形影得從怎您惠想成我截戶房扇手折抵挑捲推搭支收文斑料新於施日明是時晚景曬替會服木本束果柔格案條業模樣次款正步比求法活洽測準溫潮濕灣無熱片現理琴環留發百的看真確礎示禮私租種究穿窗立第算範簾約紗細組結給網線總織群而臥自與落葉薦蛇蜂行裝裡西要見訂計記詢試話認調請諮講讓費跟較輕辦送透通進適遮選還配量金鋁門開間關限階隔隱電需面預題類風馬驟鬆麼龍！＃＄％＆（）＋，／０１２３４５６７８９：；＝？＠［］｜～", "700": "—…✓　、。「」・件位傳內劃名天小師年您折時檔片現給規請送！％（）＋，／：；？～"};
     function check(){
       try {
         var need = false, w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT), n, cs, wt, set, t, i;
