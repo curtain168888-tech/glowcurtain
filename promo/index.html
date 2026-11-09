@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6PKFR414KT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-6PKFR414KT');
+  window.gcTrack = function(name, params){
+    try { if (typeof gtag === 'function') gtag('event', name, Object.assign({ transport_type: 'beacon' }, params || {})); } catch (e) {}
+  };
+  // ===== 活動期間設定：結束時間（台灣時間）只需要改這一行；過了這個時間，頁面自動切換成「活動已結束」 =====
+  window.GC_PROMO_END = '2026-12-31T23:59:59+08:00';
+  try { if (Date.now() > Date.parse(window.GC_PROMO_END)) document.documentElement.classList.add('promo-ended'); } catch (e) {}
+  // 從活動頁回首頁預約時，略過首頁的開場動畫，直接看到預約表單
+  try { sessionStorage.setItem('gc_intro_seen', '1'); } catch (e) {}
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title data-cid="PROMO-SEO-TITLE">官網預約限定｜住戶群組分享現折 NT$2,000｜織光窗簾</title>
+<meta name="description" content="織光窗簾官網預約限定優惠：即日起至 2026/12/31，透過官網預約到府丈量，於社區住戶 LINE 群組分享織光窗簾名片並在記事本發文推薦，確認訂購現折 NT$2,000，好禮再加送。全台免費到府丈量。" data-cid="PROMO-SEO-META-DESC">
+<link rel="canonical" href="https://www.glowcurtain.com.tw/promo/">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.glowcurtain.com.tw/promo/">
+<meta property="og:title" content="官網預約限定｜住戶群組分享，現折 NT$2,000、好禮再加送" data-cid="PROMO-OG-TITLE">
+<meta property="og:description" content="即日起至 2026/12/31，官網預約到府丈量，住戶群組分享名片＋記事本，現折兩千、好禮加送。全台免費到府丈量。" data-cid="PROMO-OG-DESC">
+<meta property="og:image" content="https://www.glowcurtain.com.tw/promo/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="織光窗簾 GlowCurtain">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.glowcurtain.com.tw/promo/og.jpg">
+<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/noto-serif-tc-gc-500.woff2" crossorigin>
+<link rel="preload" as="image" href="/images/hero-photo4.webp" fetchpriority="high">
+<style>
+  /* 標題字型：與首頁共用 Noto Serif TC 自架子集（授權 SIL OFL，見 /fonts/OFL-NotoSerifTC.txt） */
+  @font-face{ font-family:"GC Serif"; src:url("/fonts/noto-serif-tc-gc-400.woff2") format("woff2"); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face{ font-family:"GC Serif"; src:url("/fonts/noto-serif-tc-gc-500.woff2") format("woff2"); font-weight:500; font-style:normal; font-display:swap; }
+  @font-face{ font-family:"GC Serif"; src:url("/fonts/noto-serif-tc-gc-700.woff2") format("woff2"); font-weight:700; font-style:normal; font-display:swap; }
+  :root{
+    --bg:#EDE6DC; --bg-soft:#F6F1EA; --paper:#FBF8F3; --ink:#362A2C; --ink-soft:#746264;
+    --gold:#C0976A; --gold-deep:#7E5F3A; --gold-soft:#E4C9A9;
+    --navy:#364852; --navy-deep:#232E36; --line:rgba(54,72,82,0.16);
+    --shadow:0 12px 32px rgba(54,72,82,0.12);
+    --font-base: Arial, "Microsoft JhengHei", "微軟正黑體", sans-serif;
+    --font-display: "GC Serif", "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+    --wrap-pad:32px;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:var(--font-base); line-height:1.75; -webkit-font-smoothing:antialiased; -webkit-text-size-adjust:100%; overflow-x:hidden; }
+  h1,h2,h3{ font-family:var(--font-display); font-weight:500; margin:0; color:var(--navy-deep); letter-spacing:0.02em; }
+  p{ margin:0; }
+  a{ color:inherit; }
+  img{ max-width:100%; display:block; }
+  button{ font-family:inherit; }
+  :focus-visible{ outline:2px solid var(--navy); outline-offset:3px; }
+  [hidden]{ display:none !important; }
+  .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+  .wrap{ max-width:1120px; margin:0 auto; padding:0 var(--wrap-pad); }
+  .eyebrow{ font-style:italic; letter-spacing:0.14em; color:var(--gold-deep); font-size:0.92rem; display:inline-flex; align-items:center; gap:10px; margin-bottom:0.8rem; }
+  .eyebrow::before{ content:""; width:26px; height:1px; background:currentColor; }
+  section{ padding:104px 0; scroll-margin-top:72px; }
+  .section-head{ max-width:640px; margin-bottom:52px; }
+  .section-head h2{ font-size:clamp(1.7rem, 3.4vw, 2.4rem); line-height:1.35; margin-bottom:14px; }
+  .section-head p{ color:var(--ink-soft); line-height:1.9; }
+
+  /* 活動結束後：隱藏優惠相關元素、顯示結束公告（由 <head> 內的日期判斷加上 html.promo-ended） */
+  .ended-only{ display:none; }
+  .promo-ended .ended-only{ display:block; }
+  .promo-ended .live-only{ display:none !important; }
+
+  /* ---------- 按鈕 ---------- */
+  .btn{ display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:50px; padding:15px 32px;
+    text-decoration:none; font-size:0.95rem; letter-spacing:0.04em; border:1px solid transparent; cursor:pointer;
+    transition:opacity .3s ease, transform .3s ease, background .3s ease, color .3s ease; }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn-primary{ background:var(--navy-deep); color:var(--paper); border-color:var(--navy-deep); font-weight:700; }
+  .btn-primary:hover{ opacity:0.9; }
+  .btn-ghost{ background:transparent; color:var(--navy-deep); border-color:var(--navy-deep); }
+  .btn-ghost:hover{ background:var(--navy-deep); color:var(--paper); }
+  .btn-gold{ background:var(--gold-soft); color:var(--navy-deep); border-color:var(--gold-soft); font-weight:700; }
+  .btn-gold:hover{ background:var(--gold); border-color:var(--gold); }
+  .btn-line{ background:#06C755; color:#fff; border-color:#06C755; font-weight:700; }
+  .btn-line:hover{ opacity:0.9; }
+  .btn svg{ width:20px; height:20px; flex-shrink:0; }
+  .btn .arrow{ transition:transform .25s ease; }
+  .btn:hover .arrow{ transform:translateX(4px); }
+
+  /* ---------- 頁首 ---------- */
+  .p-header{ position:sticky; top:0; z-index:40; background:rgba(251,248,243,0.92); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+  .p-header .bar{ max-width:1120px; margin:0 auto; padding:12px var(--wrap-pad); display:flex; align-items:center; justify-content:space-between; gap:16px; }
+  .p-header .logo img{ width:200px; height:40px; object-fit:cover; object-position:left center; max-width:100%; }
+  .p-header .hdr-links{ display:flex; align-items:center; gap:22px; flex-shrink:0; }
+  .p-header .home-link{ color:var(--navy); text-decoration:none; font-size:0.92rem; min-height:44px; display:inline-flex; align-items:center; }
+  .p-header .home-link:hover{ color:var(--gold-deep); }
+  .p-header .hdr-cta{ background:var(--navy-deep); color:#fff; text-decoration:none; font-size:0.88rem; font-weight:700; padding:10px 18px; letter-spacing:0.03em; white-space:nowrap; }
+  .p-header .hdr-cta:hover{ opacity:0.9; }
+
+  /* ---------- 主視覺 ---------- */
+  .p-hero{ position:relative; overflow:hidden; padding:84px 0 112px;
+    background:radial-gradient(ellipse 60% 70% at 85% 30%, rgba(228,201,169,0.55), transparent 70%), var(--bg); }
+  .p-hero-grid{ display:grid; grid-template-columns:1.08fr 0.92fr; gap:72px; align-items:center; }
+  .ended-block{ margin:0 0 26px; }
+  .ended-title{ font-family:var(--font-display); font-weight:500; font-size:clamp(1.9rem, 4vw, 2.8rem); line-height:1.35; color:var(--navy-deep); margin-bottom:16px; }
+  .ended-text{ font-size:1.02rem; line-height:1.95; max-width:520px; }
+  .p-badge{ display:inline-flex; align-items:center; gap:10px; padding:7px 16px; border:1px solid var(--gold-deep); color:var(--gold-deep);
+    background:rgba(255,255,255,0.55); font-size:0.88rem; font-weight:700; letter-spacing:0.22em; margin-bottom:26px; }
+  .p-badge::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--gold-deep); }
+  .p-hero h1{ font-size:clamp(2.2rem, 4.8vw, 3.7rem); line-height:1.28; margin-bottom:18px; word-break:keep-all; }
+  .p-hero h1 .line{ display:block; }
+  .p-hero h1 .amt{ color:var(--gold-deep); font-weight:700; white-space:nowrap; }
+  .p-hero h1 .amt small{ font-size:0.55em; font-weight:500; margin-right:0.08em; letter-spacing:0.02em; }
+  .p-gift{ display:inline-flex; align-items:center; gap:12px; font-family:var(--font-display); font-weight:500; font-size:clamp(1.15rem, 2vw, 1.4rem); color:var(--navy-deep); margin-bottom:28px; }
+  .p-gift svg{ width:26px; height:26px; color:var(--gold-deep); flex-shrink:0; }
+  .p-gift .plus{ color:var(--gold-deep); }
+  .p-period{ display:flex; flex-wrap:wrap; align-items:center; gap:10px 14px; font-size:0.95rem; color:var(--ink); margin-bottom:22px; }
+  .p-period .label{ color:var(--ink-soft); letter-spacing:0.08em; }
+  .p-period strong{ font-weight:700; color:var(--navy-deep); }
+  .countdown{ display:inline-flex; align-items:center; gap:6px; background:var(--navy-deep); color:var(--gold-soft); font-size:0.82rem; padding:4px 12px; letter-spacing:0.06em; }
+  .countdown b{ color:#fff; font-size:1rem; font-family:var(--font-display); }
+  .p-lead{ font-size:1.03rem; line-height:1.95; color:var(--ink); max-width:540px; margin-bottom:36px; }
+  .p-actions{ display:flex; flex-wrap:wrap; gap:16px; }
+
+  /* 拱形窗框照片＋折價券 */
+  .p-visual{ position:relative; isolation:isolate; justify-self:center; width:min(100%, 430px); }
+  .p-arch{ position:relative; aspect-ratio:4 / 5; border-radius:999px 999px 6px 6px; overflow:hidden; box-shadow:0 30px 60px rgba(54,42,44,0.18); }
+  .p-arch img{ width:100%; height:100%; object-fit:cover; object-position:50% 40%; }
+  .p-visual::before{ content:""; position:absolute; inset:-16px -16px 22px 16px; border:1px solid var(--gold); border-radius:999px 999px 6px 6px; z-index:-1; }
+  .coupon{ position:absolute; left:-44px; bottom:-30px; width:236px; padding:20px 24px 18px; color:var(--navy-deep); transform:rotate(-4deg);
+    background:linear-gradient(135deg, #D2AE86 0%, #C0976A 55%, #B0875B 100%);
+    -webkit-mask:radial-gradient(circle at 0 58%, transparent 11px, #000 11.5px) left / 51% 100% no-repeat, radial-gradient(circle at 100% 58%, transparent 11px, #000 11.5px) right / 51% 100% no-repeat;
+            mask:radial-gradient(circle at 0 58%, transparent 11px, #000 11.5px) left / 51% 100% no-repeat, radial-gradient(circle at 100% 58%, transparent 11px, #000 11.5px) right / 51% 100% no-repeat;
+    filter:drop-shadow(0 14px 22px rgba(54,42,44,0.22)); }
+  .coupon::after{ content:""; position:absolute; inset:7px; border:1px dashed rgba(35,46,54,0.45); pointer-events:none; }
+  .coupon .c-top{ font-size:0.8rem; letter-spacing:0.3em; font-weight:700; }
+  .coupon .c-amt{ font-family:var(--font-display); font-weight:700; font-size:2.3rem; line-height:1.15; letter-spacing:0.01em; }
+  .coupon .c-amt small{ font-size:0.5em; margin-right:2px; }
+  .coupon .c-rule{ margin:8px 0 8px; border-top:1px dashed rgba(35,46,54,0.5); }
+  .coupon .c-foot{ font-size:0.78rem; letter-spacing:0.08em; font-weight:700; }
+
+  /* ---------- 優惠重點 ---------- */
+  .p-perks{ padding:0; position:relative; z-index:2; margin-top:-56px; }
+  .perk-row{ display:grid; grid-template-columns:repeat(3, 1fr); background:#fff; border:1px solid var(--line); box-shadow:var(--shadow); }
+  .perk{ padding:28px 30px; display:flex; gap:18px; align-items:flex-start; }
+  .perk + .perk{ border-left:1px solid var(--line); }
+  .perk svg{ width:34px; height:34px; color:var(--gold-deep); flex-shrink:0; margin-top:2px; }
+  .perk h3{ font-size:1.15rem; margin-bottom:4px; }
+  .perk p{ font-size:0.9rem; color:var(--ink-soft); line-height:1.7; }
+
+  /* ---------- 參加步驟 ---------- */
+  #steps{ background:var(--paper); }
+  .steps{ list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(4, 1fr); gap:20px; counter-reset:step; }
+  .step{ position:relative; background:#fff; border:1px solid var(--line); border-top:3px solid var(--gold); padding:30px 26px 28px; }
+  .step .num{ font-family:var(--font-display); font-style:italic; font-size:2rem; line-height:1; color:var(--gold-deep); }
+  .step svg{ position:absolute; top:28px; right:24px; width:36px; height:36px; color:var(--navy); opacity:0.85; }
+  .step h3{ font-size:1.18rem; margin:20px 0 10px; line-height:1.45; }
+  .step p{ font-size:0.92rem; color:var(--ink-soft); line-height:1.8; }
+  .step .step-link{ display:inline-flex; align-items:center; gap:6px; margin-top:14px; color:var(--gold-deep); font-weight:700; font-size:0.9rem; text-decoration:none; border-bottom:1px solid var(--gold); padding-bottom:2px; }
+  .step .step-link:hover{ color:var(--navy-deep); }
+  .steps-note{ margin-top:28px; padding:16px 20px; background:var(--bg-soft); border-left:3px solid var(--gold); font-size:0.95rem; line-height:1.8; }
+  .steps-note strong{ color:var(--navy-deep); }
+
+  /* ---------- 分享小幫手 ---------- */
+  #share{ background:var(--bg); }
+  .share-grid{ display:grid; grid-template-columns:0.8fr 1.2fr; gap:64px; align-items:start; }
+  .share-intro .section-head{ margin-bottom:24px; }
+  .shot-list{ list-style:none; margin:0; padding:20px 22px; background:#fff; border:1px solid var(--line); }
+  .shot-list .t{ font-weight:700; color:var(--navy-deep); margin-bottom:8px; font-size:0.95rem; }
+  .shot-list li{ display:flex; gap:10px; font-size:0.92rem; line-height:1.8; color:var(--ink); }
+  .shot-list li::before{ content:"✓"; color:var(--gold-deep); font-weight:700; }
+  .shot-list li.t::before{ content:none; }
+  .kit{ background:var(--paper); border:1px solid var(--line); box-shadow:var(--shadow); }
+  .kit-block{ padding:32px 34px; }
+  .kit-block + .kit-block{ border-top:1px solid var(--line); }
+  .kit-block h3{ font-size:1.2rem; margin-bottom:10px; display:flex; align-items:center; gap:12px; }
+  .kit-block h3 .tag{ font-family:var(--font-base); font-size:0.78rem; font-weight:700; letter-spacing:0.12em; background:var(--navy-deep); color:var(--gold-soft); padding:3px 10px; }
+  .kit-block > p, .kit-block .js-mobile > p, .kit-block .js-desktop > p{ color:var(--ink-soft); font-size:0.93rem; line-height:1.85; margin-bottom:18px; }
+  .kit-block .btn{ width:100%; }
+  .qr-box{ display:flex; gap:20px; align-items:center; padding:16px; background:#fff; border:1px solid var(--line); }
+  .qr-box svg{ width:112px; height:112px; flex-shrink:0; }
+  .qr-box p{ font-size:0.9rem; line-height:1.8; color:var(--ink); }
+  .qr-box strong{ color:var(--navy-deep); }
+  .copy-area{ width:100%; min-height:212px; resize:vertical; border:1px solid var(--line); background:#fff; color:var(--ink);
+    padding:14px 16px; font-family:var(--font-base); font-size:16px; line-height:1.75; border-radius:0; margin-bottom:12px; }
+  .copy-area:focus{ outline:none; border-color:var(--gold-deep); }
+  .copy-btn.is-copied{ background:var(--gold-deep); border-color:var(--gold-deep); color:#fff; }
+  .howto{ margin:18px 0 0; padding:0; list-style:none; counter-reset:h; display:grid; gap:8px; }
+  .howto li{ counter-increment:h; display:flex; gap:10px; font-size:0.9rem; line-height:1.7; color:var(--ink); }
+  .howto li::before{ content:counter(h); flex-shrink:0; width:22px; height:22px; border-radius:50%; background:var(--gold-soft); color:var(--navy-deep); font-size:0.78rem; font-weight:700; display:inline-flex; align-items:center; justify-content:center; margin-top:2px; }
+  .howto-title{ margin-top:22px; font-size:0.85rem; font-weight:700; letter-spacing:0.08em; color:var(--gold-deep); }
+
+  /* ---------- 活動辦法 ---------- */
+  #terms{ background:var(--paper); }
+  .terms-box{ max-width:860px; }
+  .terms{ margin:0; padding:0; list-style:none; counter-reset:t; border-top:1px solid var(--line); }
+  .terms li{ counter-increment:t; display:grid; grid-template-columns:44px 1fr; gap:6px; padding:16px 0; border-bottom:1px solid var(--line); font-size:0.97rem; line-height:1.85; }
+  .terms li::before{ content:counter(t, decimal-leading-zero); font-family:var(--font-display); font-style:italic; color:var(--gold-deep); font-size:1.05rem; }
+  .terms-contact{ margin-top:22px; font-size:0.92rem; color:var(--ink-soft); }
+  .terms-contact a{ color:var(--gold-deep); text-underline-offset:2px; }
+
+  /* ---------- 收尾 CTA ---------- */
+  .p-cta{ position:relative; overflow:hidden; background:var(--navy-deep); color:var(--paper); padding:96px 0; }
+  .p-cta::before{ content:""; position:absolute; inset:0 0 0 45%; background:url("/images/hero-photo3.webp") center 40% / cover no-repeat; opacity:0.5; }
+  .p-cta::after{ content:""; position:absolute; inset:0; background:linear-gradient(90deg, var(--navy-deep) 45%, rgba(35,46,54,0.55) 75%, rgba(35,46,54,0.25) 100%); }
+  .p-cta .wrap{ position:relative; z-index:1; }
+  .p-cta .eyebrow{ color:var(--gold-soft); }
+  .p-cta h2{ color:var(--paper); font-size:clamp(1.7rem, 3.6vw, 2.6rem); line-height:1.4; margin-bottom:16px; max-width:560px; }
+  .p-cta p{ color:rgba(251,248,243,0.78); max-width:500px; line-height:1.9; margin-bottom:34px; }
+  .p-cta .p-actions .btn-ghost{ color:var(--paper); border-color:rgba(251,248,243,0.7); }
+  .p-cta .p-actions .btn-ghost:hover{ background:var(--paper); color:var(--navy-deep); }
+
+  /* ---------- 頁尾 ---------- */
+  footer{ background:#1B242A; color:#AFBAC0; font-size:0.88rem; padding:44px 0 28px; }
+  .f-grid{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:28px; }
+  .f-logo{ width:200px; height:38px; object-fit:cover; object-position:left center; filter:brightness(0) invert(1); margin-bottom:10px; }
+  footer ul{ list-style:none; margin:0; padding:0; display:grid; gap:4px; }
+  footer a{ color:#D7DEE2; text-decoration:none; display:inline-flex; align-items:center; min-height:32px; }
+  footer a:hover{ color:var(--gold-soft); }
+  .f-bottom{ margin-top:28px; padding-top:18px; border-top:1px solid rgba(255,255,255,0.1); display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px; font-size:0.8rem; }
+  .f-bottom a{ text-decoration:underline; text-underline-offset:2px; min-height:0; }
+
+  /* ---------- 手機底部固定預約列 ---------- */
+  .m-sticky{ display:none; }
+
+  /* ---------- RWD ---------- */
+  @media (max-width:1024px){
+    .steps{ grid-template-columns:repeat(2, 1fr); }
+    .share-grid{ grid-template-columns:1fr; gap:36px; }
+    .p-hero-grid{ gap:48px; }
+  }
+  @media (max-width:860px){
+    :root{ --wrap-pad:24px; }
+    section{ padding:76px 0; }
+    .p-header .home-link{ display:none; }
+    .p-hero{ padding:36px 0 104px; }
+    .p-hero-grid{ grid-template-columns:1fr; gap:56px; }
+    .p-visual{ width:min(66%, 300px); order:-1; }
+    .coupon{ left:auto; right:-40px; bottom:-26px; width:200px; padding:16px 20px 14px; }
+    .coupon .c-amt{ font-size:1.9rem; }
+    .perk-row{ grid-template-columns:1fr; }
+    .perk + .perk{ border-left:none; border-top:1px solid var(--line); }
+    .p-cta::before{ inset:0; opacity:0.28; }
+    .p-cta::after{ background:linear-gradient(180deg, rgba(35,46,54,0.92), rgba(35,46,54,0.82)); }
+    .m-sticky{ display:flex; position:fixed; left:0; right:0; bottom:0; z-index:45; align-items:center; justify-content:space-between; gap:12px;
+      padding:10px max(16px, env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+      background:rgba(251,248,243,0.96); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); border-top:1px solid var(--line); box-shadow:0 -8px 24px rgba(54,72,82,0.1); }
+    .m-sticky .ms-text{ font-size:0.82rem; line-height:1.4; color:var(--ink); }
+    .m-sticky .ms-text b{ display:block; font-family:var(--font-display); font-size:1.02rem; color:var(--gold-deep); }
+    .m-sticky .btn{ min-height:44px; padding:10px 18px; font-size:0.9rem; flex-shrink:0; }
+    body{ padding-bottom:76px; }
+    .promo-ended body{ padding-bottom:0; }
+  }
+  @media (max-width:560px){
+    :root{ --wrap-pad:16px; }
+    .p-header .logo img{ width:160px; height:34px; }
+    .p-header .hdr-cta{ padding:9px 14px; font-size:0.85rem; }
+    .p-actions .btn{ width:100%; }
+    .steps{ grid-template-columns:1fr; }
+    .kit-block{ padding:26px 20px; }
+    .perk{ padding:22px 20px; }
+    .p-visual{ width:min(62%, 250px); }
+    .p-visual::before{ inset:-12px -12px 18px 12px; }
+    .coupon{ right:-44px; bottom:-22px; width:172px; padding:13px 16px 11px; }
+    .coupon .c-amt{ font-size:1.65rem; }
+    .coupon .c-foot{ font-size:0.72rem; }
+    .terms li{ grid-template-columns:36px 1fr; font-size:0.94rem; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .btn, .btn .arrow{ transition:none; }
+    .btn:hover{ transform:none; }
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="icon-line" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 5.86 2 10.6c0 4.24 3.54 7.79 8.32 8.47.32.07.76.21.87.49.1.25.06.65.03.9l-.14.86c-.04.25-.2.99.87.54 1.06-.45 5.74-3.38 7.83-5.79C21.29 13.86 22 12.3 22 10.6 22 5.86 17.52 2 12 2zm-3.6 11.02H6.98a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.42a.4.4 0 0 1 .4.4v3.7h1.6a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4zm2.02 0h-.42a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.42a.4.4 0 0 1 .4.4v4.52a.4.4 0 0 1-.4.4zm4.6 0h-.42a.4.4 0 0 1-.34-.18l-2.02-2.75v2.53a.4.4 0 0 1-.4.4h-.42a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h.44a.4.4 0 0 1 .33.18l2 2.73V8.1a.4.4 0 0 1 .4-.4h.43a.4.4 0 0 1 .4.4v4.52a.4.4 0 0 1-.4.4zm4.6-3.7h-1.83v.72h1.83a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4h-1.83v.72h1.83a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4h-2.65a.4.4 0 0 1-.4-.4V8.1a.4.4 0 0 1 .4-.4h2.65a.4.4 0 0 1 .4.4v.42a.4.4 0 0 1-.4.4z"/></symbol></svg>
+
+<header class="p-header">
+  <div class="bar">
+    <a class="logo" href="/" aria-label="回織光窗簾首頁"><img src="/images/logo-horizontal-web.webp" alt="織光窗簾 GlowCurtain" width="200" height="40"></a>
+    <div class="hdr-links">
+      <a class="home-link" href="/" data-cid="PROMO-HDR-HOME">官網首頁</a>
+      <a class="hdr-cta" href="/?promo=resident#booking" data-cid="PROMO-HDR-CTA">官網預約丈量</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="p-hero" aria-labelledby="promoTitle">
+  <div class="wrap p-hero-grid">
+    <div class="p-hero-text">
+      <div class="ended-only ended-block">
+        <p class="ended-title" data-cid="PROMO-ENDED-TITLE">官網預約限定活動已結束</p>
+        <p class="ended-text" data-cid="PROMO-ENDED-NOTE">感謝大家熱情參與！全台免費到府丈量仍持續開放預約，也可以先到官網輸入窗戶寬度、高度線上估價。</p>
+      </div>
+      <p class="p-badge live-only" data-cid="PROMO-BADGE">官網預約限定</p>
+      <h1 id="promoTitle" class="live-only"><span class="line" data-cid="PROMO-H1-L1">住戶群組分享</span><span class="line"><span data-cid="PROMO-H1-L2">現折 </span><span class="amt"><small>NT$</small>2,000</span></span></h1>
+      <p class="p-gift live-only"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="9" width="17" height="11.5"/><path d="M2.5 9h19v-3.2h-19z"/><path d="M12 5.8v14.7"/><path d="M12 5.8C10.6 3 7 2.6 6.6 4.6 6.2 6.4 9.6 5.8 12 5.8zM12 5.8c1.4-2.8 5-3.2 5.4-1.2.4 1.8-3 1.2-5.4 1.2z"/></svg><span><span class="plus">＋</span><span data-cid="PROMO-GIFT">好禮再加送</span></span></p>
+      <p class="p-period"><span class="label" data-cid="PROMO-PERIOD-LABEL">活動期間</span><strong data-cid="PROMO-PERIOD">即日起至 2026/12/31（四）</strong><span class="countdown live-only" id="countdown" hidden></span></p>
+      <p class="p-lead live-only" data-cid="PROMO-LEAD">透過官網預約到府丈量，把織光窗簾的 LINE 名片分享到您的社區住戶群組，再到群組「記事本」發一則推薦，確認訂購就現折 NT$2,000，還有好禮加送。</p>
+      <div class="p-actions">
+        <a class="btn btn-primary" href="/?promo=resident#booking" data-cid="PROMO-HERO-CTA1">立即官網預約<span class="arrow" aria-hidden="true">→</span></a>
+        <a class="btn btn-ghost live-only" href="#steps" data-cid="PROMO-HERO-CTA2">看參加方式</a>
+      </div>
+    </div>
+    <div class="p-visual">
+      <div class="p-arch"><img src="/images/hero-photo4.webp" alt="織光窗簾客廳布簾與紗簾安裝實景" width="1350" height="1800" fetchpriority="high"></div>
+      <div class="coupon live-only" aria-hidden="true">
+        <p class="c-top">現折</p>
+        <p class="c-amt"><small>NT$</small>2,000</p>
+        <p class="c-rule"></p>
+        <p class="c-foot">官網預約限定 · 至 12/31</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="p-perks live-only">
+  <div class="wrap">
+    <div class="perk-row">
+      <div class="perk">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7.5V5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2.5a2.5 2.5 0 0 0 0 5V15a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-2.5a2.5 2.5 0 0 0 0-5z"/><path d="M9.5 4v12" stroke-dasharray="1.5 2"/><path d="M5 20h14"/></svg>
+        <div><h3 data-cid="PROMO-PERK1-TITLE">現折 NT$2,000</h3><p data-cid="PROMO-PERK1-DESC">確認訂購時，直接從訂單金額折抵。</p></div>
+      </div>
+      <div class="perk">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="9" width="17" height="11.5"/><path d="M2.5 9h19v-3.2h-19z"/><path d="M12 5.8v14.7"/><path d="M12 5.8C10.6 3 7 2.6 6.6 4.6 6.2 6.4 9.6 5.8 12 5.8zM12 5.8c1.4-2.8 5-3.2 5.4-1.2.4 1.8-3 1.2-5.4 1.2z"/></svg>
+        <div><h3 data-cid="PROMO-PERK2-TITLE">好禮再加送</h3><p data-cid="PROMO-PERK2-DESC">完成分享再加碼好禮，贈品內容以現場提供為準。</p></div>
+      </div>
+      <div class="perk">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h13V9.5"/><path d="M8.5 16.5h7"/><path d="M8.5 16.5v-2M11 16.5v-1.2M13.5 16.5v-2M15.5 16.5v-1.2"/></svg>
+        <div><h3 data-cid="PROMO-PERK3-TITLE">全台免費到府丈量</h3><p data-cid="PROMO-PERK3-DESC">規劃師帶布料樣品到府，在您家的光線下挑選。</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="steps" class="live-only">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow" data-cid="PROMO-STEPS-EYEBROW">How to Join</span>
+      <h2 data-cid="PROMO-STEPS-H2">四個步驟，輕鬆參加</h2>
+      <p data-cid="PROMO-STEPS-DESC">從預約到折抵，只要一支手機就能完成。</p>
+    </div>
+    <ol class="steps">
+      <li class="step">
+        <span class="num">01</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15.5" rx="1"/><path d="M4 9.5h16M8.5 3v4M15.5 3v4"/><path d="m9 15 2 2 4-4.5"/></svg>
+        <h3 data-cid="PROMO-STEP1-TITLE">官網預約丈量</h3>
+        <p data-cid="PROMO-STEP1-DESC">在官網填寫「預約到府丈量」表單，勾選「參加官網預約限定優惠」，規劃師會先幫您備註。</p>
+        <a class="step-link" href="/?promo=resident#booking" data-cid="PROMO-STEP1-LINK">前往預約表單<span aria-hidden="true">→</span></a>
+      </li>
+      <li class="step">
+        <span class="num">02</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="14" height="10.5" rx="1"/><circle cx="7" cy="9.2" r="1.8"/><path d="M4.6 13.2c.5-1.3 1.4-2 2.4-2s1.9.7 2.4 2M11 8.5h3.5M11 11h2.5"/><path d="M15 19.5c2.5 0 5-1.6 6-4.5m0 0-2.6.6M21 15l.4 2.7"/></svg>
+        <h3 data-cid="PROMO-STEP2-TITLE">分享名片到住戶群組</h3>
+        <p data-cid="PROMO-STEP2-DESC">把織光窗簾的 LINE 官方帳號名片，分享到您社區的住戶 LINE 群組。</p>
+        <a class="step-link" href="#share" data-cid="PROMO-STEP2-LINK">一鍵分享名片<span aria-hidden="true">→</span></a>
+      </li>
+      <li class="step">
+        <span class="num">03</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3.5H6a1 1 0 0 0-1 1v15a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-8"/><path d="M8 8.5h5M8 12h4M8 15.5h7"/><path d="m16.5 3.2 3.3 3.3-5.6 5.6-3.7.6.6-3.7z"/></svg>
+        <h3 data-cid="PROMO-STEP3-TITLE">在群組記事本發文</h3>
+        <p data-cid="PROMO-STEP3-DESC">在同一個住戶群組的「記事本」發一則推薦貼文，下方有現成文案可以直接複製。</p>
+        <a class="step-link" href="#share" data-cid="PROMO-STEP3-LINK">複製推薦文案<span aria-hidden="true">→</span></a>
+      </li>
+      <li class="step">
+        <span class="num">04</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6.5" y="2.5" width="11" height="19" rx="2"/><path d="M10.5 18.5h3"/><path d="m9.5 10.5 2 2 3.5-4"/></svg>
+        <h3 data-cid="PROMO-STEP4-TITLE">丈量時出示截圖</h3>
+        <p data-cid="PROMO-STEP4-DESC">規劃師到府丈量時，出示名片分享與記事本貼文的截圖，確認訂購即現折 NT$2,000，並加送好禮。</p>
+      </li>
+    </ol>
+    <p class="steps-note" data-cid="PROMO-STEPS-NOTE"><strong>小提醒：</strong>分享完記得截圖兩張──群組裡的名片訊息，以及記事本貼文。</p>
+  </div>
+</section>
+
+<section id="share" class="live-only">
+  <div class="wrap share-grid">
+    <div class="share-intro">
+      <div class="section-head">
+        <span class="eyebrow" data-cid="PROMO-SHARE-EYEBROW">Share Kit</span>
+        <h2 data-cid="PROMO-SHARE-H2">分享小幫手</h2>
+        <p data-cid="PROMO-SHARE-DESC">名片和記事本文案都幫您準備好了。用手機打開這一頁，跟著按就能完成。</p>
+      </div>
+      <ul class="shot-list">
+        <li class="t" style="display:block" data-cid="PROMO-SHOT-TITLE">丈量時請準備兩張截圖</li>
+        <li data-cid="PROMO-SHOT-1">住戶群組裡的織光窗簾名片訊息</li>
+        <li data-cid="PROMO-SHOT-2">群組記事本的推薦貼文</li>
+      </ul>
+    </div>
+    <div class="kit">
+      <div class="kit-block">
+        <h3><span class="tag">A</span><span data-cid="PROMO-KIT-A-TITLE">分享 LINE 名片到住戶群組</span></h3>
+        <div class="js-mobile" hidden>
+          <p data-cid="PROMO-KIT-A-DESC-M">按下按鈕會開啟 LINE，選擇您的社區住戶群組，就能送出織光窗簾的官方帳號名片。</p>
+          <a class="btn btn-line" id="shareCardBtn" href="https://line.me/R/nv/recommendOA/%40133tlbtv" data-cid="PROMO-KIT-A-BTN"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#icon-line"/></svg>分享織光窗簾名片</a>
+        </div>
+        <div class="js-desktop">
+          <p data-cid="PROMO-KIT-A-DESC-D">LINE 電腦版不支援名片分享按鈕。請用手機掃描下方 QR Code 開啟本頁，再按「分享織光窗簾名片」。</p>
+          <div class="qr-box"><svg viewBox="-2 -2 41 41" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" role="img" aria-label="手機掃描開啟活動頁的 QR Code"><rect x="-2" y="-2" width="41" height="41" fill="#fff"/><path fill="#232E36" d="M0 0h7v1h-7zM9 0h1v1h-1zM12 0h1v1h-1zM16 0h2v1h-2zM20 0h1v1h-1zM23 0h1v1h-1zM26 0h2v1h-2zM30 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM11 1h1v1h-1zM13 1h2v1h-2zM16 1h1v1h-1zM18 1h1v1h-1zM20 1h1v1h-1zM22 1h6v1h-6zM30 1h1v1h-1zM36 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM9 2h2v1h-2zM13 2h1v1h-1zM16 2h2v1h-2zM24 2h1v1h-1zM26 2h1v1h-1zM30 2h1v1h-1zM32 2h3v1h-3zM36 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM11 3h2v1h-2zM18 3h2v1h-2zM22 3h1v1h-1zM26 3h3v1h-3zM30 3h1v1h-1zM32 3h3v1h-3zM36 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM10 4h1v1h-1zM13 4h1v1h-1zM15 4h1v1h-1zM17 4h2v1h-2zM23 4h1v1h-1zM25 4h4v1h-4zM30 4h1v1h-1zM32 4h3v1h-3zM36 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM11 5h3v1h-3zM15 5h8v1h-8zM25 5h1v1h-1zM27 5h2v1h-2zM30 5h1v1h-1zM36 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h1v1h-1zM24 6h1v1h-1zM26 6h1v1h-1zM28 6h1v1h-1zM30 6h7v1h-7zM10 7h2v1h-2zM16 7h1v1h-1zM19 7h1v1h-1zM21 7h2v1h-2zM24 7h1v1h-1zM0 8h1v1h-1zM3 8h1v1h-1zM5 8h2v1h-2zM8 8h1v1h-1zM10 8h1v1h-1zM12 8h2v1h-2zM15 8h1v1h-1zM17 8h1v1h-1zM21 8h1v1h-1zM24 8h6v1h-6zM31 8h1v1h-1zM1 9h3v1h-3zM5 9h1v1h-1zM8 9h1v1h-1zM10 9h2v1h-2zM15 9h1v1h-1zM19 9h2v1h-2zM24 9h2v1h-2zM28 9h4v1h-4zM36 9h1v1h-1zM1 10h3v1h-3zM6 10h2v1h-2zM9 10h1v1h-1zM16 10h1v1h-1zM20 10h3v1h-3zM26 10h1v1h-1zM28 10h4v1h-4zM33 10h1v1h-1zM35 10h2v1h-2zM0 11h1v1h-1zM3 11h2v1h-2zM7 11h2v1h-2zM10 11h1v1h-1zM12 11h1v1h-1zM14 11h2v1h-2zM18 11h1v1h-1zM21 11h3v1h-3zM25 11h1v1h-1zM27 11h6v1h-6zM3 12h5v1h-5zM14 12h1v1h-1zM17 12h1v1h-1zM19 12h1v1h-1zM21 12h1v1h-1zM24 12h2v1h-2zM27 12h5v1h-5zM33 12h1v1h-1zM35 12h2v1h-2zM1 13h1v1h-1zM4 13h2v1h-2zM7 13h3v1h-3zM11 13h1v1h-1zM13 13h3v1h-3zM17 13h1v1h-1zM19 13h2v1h-2zM22 13h1v1h-1zM25 13h2v1h-2zM30 13h2v1h-2zM34 13h1v1h-1zM36 13h1v1h-1zM2 14h5v1h-5zM8 14h1v1h-1zM11 14h4v1h-4zM17 14h2v1h-2zM21 14h1v1h-1zM23 14h2v1h-2zM28 14h1v1h-1zM30 14h3v1h-3zM34 14h1v1h-1zM36 14h1v1h-1zM2 15h1v1h-1zM4 15h1v1h-1zM10 15h1v1h-1zM12 15h1v1h-1zM15 15h5v1h-5zM21 15h2v1h-2zM24 15h7v1h-7zM32 15h1v1h-1zM36 15h1v1h-1zM0 16h2v1h-2zM3 16h2v1h-2zM6 16h2v1h-2zM10 16h1v1h-1zM12 16h1v1h-1zM15 16h1v1h-1zM18 16h2v1h-2zM21 16h3v1h-3zM27 16h1v1h-1zM29 16h2v1h-2zM33 16h3v1h-3zM0 17h1v1h-1zM2 17h1v1h-1zM7 17h1v1h-1zM9 17h2v1h-2zM13 17h8v1h-8zM22 17h4v1h-4zM28 17h3v1h-3zM32 17h2v1h-2zM35 17h2v1h-2zM1 18h1v1h-1zM4 18h1v1h-1zM6 18h2v1h-2zM12 18h2v1h-2zM15 18h3v1h-3zM29 18h4v1h-4zM35 18h2v1h-2zM0 19h4v1h-4zM8 19h2v1h-2zM12 19h1v1h-1zM14 19h1v1h-1zM17 19h2v1h-2zM21 19h1v1h-1zM23 19h2v1h-2zM26 19h1v1h-1zM30 19h1v1h-1zM34 19h2v1h-2zM0 20h1v1h-1zM3 20h2v1h-2zM6 20h4v1h-4zM11 20h6v1h-6zM18 20h1v1h-1zM20 20h9v1h-9zM30 20h1v1h-1zM32 20h1v1h-1zM35 20h1v1h-1zM3 21h1v1h-1zM5 21h1v1h-1zM11 21h1v1h-1zM13 21h2v1h-2zM16 21h1v1h-1zM20 21h2v1h-2zM24 21h3v1h-3zM28 21h1v1h-1zM30 21h2v1h-2zM33 21h1v1h-1zM35 21h2v1h-2zM4 22h1v1h-1zM6 22h1v1h-1zM8 22h1v1h-1zM11 22h1v1h-1zM17 22h1v1h-1zM19 22h1v1h-1zM25 22h1v1h-1zM28 22h3v1h-3zM35 22h2v1h-2zM0 23h1v1h-1zM2 23h2v1h-2zM5 23h1v1h-1zM7 23h1v1h-1zM13 23h1v1h-1zM15 23h3v1h-3zM21 23h1v1h-1zM25 23h1v1h-1zM28 23h2v1h-2zM35 23h2v1h-2zM0 24h5v1h-5zM6 24h1v1h-1zM10 24h1v1h-1zM12 24h3v1h-3zM19 24h2v1h-2zM22 24h4v1h-4zM29 24h3v1h-3zM33 24h1v1h-1zM36 24h1v1h-1zM1 25h1v1h-1zM3 25h3v1h-3zM10 25h4v1h-4zM15 25h2v1h-2zM20 25h1v1h-1zM22 25h1v1h-1zM24 25h1v1h-1zM27 25h1v1h-1zM30 25h2v1h-2zM33 25h4v1h-4zM0 26h1v1h-1zM4 26h1v1h-1zM6 26h1v1h-1zM8 26h4v1h-4zM13 26h2v1h-2zM19 26h1v1h-1zM21 26h1v1h-1zM23 26h3v1h-3zM30 26h2v1h-2zM33 26h1v1h-1zM36 26h1v1h-1zM1 27h2v1h-2zM4 27h2v1h-2zM7 27h2v1h-2zM11 27h2v1h-2zM15 27h1v1h-1zM17 27h2v1h-2zM20 27h2v1h-2zM23 27h3v1h-3zM27 27h2v1h-2zM30 27h1v1h-1zM32 27h1v1h-1zM35 27h2v1h-2zM0 28h4v1h-4zM6 28h1v1h-1zM8 28h4v1h-4zM13 28h2v1h-2zM16 28h3v1h-3zM20 28h3v1h-3zM24 28h1v1h-1zM27 28h6v1h-6zM34 28h3v1h-3zM8 29h1v1h-1zM11 29h2v1h-2zM14 29h1v1h-1zM16 29h1v1h-1zM18 29h1v1h-1zM20 29h1v1h-1zM22 29h3v1h-3zM27 29h2v1h-2zM32 29h2v1h-2zM35 29h2v1h-2zM0 30h7v1h-7zM9 30h1v1h-1zM11 30h2v1h-2zM14 30h1v1h-1zM18 30h1v1h-1zM21 30h1v1h-1zM27 30h2v1h-2zM30 30h1v1h-1zM32 30h2v1h-2zM35 30h2v1h-2zM0 31h1v1h-1zM6 31h1v1h-1zM8 31h2v1h-2zM11 31h1v1h-1zM14 31h2v1h-2zM17 31h4v1h-4zM22 31h2v1h-2zM26 31h1v1h-1zM28 31h1v1h-1zM32 31h3v1h-3zM36 31h1v1h-1zM0 32h1v1h-1zM2 32h3v1h-3zM6 32h1v1h-1zM10 32h1v1h-1zM16 32h3v1h-3zM20 32h1v1h-1zM23 32h3v1h-3zM28 32h6v1h-6zM0 33h1v1h-1zM2 33h3v1h-3zM6 33h1v1h-1zM8 33h3v1h-3zM12 33h5v1h-5zM18 33h2v1h-2zM21 33h1v1h-1zM24 33h6v1h-6zM31 33h2v1h-2zM35 33h1v1h-1zM0 34h1v1h-1zM2 34h3v1h-3zM6 34h1v1h-1zM9 34h1v1h-1zM12 34h2v1h-2zM15 34h1v1h-1zM17 34h1v1h-1zM19 34h1v1h-1zM22 34h1v1h-1zM25 34h1v1h-1zM27 34h2v1h-2zM31 34h3v1h-3zM35 34h2v1h-2zM0 35h1v1h-1zM6 35h1v1h-1zM9 35h1v1h-1zM14 35h1v1h-1zM16 35h1v1h-1zM18 35h4v1h-4zM24 35h6v1h-6zM31 35h1v1h-1zM33 35h1v1h-1zM0 36h7v1h-7zM8 36h3v1h-3zM14 36h2v1h-2zM17 36h1v1h-1zM21 36h1v1h-1zM23 36h3v1h-3zM27 36h2v1h-2zM30 36h1v1h-1zM33 36h1v1h-1zM35 36h2v1h-2z"/></svg><p data-cid="PROMO-KIT-A-QR-TEXT"><strong>手機掃描，開啟活動頁</strong><br>LINE 官方帳號 ID：@133tlbtv</p></div>
+        </div>
+      </div>
+      <div class="kit-block">
+        <h3><span class="tag">B</span><span data-cid="PROMO-KIT-B-TITLE">在群組記事本發一則推薦</span></h3>
+        <p data-cid="PROMO-KIT-B-DESC">複製下面的文案，貼到住戶群組的記事本；也可以依自己的語氣修改。</p>
+        <label for="shareText" class="sr-only">記事本推薦文案</label>
+        <textarea id="shareText" class="copy-area" readonly data-cid="PROMO-KIT-B-TEXT">【鄰居分享｜新家窗簾】
+最近在挑窗簾的鄰居，可以參考「織光窗簾」：
+・全台免費到府丈量，布料樣品直接帶到家裡比對
+・官網輸入窗戶寬度、高度就能線上估價，不用傳照片
+・現在透過官網預約，還有官網限定優惠
+官網：https://www.glowcurtain.com.tw/promo/?utm_source=line&amp;utm_medium=group
+LINE 官方帳號：@133tlbtv</textarea>
+        <button type="button" class="btn btn-gold copy-btn" id="copyTextBtn" data-cid="PROMO-KIT-B-BTN">複製記事本文案</button>
+        <p class="howto-title" data-cid="PROMO-HOWTO-TITLE">怎麼發到記事本？</p>
+        <ol class="howto">
+          <li data-cid="PROMO-HOWTO-1">開啟社區住戶群組，點右上角「≡」選單</li>
+          <li data-cid="PROMO-HOWTO-2">點「記事本」，新增一則貼文</li>
+          <li data-cid="PROMO-HOWTO-3">貼上文案後發布，記得截圖</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="terms">
+  <div class="wrap"><div class="terms-box">
+    <div class="section-head">
+      <span class="eyebrow" data-cid="PROMO-TERMS-EYEBROW">Terms</span>
+      <h2 data-cid="PROMO-TERMS-H2">活動辦法</h2>
+    </div>
+    <ol class="terms">
+      <li data-cid="PROMO-TERM-1">活動期間：即日起至 2026 年 12 月 31 日（四）止，以官網預約表單送出時間為準。</li>
+      <li data-cid="PROMO-TERM-2">本優惠限透過織光窗簾官網「預約到府丈量」表單完成預約者適用。</li>
+      <li data-cid="PROMO-TERM-3">參加方式：將織光窗簾 LINE 官方帳號名片分享至您所居住社區的住戶 LINE 群組，並於同一群組記事本發布推薦貼文；到府丈量時請出示兩者截圖。</li>
+      <li data-cid="PROMO-TERM-4">符合資格者於確認訂購時，訂單金額現折新台幣 2,000 元，並加贈好禮；贈品內容以現場提供為準。</li>
+      <li data-cid="PROMO-TERM-5">每戶限折抵一次，折抵金額不得兌換現金，亦不得與其他優惠合併使用。</li>
+      <li data-cid="PROMO-TERM-6">活動內容如有調整，以本頁公告為準。</li>
+    </ol>
+    <p class="terms-contact" data-cid="PROMO-TERMS-CONTACT">活動相關問題，歡迎來電 <a href="tel:0986295548">0986-295-548</a>（唐經理），或透過 <a data-line-add href="https://lin.ee/5Y7AiI6" target="_blank" rel="noopener">LINE 官方帳號</a>詢問。</p>
+  </div></div>
+</section>
+
+<section class="p-cta" aria-labelledby="ctaTitle">
+  <div class="wrap">
+    <span class="eyebrow" data-cid="PROMO-CTA-EYEBROW">Book a Home Visit</span>
+    <h2 id="ctaTitle" data-cid="PROMO-CTA-H2">新家的光，從一次丈量開始</h2>
+    <p data-cid="PROMO-CTA-DESC">全台免費到府丈量，規劃師帶布料樣品到府，依您家的採光與生活習慣規劃；也可以先到官網輸入窗戶寬高，線上估價參考。</p>
+    <div class="p-actions">
+      <a class="btn btn-gold" href="/?promo=resident#booking" data-cid="PROMO-CTA-BTN1">立即官網預約<span class="arrow" aria-hidden="true">→</span></a>
+      <a class="btn btn-ghost" href="/#quote" data-cid="PROMO-CTA-BTN2">先線上估價</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div>
+        <img class="f-logo" src="/images/logo-horizontal-web.webp" alt="織光窗簾 GlowCurtain" width="200" height="38" loading="lazy">
+        <p data-cid="PROMO-FOOTER-TAGLINE">全台到府訂製窗簾・免費丈量估價</p>
+      </div>
+      <ul>
+        <li><a href="/">官網首頁</a></li>
+        <li><a href="/#quote">線上報價</a></li>
+        <li><a href="/#booking">預約丈量</a></li>
+        <li><a href="/portfolio/">空間作品集</a></li>
+      </ul>
+      <ul>
+        <li><a href="tel:0986295548">唐經理 0986-295-548</a></li>
+        <li><a data-line-add href="https://lin.ee/5Y7AiI6" target="_blank" rel="noopener">LINE 官方帳號 @133tlbtv</a></li>
+        <li><a href="https://www.instagram.com/glowcurtain/" target="_blank" rel="noopener">Instagram @glowcurtain</a></li>
+      </ul>
+    </div>
+    <div class="f-bottom">
+      <span>© 2026 織光窗簾 GlowCurtain. All rights reserved.</span>
+      <span><a href="/privacy/">隱私權政策</a></span>
+    </div>
+  </div>
+</footer>
+
+<div class="m-sticky live-only" role="region" aria-label="預約捷徑">
+  <p class="ms-text"><span data-cid="PROMO-STICKY-TEXT">官網預約限定</span><b data-cid="PROMO-STICKY-AMT">現折 NT$2,000</b></p>
+  <a class="btn btn-primary" href="/?promo=resident#booking" data-cid="PROMO-STICKY-BTN">立即預約</a>
+</div>
+
+<script>
+  (function(){
+    var LINE_ADD_FRIEND_URL = 'https://lin.ee/5Y7AiI6';
+    var IS_MOBILE = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    document.querySelectorAll('a[data-line-add]').forEach(function(a){ a.href = LINE_ADD_FRIEND_URL; });
+    // LINE 分享名片的深連結只有手機 LINE 支援；電腦改顯示 QR Code
+    document.querySelectorAll('.js-mobile').forEach(function(el){ el.hidden = !IS_MOBILE; });
+    document.querySelectorAll('.js-desktop').forEach(function(el){ el.hidden = IS_MOBILE; });
+
+    // 倒數天數（依台灣時間計算）
+    var end = Date.parse(window.GC_PROMO_END), cd = document.getElementById('countdown');
+    if (cd && end && Date.now() <= end) {
+      var days = Math.ceil((end - Date.now()) / 86400000);
+      cd.innerHTML = days <= 1 ? '今天最後一天' : '倒數 <b>' + days + '</b> 天';
+      cd.hidden = false;
+    }
+
+    // 複製記事本文案（文字框自動撐高，完整顯示文案）
+    var btn = document.getElementById('copyTextBtn'), ta = document.getElementById('shareText');
+    function fit(){ if (!ta) return; ta.style.height = 'auto'; ta.style.height = (ta.scrollHeight + 2) + 'px'; }
+    fit(); window.addEventListener('resize', fit); window.addEventListener('load', fit);
+    var label = btn ? btn.textContent : '';
+    function copied(){
+      btn.textContent = '已複製，貼到記事本吧！'; btn.classList.add('is-copied');
+      setTimeout(function(){ btn.textContent = label; btn.classList.remove('is-copied'); }, 2600);
+      window.gcTrack && window.gcTrack('promo_copy_text', { device: IS_MOBILE ? 'mobile' : 'desktop' });
+    }
+    function fallback(){
+      try { ta.focus(); ta.select(); ta.setSelectionRange(0, ta.value.length); if (document.execCommand('copy')) { copied(); return; } } catch (e) {}
+      btn.textContent = '請長按文字框，選擇「全選」後複製';
+    }
+    if (btn && ta) btn.addEventListener('click', function(){
+      if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(ta.value).then(copied, fallback);
+      else fallback();
+    });
+  })();
+</script>
+
+<script>
+  // 點擊追蹤（GA4）：預約 CTA、名片分享、LINE、電話
+  (function(){
+    function positionOf(el){
+      if (el.closest('.p-header')) return 'promo_header';
+      if (el.closest('.m-sticky')) return 'promo_sticky';
+      if (el.closest('footer')) return 'promo_footer';
+      var s = el.closest('section');
+      if (s && s.classList.contains('p-hero')) return 'promo_hero';
+      if (s && s.classList.contains('p-cta')) return 'promo_cta';
+      return s && s.id ? 'promo_' + s.id : 'promo_other';
+    }
+    document.addEventListener('click', function(e){
+      var el = e.target.closest && e.target.closest('a, button');
+      if (!el || !window.gcTrack) return;
+      var href = el.getAttribute('href') || '', pos = positionOf(el);
+      if (el.id === 'shareCardBtn') window.gcTrack('promo_share_card', { link_position: pos });
+      else if (/#booking$/.test(href)) window.gcTrack('cta_click', { cta_target: 'booking', link_position: pos });
+      else if (/#quote$/.test(href)) window.gcTrack('cta_click', { cta_target: 'quote', link_position: pos });
+      else if (/lin\.ee|line\.me/.test(href)) window.gcTrack('line_click', { link_position: pos });
+      else if (href.indexOf('tel:') === 0) window.gcTrack('phone_click', { link_position: pos });
+    }, true);
+  })();
+</script>
+
+<script>
+  // 標題字型補字：與首頁相同機制，標題出現子集沒有的字時才補載 Google Fonts
+  (function(){
+    var COVER = {"400": "—…✓　、。「」・一下不個們光剛只好安家我是替片留的私窗簾而與裝隱！％（）＋，／：；？～", "500": "·×÷–—‘’“”…←↑→↓★☆✓　、。々〇「」『』【】〜・一丈上下不中久事交享人什付以仿估住何作個們值僅價先光免內全再出分到則剛加動務參只可台合名否哪問嗎四圍圖在地基報填境多大好如始安官定客室家寫寸專小少尺屋巢差己已市布常幫幾府式形影得從怎您想成我截戶房扇手折挑捲推搭收文斑料新於施明是時晚景曬替會服木本束柔格條業模樣次款正步比求法活洽測準溫潮濕灣無熱片現理琴環留發百的看真確礎示禮私租種究穿窗第算範簾約紗細組結給網線總織群而臥自與落葉薦蛇蜂裝裡西要見訂計記詢試話認調請諮講讓費跟較輕辦送透通進適遮選還配量金鋁門開間關限階隔隱電需面預題類風馬驟鬆麼龍！＃＄％＆（）＋，／０１２３４５６７８９：；＝？＠［］～", "700": "—…✓　、。「」・件位內天小年折時現！％（）＋，／：；？～"};
+    function check(){
+      try {
+        var need = false, w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT), n, cs, wt, set, t, i;
+        while (!need && (n = w.nextNode())) {
+          t = n.nodeValue; if (!t || !t.trim() || !n.parentElement) continue;
+          cs = getComputedStyle(n.parentElement);
+          if (cs.fontFamily.indexOf('GC Serif') === -1) continue;
+          wt = parseInt(cs.fontWeight, 10); set = COVER[wt <= 450 ? '400' : (wt >= 600 ? '700' : '500')] || '';
+          for (i = 0; i < t.length; i++) { var c = t.charCodeAt(i); if (c > 0x7E && !/\s/.test(t[i]) && set.indexOf(t[i]) === -1) { need = true; break; } }
+        }
+        if (need) {
+          var l = document.createElement('link'); l.rel = 'stylesheet';
+          l.href = 'https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&display=swap';
+          document.head.appendChild(l);
+        }
+      } catch (e) {}
+    }
+    window.addEventListener('load', function(){ (window.requestIdleCallback || function(f){ setTimeout(f, 1200); })(check); });
+  })();
+</script>
+</body>
+</html>
