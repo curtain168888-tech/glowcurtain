@@ -14,7 +14,7 @@
   window.gcTrack = function(name, params){
     try { if (typeof gtag === 'function') gtag('event', name, Object.assign({ transport_type: 'beacon' }, params || {})); } catch (e) {}
   };
-  // ===== 優惠活動期間（/promo/ 官網預約限定）：結束時間（台灣時間）只需要改這一行，活動頁 /promo/ 內也有同一行要一起改 =====
+  // ===== 優惠活動期間（/promo/ 官網預約限定）：結束時間（台灣時間）只需要改這一行，活動頁 /promo/resident-share/ 與列表頁 /promo/（卡片的 data-end）也要一起改 =====
   // 過了這個時間，首頁的公告列、預約區提示、表單勾選與頁尾連結（class="js-promo"）會自動隱藏
   window.GC_PROMO_END = '2026-12-31T23:59:59+08:00';
   try { if (Date.now() > Date.parse(window.GC_PROMO_END)) document.documentElement.classList.add('promo-ended'); } catch (e) {}
@@ -48,7 +48,7 @@
 <link rel="preload" as="image" fetchpriority="high" href="/images/hero-photo1.webp">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/noto-serif-tc-gc-500.woff2" crossorigin>
 <style>
-  /* 標題字型：Noto Serif TC 自架子集（只含網站標題實際用到的字，三個字重共約 97KB；涵蓋首頁與 /promo/ 活動頁）
+  /* 標題字型：Noto Serif TC 自架子集（只含網站標題實際用到的字，三個字重共約 98KB；涵蓋首頁與 /promo/ 優惠活動頁）
      原本從 Google Fonts 載入完整中文字型約 1.4MB，且會擋住畫面顯示；授權 SIL OFL，見 /fonts/OFL-NotoSerifTC.txt
      改了標題文字出現新字時，頁尾程式會自動補載 Google Fonts 版本；建議同時重新產生子集 */
   @font-face{ font-family:"GC Serif"; src:url("/fonts/noto-serif-tc-gc-400.woff2") format("woff2"); font-weight:400; font-style:normal; font-display:swap; }
@@ -139,9 +139,9 @@
     .promo-bar .pb-mobile{ display:inline; white-space:nowrap; }
   }
   @media (max-width:340px){ .promo-bar .pb-mobile{ white-space:normal; } }
-  /* 選單裡的「優惠活動」只在手機選單出現（桌機已有頂部公告列） */
-  nav.links a.nav-promo{ display:none; color:var(--gold-deep); font-weight:700; }
-  @media (max-width:860px){ nav.links a.nav-promo{ display:block; } }
+  /* 選單「優惠活動」→ /promo/ 活動列表頁（常駐）；有進行中活動時，文字旁顯示金色小圓點 */
+  nav.links a.nav-promo{ color:var(--gold-deep); font-weight:700; }
+  nav.links a.nav-promo .nav-dot{ display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--gold); margin-left:4px; vertical-align:top; position:relative; top:2px; }
   .booking-promo{
     display:block; margin:0 0 32px; padding:18px 20px; max-width:420px; text-decoration:none;
     border:1px solid rgba(228,201,169,0.55); border-left:3px solid var(--gold); background:rgba(228,201,169,0.08);
@@ -304,7 +304,7 @@
     font-family:var(--font-base); font-style:italic; font-weight:400;
     font-size:0.85rem; color:var(--ink-soft); letter-spacing:0.08em; margin-left:2px;
   }
-  nav.links{ display:flex; align-items:center; gap:34px; font-size:0.95rem; }
+  nav.links{ display:flex; align-items:center; gap:30px; font-size:0.95rem; } /* 7 項選單：34px→30px，避免寬螢幕壓縮 Logo */
   nav.links a{ text-decoration:none; color:var(--ink); position:relative; padding-bottom:4px; }
   nav.links a::after{
     content:""; position:absolute; left:0; bottom:0; width:0; height:1px; background:var(--gold-deep);
@@ -313,8 +313,8 @@
   nav.links a:hover::after{ width:100%; }
   /* 選單多了「空間作品集」：平板寬度縮小間距，避免文字換行 */
   nav.links a{ white-space:nowrap; }
-  @media (max-width:1180px) and (min-width:861px){ nav.links{ gap:22px; } }
-  @media (max-width:980px) and (min-width:861px){ nav.links{ gap:14px; font-size:0.88rem; } header.site .nav-cta{ padding:9px 14px; } }
+  @media (max-width:1180px) and (min-width:961px){ nav.links{ gap:22px; } }
+  @media (max-width:1060px) and (min-width:961px){ nav.links{ gap:14px; font-size:0.88rem; } header.site .nav-cta{ padding:9px 14px; } }
   header.site .nav-cta{
     border:1px solid var(--navy-deep); background:var(--navy-deep); color:#FFFFFF; padding:9px 20px;
     text-decoration:none; font-size:0.88rem; font-weight:700; letter-spacing:0.03em; white-space:nowrap;
@@ -908,9 +908,10 @@
     .cat-carousel::before, .cat-carousel::after{ width:48px; }
   }
 
-  /* ---------- BREAKPOINT: MOBILE NAV / STACKED GRIDS (≤860px) ---------- */
-  @media (max-width: 860px){
-    :root{ --section-pad:84px; --wrap-pad:24px; }
+  /* ---------- BREAKPOINT: 漢堡選單（≤960px）----------
+     選單加入「優惠活動」後共 7 項，861–960px 的窄桌機放不下會壓縮 Logo，所以選單提早在 960px 收成漢堡選單；
+     版面欄位（表單、報價）仍維持 860px 才改成單欄 */
+  @media (max-width: 960px){
     nav.links{
       display:none;
       flex-direction:column;
@@ -927,6 +928,11 @@
       display:inline-block; margin:4px 24px 20px; text-align:center;
     }
     header.site.nav-open nav.links{ padding-bottom:0; }
+  }
+
+  /* ---------- BREAKPOINT: MOBILE / STACKED GRIDS (≤860px) ---------- */
+  @media (max-width: 860px){
+    :root{ --section-pad:84px; --wrap-pad:24px; }
     .booking-grid, .quote-grid{ grid-template-columns:1fr; }
     .quote-result{ position:static; }
     .footer-grid{ grid-template-columns:1fr; gap:36px; }
@@ -1147,7 +1153,7 @@
 })();
 </script>
 
-<a class="promo-bar js-promo" href="/promo/" data-cid="PROMO-BAR">
+<a class="promo-bar js-promo" href="/promo/resident-share/" data-cid="PROMO-BAR">
   <span class="pb-tag" data-cid="PROMO-BAR-TAG">官網預約限定</span>
   <span class="pb-text pb-desktop" data-cid="PROMO-BAR-TEXT">住戶群組分享名片＋記事本，<b>現折 NT$2,000</b>、好禮再加送｜即日起至 12/31</span>
   <span class="pb-text pb-mobile" data-cid="PROMO-BAR-TEXT-M">住戶群組分享 <b>現折 NT$2,000</b>＋好禮 →</span>
@@ -1165,7 +1171,7 @@
       <a href="#booking" data-cid="NAV-L3">預約丈量</a>
       <a href="#about" data-cid="NAV-L4">關於我們</a>
       <a href="#contact" data-cid="NAV-L5">聯絡方式</a>
-      <a class="nav-promo js-promo" href="/promo/" data-cid="NAV-L7">優惠活動｜現折 NT$2,000</a>
+      <a class="nav-promo" href="/promo/" data-cid="NAV-L7">優惠活動<span class="nav-dot js-promo" aria-hidden="true"></span></a>
       <a class="nav-cta" href="#booking" data-cid="NAV-CTA">立即預約免費丈量</a>
     </nav>
     <button class="menu-toggle" id="menuToggle" aria-label="開啟選單" aria-expanded="false" aria-controls="navLinks">
@@ -1426,7 +1432,7 @@
       <span class="eyebrow" data-cid="BOOK-EYEBROW">03 — Home Visit</span>
       <h2 data-cid="BOOK-H2">預約到府丈量</h2>
       <p data-cid="BOOK-DESC">填寫您的空間資訊與方便時段，專人將盡速於工作日內致電確認丈量時間，丈量與諮詢皆為免費服務。</p>
-      <a class="booking-promo js-promo" href="/promo/">
+      <a class="booking-promo js-promo" href="/promo/resident-share/">
         <span class="bp-tag" data-cid="BOOK-PROMO-TAG">官網預約限定</span>
         <strong data-cid="BOOK-PROMO-TITLE">住戶群組分享名片＋記事本，現折 NT$2,000、好禮再加送</strong>
         <span class="bp-more" data-cid="BOOK-PROMO-MORE">活動至 2026/12/31｜看活動辦法 →</span>
@@ -1519,7 +1525,7 @@
           <input id="b-promo" type="checkbox" name="promo" value="參加：官網預約限定（住戶群組分享名片＋記事本，現折 NT$2,000＋好禮）">
           <span class="po-text"><b data-cid="BOOK-PROMO-OPTIN">參加「官網預約限定」優惠</b><span data-cid="BOOK-PROMO-OPTIN-DESC">住戶群組分享名片＋記事本，確認訂購現折 NT$2,000、好禮再加送（至 2026/12/31）</span></span>
         </label>
-        <a class="po-link" href="/promo/" target="_blank" rel="noopener" data-cid="BOOK-PROMO-OPTIN-LINK">活動辦法</a>
+        <a class="po-link" href="/promo/resident-share/" target="_blank" rel="noopener" data-cid="BOOK-PROMO-OPTIN-LINK">活動辦法</a>
       </div>
       <p class="form-hint form-hint-mobile" data-cid="BOOK-SUBMIT-HINT-MOBILE">使用手機瀏覽器直接送出，內容將直接跳轉至 LINE 官方，小編會立即接手為您安排丈量時間</p>
       <p class="form-hint form-hint-desktop" data-cid="BOOK-SUBMIT-HINT-DESKTOP">建議使用手機瀏覽器填寫，送出後將直接跳轉至 LINE 官方，我們會立即與您聯繫預約丈量事宜</p>
@@ -1879,7 +1885,7 @@
           <li><a href="/portfolio/" data-cid="FOOTER-LINK4">空間作品集</a></li>
           <li><a href="#quote" data-cid="FOOTER-LINK2">線上報價</a></li>
           <li><a href="#booking" data-cid="FOOTER-LINK3">預約丈量</a></li>
-          <li class="js-promo"><a href="/promo/" data-cid="FOOTER-LINK5">優惠活動</a></li>
+          <li><a href="/promo/" data-cid="FOOTER-LINK5">優惠活動</a></li>
         </ul>
       </div>
       <div>
@@ -2885,7 +2891,7 @@
     if(e.key === 'Escape') setMenu(false);
   });
   window.addEventListener('resize', () => {
-    if(window.innerWidth > 860) setMenu(false);
+    if(window.innerWidth > 960) setMenu(false); // 與 CSS 漢堡選單斷點 960px 一致
   });
 
   // 作品集／LINE 仿真對話泡泡：進場動畫結束後才依序出現（作品集先、LINE 後），避免跟 Splash 搶注意力，
@@ -2972,12 +2978,12 @@
 </script>
 
 <script>
-  // 從優惠活動頁（/promo/）點「立即官網預約」過來：/?promo=resident#booking，自動勾選「參加官網預約限定優惠」
+  // 從優惠活動頁（/promo/resident-share/）點「立即官網預約」過來：/?promo=resident#booking，自動勾選「參加官網預約限定優惠」
   (function(){
     var box = document.getElementById('b-promo');
     if (!box || document.documentElement.classList.contains('promo-ended')) return;
     var fromPromo = new URLSearchParams(location.search).get('promo') === 'resident';
-    try { fromPromo = fromPromo || /\/promo\/?/.test(new URL(document.referrer).pathname) && new URL(document.referrer).host === location.host; } catch (e) {}
+    try { fromPromo = fromPromo || /^\/promo\/resident-share\/?/.test(new URL(document.referrer).pathname) && new URL(document.referrer).host === location.host; } catch (e) {}
     if (fromPromo) box.checked = true;
   })();
 </script>
@@ -3007,7 +3013,7 @@
   // 標題字型補字：若標題出現子集沒有的字（例如改了文案），才在頁面載入完成後補載 Google Fonts 的 Noto Serif TC，
   // 讓新字仍以同一字型顯示；平常不會多下載任何字型。（子集字表與 /fonts/ 內檔案同步，重新產生子集時一起更新）
   (function(){
-    var COVER = {"400": "—…✓　、。「」・一下不個們光剛只好安家我是替片留的私窗簾而與裝隱！％（）＋，／：；？～", "500": "·×÷–—‘’“”…←↑→↓★☆✓　、。々〇「」『』【】〜・一丈上下不中久事交享人什付以仿估住何作個們值僅價先光免內全再出分到則剛加動務參只可台合名否哪問嗎四圍圖在地基報填境多大好如始安官定客室家寫寸專小少尺屋巢差己已市布常幫幾府式形影得從怎您想成我截戶房扇手折挑捲推搭收文斑料新於施明是時晚景曬替會服木本束柔格條業模樣次款正步比求法活洽測準溫潮濕灣無熱片現理琴環留發百的看真確礎示禮私租種究穿窗第算範簾約紗細組結給網線總織群而臥自與落葉薦蛇蜂裝裡西要見訂計記詢試話認調請諮講讓費跟較輕辦送透通進適遮選還配量金鋁門開間關限階隔隱電需面預題類風馬驟鬆麼龍！＃＄％＆（）＋，／０１２３４５６７８９：；＝？＠［］～", "700": "—…✓　、。「」・件位內天小年折時現！％（）＋，／：；？～"};
+    var COVER = {"400": "—…✓　、。「」・一下不個們光剛只好安家我是替片留的私窗簾而與裝隱！％（）＋，／：；？～", "500": "·×÷–—‘’“”…←↑→↓★☆✓　、。々〇「」『』【】〜・一丈上下不中久事交享人什付以仿估住何作個們值僅價優先光免內全再出分到則剛加動務參只可台合名否哪問嗎四圍圖在地基報填境多大好如始安官定客室家寫寸專小少尺屋巢差己已市布常幫幾府式形影得從怎您惠想成我截戶房扇手折挑捲推搭收文斑料新於施明是時晚景曬替會服木本束柔格條業模樣次款正步比求法活洽測準溫潮濕灣無熱片現理琴環留發百的看真確礎示禮私租種究穿窗第算範簾約紗細組結給網線總織群而臥自與落葉薦蛇蜂行裝裡西要見訂計記詢試話認調請諮講讓費跟較輕辦送透通進適遮選還配量金鋁門開間關限階隔隱電需面預題類風馬驟鬆麼龍！＃＄％＆（）＋，／０１２３４５６７８９：；＝？＠［］｜～", "700": "—…✓　、。「」・件位內天小年折時現！％（）＋，／：；？～"};
     function check(){
       try {
         var need = false, w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT), n, cs, wt, set, t, i;
