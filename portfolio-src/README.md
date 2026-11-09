@@ -28,4 +28,5 @@ node portfolio-src/build_web.js
 
 作品集頁上方的官網選單、下方的頁尾，是 `build_web.js` 建置時從首頁 `index.html` 擷取的（HTML ＋ 相關 CSS，`data-cid` 會拿掉、首頁錨點改成 `/#...`）。
 **首頁的選單或頁尾改了以後，要重跑一次 `node portfolio-src/build_web.js`，作品集才會同步。**
+優惠活動頁（`/promo/`、`/promo/resident-share/`）也用同一套首頁選單與頁尾，首頁改了以後另外執行 `node tools/sync-site-chrome.js` 同步。
 作品集頁專用的調整在 `site-chrome.css`（基本設定）與 `site-chrome-after.css`（header 不黏頂、logo 不跑進場動畫、標示目前頁面）。

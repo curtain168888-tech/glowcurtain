@@ -4,3 +4,5 @@ header.site { position: relative; }
 .logo-home { display: block; min-width: 0; }
 nav.links a.is-current { color: var(--gold-deep); }
 nav.links a.is-current::after { width: 100%; }
+/* 選單「優惠活動」的金色小圓點：活動結束（html.promo-ended，由 build_web.js 依首頁 GC_PROMO_END 判斷）後隱藏 */
+.promo-ended .js-promo { display: none !important; }

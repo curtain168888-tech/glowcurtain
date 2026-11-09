@@ -714,13 +714,15 @@ header.site button { font-family: inherit; }
     --radius: 2px;
     --font-base: Arial, "Microsoft JhengHei", "微軟正黑體", sans-serif;
     --font-serif: Arial, "Microsoft JhengHei", "微軟正黑體", sans-serif;
-    --font-display: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+    --font-display: "GC Serif", "Noto Serif TC", "Songti TC", "PMingLiU", serif;
     
     --section-pad: 136px;
     --wrap-pad: 32px;
     --grid-gap: 64px;
   }
 .wrap{ max-width:1120px; margin:0 auto; padding:0 var(--wrap-pad); }
+nav.links a.nav-promo{ color:var(--gold-deep); font-weight:700; }
+nav.links a.nav-promo .nav-dot{ display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--gold); margin-left:4px; vertical-align:top; position:relative; top:2px; }
 header.site{
     position:sticky; top:0; z-index:50;
     background:rgba(237,230,220,0.88);
@@ -770,7 +772,7 @@ header.site{
     font-family:var(--font-base); font-style:italic; font-weight:400;
     font-size:0.85rem; color:var(--ink-soft); letter-spacing:0.08em; margin-left:2px;
   }
-nav.links{ display:flex; align-items:center; gap:34px; font-size:0.95rem; }
+nav.links{ display:flex; align-items:center; gap:30px; font-size:0.95rem; }
 nav.links a{ text-decoration:none; color:var(--ink); position:relative; padding-bottom:4px; }
 nav.links a::after{
     content:""; position:absolute; left:0; bottom:0; width:0; height:1px; background:var(--gold-deep);
@@ -778,10 +780,10 @@ nav.links a::after{
   }
 nav.links a:hover::after{ width:100%; }
 nav.links a{ white-space:nowrap; }
-@media (max-width:1180px) and (min-width:861px){
+@media (max-width:1180px) and (min-width:961px){
 nav.links{ gap:22px; }
 }
-@media (max-width:980px) and (min-width:861px){
+@media (max-width:1060px) and (min-width:961px){
 nav.links{ gap:14px; font-size:0.88rem; }
 header.site .nav-cta{ padding:9px 14px; }
 }
@@ -802,7 +804,7 @@ header.site.nav-open .menu-toggle .icon-open{ display:none; }
 header.site.nav-open .menu-toggle .icon-close{ display:block; }
 footer{ background:var(--navy-deep); color:var(--bg-soft); padding:70px 0 30px; }
 .footer-grid{ display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:50px; margin-bottom:50px; }
-footer h4{ font-family:var(--font-serif); font-weight:500; font-size:1rem; margin-bottom:16px; color:var(--paper); }
+footer h3{ font-family:var(--font-serif); font-weight:500; font-size:1rem; margin-bottom:16px; color:var(--paper); }
 footer p, footer a{ color:#B9C3C7; font-size:0.9rem; text-decoration:none; }
 footer a:hover{ color:var(--gold-soft); }
 footer .flogo{ font-family:var(--font-serif); font-size:1.3rem; color:var(--paper); margin-bottom:14px; }
@@ -824,8 +826,7 @@ footer ul a, .footer-biz-link{ display:inline-flex; align-items:center; min-heig
 @media (max-width: 1024px){
 :root{ --grid-gap:44px; --section-pad:108px; }
 }
-@media (max-width: 860px){
-:root{ --section-pad:84px; --wrap-pad:24px; }
+@media (max-width: 960px){
 nav.links{
       display:none;
       flex-direction:column;
@@ -842,15 +843,21 @@ header.site.nav-open .nav-cta{
       display:inline-block; margin:4px 24px 20px; text-align:center;
     }
 header.site.nav-open nav.links{ padding-bottom:0; }
+}
+@media (max-width: 860px){
+:root{ --section-pad:84px; --wrap-pad:24px; }
 .footer-grid{ grid-template-columns:1fr; gap:36px; }
 }
 @media (max-width: 480px){
 :root{ --wrap-pad:18px; }
 .footer-bottom{ flex-direction:column; align-items:flex-start; }
 }
+.logo-mark{ opacity:1 !important; transform:none !important; }
 /* 作品集頁：header 不黏在頂部（翻頁區要最大空間）；logo 不跑首頁的進場動畫；目前頁面在選單上標示 */
 header.site { position: relative; }
 .logo-mark { opacity: 1; transform: none; }
 .logo-home { display: block; min-width: 0; }
 nav.links a.is-current { color: var(--gold-deep); }
 nav.links a.is-current::after { width: 100%; }
+/* 選單「優惠活動」的金色小圓點：活動結束（html.promo-ended，由 build_web.js 依首頁 GC_PROMO_END 判斷）後隱藏 */
+.promo-ended .js-promo { display: none !important; }

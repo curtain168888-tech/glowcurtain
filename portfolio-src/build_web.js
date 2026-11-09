@@ -103,9 +103,12 @@ let siteHeader = chromeHtml(grab(/<header class="site" id="siteHeader">[\s\S]*?<
   .replace('<a href="/portfolio/">空間作品集</a>', '<a href="/portfolio/" class="is-current" aria-current="page">空間作品集</a>')
   .replace(/(<img class="logo-mark"[^>]*>)/, '<a class="logo-home" href="/" aria-label="回織光窗簾首頁">$1</a>');
 const siteFooter = chromeHtml(grab(/<footer id="contact">[\s\S]*?<\/footer>/, 'footer'));
+// 優惠活動結束時間（首頁 window.GC_PROMO_END）：過了就隱藏選單「優惠活動」旁的小圓點
+const PROMO_END = (HOME.match(/window\.GC_PROMO_END = '([^']+)'/) || [])[1] || '';
 const siteSprite = grab(/<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">[\s\S]*?<\/svg>/, 'icon sprite');
 // 首頁 CSS：只取 :root 變數與 header／footer 用到的規則（含 @media 內的）
-const homeCss = HOME.match(/<style>([\s\S]*?)<\/style>/)[1].replace(/\/\*[\s\S]*?\*\//g, '');
+// 首頁有多個 <style>（第一個是自架字型 @font-face），要全部讀進來，否則會漏掉 header／footer 的規則
+const homeCss = Array.from(HOME.matchAll(/<style>([\s\S]*?)<\/style>/g), m => m[1]).join('\n').replace(/\/\*[\s\S]*?\*\//g, '');
 function cssBlocks(text) {
   const out = []; let i = 0;
   while (i < text.length) {
@@ -158,6 +161,7 @@ const out = `<!DOCTYPE html>
   gtag('js', new Date());
 
   gtag('config', 'G-6PKFR414KT');
+  try { if (${JSON.stringify(PROMO_END)} && Date.now() > Date.parse(${JSON.stringify(PROMO_END)})) document.documentElement.classList.add('promo-ended'); } catch (e) {}
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">

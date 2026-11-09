@@ -283,7 +283,7 @@
     menuToggle.addEventListener('click', function () { setMenu(!siteHeader.classList.contains('nav-open')); });
     Array.prototype.forEach.call(navLinks.querySelectorAll('a'), function (a) { a.addEventListener('click', function () { setMenu(false); }); });
     d.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
-    window.addEventListener('resize', function () { if (window.innerWidth > 860) setMenu(false); });
+    window.addEventListener('resize', function () { if (window.innerWidth > 960) setMenu(false); }); // 與首頁漢堡選單斷點 960px 一致
   }
 
   /* ---------- 啟動 ---------- */
