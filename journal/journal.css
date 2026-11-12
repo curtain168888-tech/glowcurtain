@@ -78,9 +78,6 @@ img{ max-width:100%; height:auto; display:block; }
 .card h3{ font-size:1.3rem; line-height:1.5; }
 .card a:hover h3{ color:var(--gold-deep); }
 .card .ex{ font-size:0.9rem; line-height:1.85; color:var(--ink-mid); }
-/* 撰寫中的文章：沒有連結，圖片淡一點並加標籤 */
-.card.is-soon .img img{ opacity:0.78; filter:saturate(0.8); }
-.card .soon{ position:absolute; left:14px; top:14px; font-size:0.75rem; letter-spacing:0.16em; padding:4px 12px; background:rgba(251,248,243,0.92); color:var(--navy); }
 .j-empty{ padding:40px 0; color:var(--ink-soft); text-align:center; }
 
 .j-promo{ background:var(--navy); color:var(--paper); }
@@ -159,6 +156,20 @@ img{ max-width:100%; height:auto; display:block; }
 .a-related .cards{ grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:32px; }
 .a-related .card h3{ font-size:1.15rem; }
 
+/* 文章：兩張並排照片、步驟清單 */
+.a-pair{ margin:40px 0; }
+.a-pair .pics{ display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:14px; align-items:start; }
+.a-pair img{ width:100%; aspect-ratio:4 / 5; object-fit:cover; }
+.a-steps{ list-style:none; counter-reset:step; padding:0 !important; margin:0 0 20px !important; display:flex; flex-direction:column; gap:0; }
+.a-steps li{ counter-increment:step; position:relative; padding:0 0 28px 64px; margin:0 !important; }
+.a-steps li::before{ content:counter(step); position:absolute; left:0; top:2px; width:40px; height:40px; border-radius:50%; border:1px solid var(--gold); color:var(--gold-deep); font-family:var(--font-display); font-size:1.05rem; display:flex; align-items:center; justify-content:center; background:var(--paper); }
+.a-steps li:not(:last-child)::after{ content:""; position:absolute; left:20px; top:46px; bottom:4px; width:1px; background:rgba(192,151,106,0.45); }
+.a-steps .t{ display:block; font-family:var(--font-display); font-size:1.2rem; color:var(--navy); line-height:1.6; margin-bottom:4px; }
+.a-steps .d{ display:block; line-height:1.95; color:var(--ink); }
+.a-body figure.is-portrait{ max-width:440px; }
+.a-body ul{ padding-left:22px; }
+.a-body ul li{ margin-bottom:10px; }
+
 @media (max-width:860px){
   :root{ --wrap-pad:24px; }
   .j-head{ padding:24px 0 32px; }
@@ -177,6 +188,7 @@ img{ max-width:100%; height:auto; display:block; }
   .a-cta{ padding:26px 20px; }
   .actions, .actions .btn{ width:100%; }
   .a-split figure{ max-width:none; }
+  .a-steps li{ padding-left:54px; }
   .a-table table{ min-width:0; font-size:0.86rem; }
   .a-table th, .a-table td{ padding:12px 8px; }
   .a-table tbody th{ white-space:normal; }

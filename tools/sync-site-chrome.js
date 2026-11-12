@@ -18,6 +18,12 @@ const TARGETS = [
   { file: 'promo/resident-share/index.html', current: '/promo/', ariaCurrent: false },
   { file: 'journal/index.html', current: '/journal/', ariaCurrent: true },
   { file: 'journal/fabric-vs-dimming/index.html', current: '/journal/', ariaCurrent: false },
+  { file: 'journal/bedroom-curtains/index.html', current: '/journal/', ariaCurrent: false },
+  { file: 'journal/motorized-curtains/index.html', current: '/journal/', ariaCurrent: false },
+  { file: 'journal/heat-setting/index.html', current: '/journal/', ariaCurrent: false },
+  { file: 'journal/honeycomb-shades/index.html', current: '/journal/', ariaCurrent: false },
+  { file: 'journal/living-room-windows/index.html', current: '/journal/', ariaCurrent: false },
+  { file: 'journal/quote-to-install/index.html', current: '/journal/', ariaCurrent: false },
 ];
 
 const grab = (re, what) => { const m = HOME.match(re); if (!m) throw new Error('首頁找不到 ' + what); return m[0]; };
