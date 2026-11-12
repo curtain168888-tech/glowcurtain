@@ -777,6 +777,8 @@
   .about-closing h3{ color:var(--paper); font-size:clamp(1.3rem, 2.2vw, 1.7rem); font-weight:600; margin-bottom:10px; }
   .about-closing p{ margin:0; color:var(--gold-soft); font-size:0.9rem; letter-spacing:0.04em; }
   .about-closing-actions{ display:flex; gap:14px; flex-wrap:wrap; }
+  .about-promo-link{ color:var(--paper); margin-left:12px; text-decoration:underline; text-underline-offset:4px; text-decoration-color:rgba(228,201,169,0.7); white-space:nowrap; display:inline-block; padding:4px 0; }
+  .about-promo-link:hover{ color:var(--gold-soft); }
   .btn-about-primary, .btn-about-ghost{
     display:inline-flex; align-items:center; justify-content:center; min-height:52px; padding:0 30px;
     text-decoration:none; font-size:0.98rem; letter-spacing:0.06em; transition:background .3s ease, color .3s ease, transform .3s ease;
@@ -1609,8 +1611,8 @@
 
     <div class="about-closing">
       <div class="about-closing-text">
-        <h3 data-cid="ABOUT-CLOSING-H3">家的光影值得講究，第一步，交給織光。</h3>
-        <p class="js-promo" data-cid="ABOUT-CLOSING-PROMO">官網預約限定｜立即預約現折 $2,000，好禮再加送（至 2026/12/31）</p>
+        <h3 data-cid="ABOUT-CLOSING-H3">家的光影值得講究，第一步，交給織光</h3>
+        <p class="js-promo" data-cid="ABOUT-CLOSING-PROMO">官網預約限定｜立即預約現折 $2,000，好禮再加送（至 2026/12/31）<a class="about-promo-link" href="/promo/resident-share/" data-cid="ABOUT-CLOSING-PROMO-LINK">查看詳情</a></p>
       </div>
       <div class="about-closing-actions">
         <a class="btn-about-primary" href="#booking" data-cid="ABOUT-CTA-1">預約免費丈量</a>
