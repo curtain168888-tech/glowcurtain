@@ -816,6 +816,10 @@ footer ul a, .footer-biz-link{ display:inline-flex; align-items:center; min-heig
 .footer-legal{ display:inline-flex; flex-wrap:wrap; column-gap:18px; }
 .footer-biz-link{ text-decoration:underline; text-underline-offset:2px; transition:color .25s ease; }
 .footer-biz-link:hover{ color:var(--gold-soft); }
+.footer-copy{ display:inline-flex; flex-wrap:wrap; align-items:center; column-gap:18px; }
+.footer-credit{ letter-spacing:.02em; }
+.footer-credit-link{ text-decoration:underline; text-underline-offset:2px; transition:color .25s ease; }
+.footer-credit-link:hover{ color:var(--gold-soft); }
 .ig-link{ display:inline-flex; align-items:center; gap:8px; }
 .ig-link svg{ width:16px; height:16px; flex-shrink:0; }
 .footer-line-link{ display:inline-flex; align-items:center; gap:8px; color:#4AD672; }
