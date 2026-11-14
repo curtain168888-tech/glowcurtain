@@ -32,7 +32,7 @@
   }, true);
 
   /* ---------- 頂部狀態列 ---------- */
-  function quoteHref(n) { var s = META[n - 1].s; return s === 'motor' ? '/?motor=1#quote' : s ? '/?style=' + s + '#quote' : '/#quote'; }
+  function quoteHref(n) { var s = META[n - 1].s; return s === 'motor' ? '/quote/?motor=1' : s ? '/quote/?style=' + s : '/quote/'; }
   function status() {
     var m = META[cur - 1];
     where.innerHTML = '';

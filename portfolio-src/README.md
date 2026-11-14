@@ -20,7 +20,7 @@ node portfolio-src/build_web.js
 
 - 閱讀模式：寬度 900px 以下＝手機版直式排版；電腦、平板橫放＝翻頁；螢幕太矮或網址加 `?view=scroll`＝整頁上下捲動。
 - 每頁網址為 `/portfolio/#p頁碼`（例如 `#p45`），可直接分享到某一頁。
-- 案例頁的「線上試算」會帶 `/?style=款式#quote`，首頁報價表會自動選好款式；電動升級頁帶 `/?motor=1#quote`。
+- 案例頁的「線上試算」會帶 `/quote/?style=款式`，線上報價頁會自動選好款式；電動升級頁帶 `/quote/?motor=1`。
 - GA4 事件：`portfolio_open`、`portfolio_page`（停留 1.2 秒以上的頁）、`portfolio_cta`（quote／line／phone／ig／home）、`portfolio_toc`。
 - 翻頁套件：StPageFlip（page-flip 2.0.7，MIT），檔案在 `portfolio/page-flip.browser.js`。
 

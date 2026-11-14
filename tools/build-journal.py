@@ -124,7 +124,7 @@ def build_article(a, by_slug, tpl):
     cover = picture(a['slug'] + '-cover', a['cover_alt'], cover_ws, '(max-width:1264px) 100vw, 1200px', lazy=False)
     toc_items = ''.join(f'<li><a href="#{i}">{esc(n)}</a></li>' for i, n in toc(a['body1'] + a['body2']))
     styles = ''.join(f'''
-        <a href="/?style={k}#quote" data-track="style_{k}">
+        <a href="/quote/?style={k}" data-track="style_{k}">
           <img src="/journal/img/thumb-{k}-200.webp" alt="" width="200" height="200" loading="lazy">
           <span class="t"><span class="k">用這款試算</span><span class="n">{STYLES[k]}</span><span class="g">輸入寬高，線上估價 →</span></span>
         </a>''' for k in a['styles'])
@@ -180,8 +180,8 @@ def build_article(a, by_slug, tpl):
         <p class="h">{a.get("cta_h", "想知道你家的窗大概多少？輸入寬高就能線上估價，不用傳照片。")}</p>
         <p class="js-promo">立即預約現折 $2,000，選布簾贈高溫定型、選調光簾贈高規五金配件。</p>
         <div class="actions">
-          <a class="btn btn-primary" href="{a.get("cta_quote", "/#quote")}" data-track="cta_quote">線上估價</a>
-          <a class="btn btn-ghost" href="/#booking" data-track="cta_booking">預約免費丈量</a>
+          <a class="btn btn-primary" href="{a.get("cta_quote", "/quote/")}" data-track="cta_quote">線上估價</a>
+          <a class="btn btn-ghost" href="/quote/#booking" data-track="cta_booking">預約免費丈量</a>
         </div>
       </div>
 

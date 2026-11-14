@@ -25,7 +25,7 @@ const label = p => {
 };
 // 每頁對應的線上試算款式（官網報價有的款式才帶參數）
 const styleOf = p => p.kind === 'case' ? (SITE_TYPES.has(p.c.type) ? p.c.type : '') : p.kind === 'feat' ? p.t.key : (p.kind === 'motor' || p.kind === 'motor2') ? 'motor' : '';
-const quoteHref = s => s === 'motor' ? '/?motor=1#quote' : s ? `/?style=${s}#quote` : '/#quote';
+const quoteHref = s => s === 'motor' ? '/quote/?motor=1' : s ? `/quote/?style=${s}` : '/quote/';
 
 const SIZES = {
   big: '(max-width: 899px) 100vw, 900px',
@@ -58,7 +58,7 @@ function webOnly(h, p) {
   if (p.kind === 'back') {
     const C = D.contact, tel = C.phone.replace(/\D/g, '');
     h = h.replace(`<b>${C.phone}</b>`, `<a href="tel:${tel}" data-cta="phone"><b>${C.phone}</b></a>`)
-      .replace(`<a href="https://www.${C.site}" target="_blank" rel="noopener">`, '<a href="/#quote" data-cta="quote">')
+      .replace(`<a href="https://www.${C.site}" target="_blank" rel="noopener">`, '<a href="/quote/" data-cta="quote">')
       .replace(`<a href="https://${C.line}" target="_blank" rel="noopener">`, `<a href="https://${C.line}" target="_blank" rel="noopener" data-cta="line">`)
       .replace(`<a href="https://www.${C.ig}/" target="_blank" rel="noopener">`, `<a href="https://www.${C.ig}/" target="_blank" rel="noopener" data-cta="ig">`);
   }
@@ -216,7 +216,7 @@ ${siteHeader}
     <a class="tb-btn hide-sm" id="view" href="?view=scroll" hidden>捲動閱讀</a>
     <button class="tb-btn hide-sm" id="fs" type="button" hidden>全螢幕</button>
     <button class="tb-btn" id="toc-open" type="button" aria-controls="toc" aria-expanded="false">${ICON_IX}<span>目錄</span></button>
-    <a class="tb-btn tb-cta" id="cta" href="/#quote" data-cta="quote">線上試算</a>
+    <a class="tb-btn tb-cta" id="cta" href="/quote/" data-cta="quote">線上試算</a>
   </div>
 </header>
 <main class="stage" id="stage" aria-label="織光窗簾 空間作品集">
@@ -230,7 +230,7 @@ ${pageHtml}
 </div>
 <p class="pf-note">照片皆為織光窗簾實際施工案例，版權所有，請勿轉載。</p>
 ${siteFooter}
-<nav class="actbar" aria-label="預約與估價"><a href="${LINE}" target="_blank" rel="noopener" data-cta="line">LINE 預約丈量</a><a class="primary" id="cta2" href="/#quote" data-cta="quote">線上試算報價</a></nav>
+<nav class="actbar" aria-label="預約與估價"><a href="${LINE}" target="_blank" rel="noopener" data-cta="line">LINE 預約丈量</a><a class="primary" id="cta2" href="/quote/" data-cta="quote">線上試算報價</a></nav>
 <div class="scrim" id="scrim" hidden></div>
 <aside class="drawer" id="toc" hidden aria-label="作品集目錄">
   <div class="dr-head"><h2>目錄</h2><button class="tb-btn round" id="toc-close" type="button" aria-label="關閉目錄">×</button></div>

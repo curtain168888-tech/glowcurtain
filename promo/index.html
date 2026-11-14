@@ -306,12 +306,12 @@ footer h3{ letter-spacing:0.01em; }
       <a href="/#categories">窗簾分類</a>
       <a href="/portfolio/">空間作品集</a>
       <a href="/journal/">織光手札</a>
-      <a href="/#quote">線上報價</a>
-      <a href="/#booking">預約丈量</a>
+      <a href="/quote/">線上報價</a>
+      <a href="/quote/#booking">預約丈量</a>
       <a href="/#about">關於我們</a>
       <a href="/#contact">聯絡方式</a>
       <a class="nav-promo is-current" href="/promo/" aria-current="page">優惠活動<span class="nav-dot js-promo" aria-hidden="true"></span></a>
-      <a class="nav-cta" href="/#booking">立即預約免費丈量</a>
+      <a class="nav-cta" href="/quote/#booking">立即預約免費丈量</a>
     </nav>
     <button class="menu-toggle" id="menuToggle" aria-label="開啟選單" aria-expanded="false" aria-controls="navLinks">
       <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -374,8 +374,8 @@ footer h3{ letter-spacing:0.01em; }
       <p data-cid="LIST-CTA-DESC">到官網輸入窗戶寬度與高度就能估價，不用傳照片；全台免費到府丈量，規劃師帶布料樣品到府。</p>
     </div>
     <div class="actions">
-      <a class="btn btn-primary" href="/#booking" data-cid="LIST-CTA-BTN1">預約免費丈量</a>
-      <a class="btn btn-ghost" href="/#quote" data-cid="LIST-CTA-BTN2">線上估價</a>
+      <a class="btn btn-primary" href="/quote/#booking" data-cid="LIST-CTA-BTN1">預約免費丈量</a>
+      <a class="btn btn-ghost" href="/quote/" data-cid="LIST-CTA-BTN2">線上估價</a>
     </div>
   </div>
 </section>
@@ -395,8 +395,8 @@ footer h3{ letter-spacing:0.01em; }
           <li><a href="/#categories">窗簾分類</a></li>
           <li><a href="/portfolio/">空間作品集</a></li>
           <li><a href="/journal/">織光手札</a></li>
-          <li><a href="/#quote">線上報價</a></li>
-          <li><a href="/#booking">預約丈量</a></li>
+          <li><a href="/quote/">線上報價</a></li>
+          <li><a href="/quote/#booking">預約丈量</a></li>
           <li><a href="/promo/">優惠活動</a></li>
         </ul>
       </div>
@@ -469,7 +469,7 @@ footer h3{ letter-spacing:0.01em; }
       var href = el.getAttribute('href') || '', pos = positionOf(el), card = el.closest('.promo-card');
       if (card) window.gcTrack('promo_click', { link_position: 'promo_list', promo_id: card.getAttribute('data-id'), promo_status: card.classList.contains('is-ended') ? 'ended' : 'active' });
       else if (/#booking$/.test(href)) window.gcTrack('cta_click', { cta_target: 'booking', link_position: pos });
-      else if (/#quote$/.test(href)) window.gcTrack('cta_click', { cta_target: 'quote', link_position: pos });
+      else if (/^\/quote\/(\?|$)/.test(href)) window.gcTrack('cta_click', { cta_target: 'quote', link_position: pos });
       else if (/lin\.ee|line\.me/.test(href)) window.gcTrack('line_click', { link_position: pos });
       else if (href.indexOf('tel:') === 0) window.gcTrack('phone_click', { link_position: pos });
     }, true);
