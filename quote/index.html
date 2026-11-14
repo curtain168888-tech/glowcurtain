@@ -502,6 +502,9 @@ select:disabled{opacity:0.55; cursor:not-allowed;}
 }
 
 /* ===== /quote/ 頁面專用 ===== */
+.field-spotlight{ border-radius:10px; animation:fieldSpot 1.6s ease-in-out 2; }
+@keyframes fieldSpot{ 0%,100%{ box-shadow:0 0 0 0 rgba(192,151,106,0); background:transparent; } 50%{ box-shadow:0 0 0 8px rgba(192,151,106,.28); background:rgba(192,151,106,.10); } }
+@media (prefers-reduced-motion: reduce){ .field-spotlight{ animation:none; box-shadow:0 0 0 3px rgba(192,151,106,.45); } }
 .q-hero{ padding:clamp(36px,6vw,64px) 0 8px; }
 .q-crumb{ font-size:13px; color:var(--ink-soft, #5E6B74); margin:0 0 14px; }
 .q-crumb a{ color:inherit; }
@@ -1719,14 +1722,38 @@ select:disabled{opacity:0.55; cursor:not-allowed;}
     }
     var w = parseInt(params.get('w'), 10), h = parseInt(params.get('h'), 10);
     var wEl = document.getElementById('q-width'), hEl = document.getElementById('q-height');
-    if (w > 0 && wEl) { wEl.value = String(w); wEl.dispatchEvent(new Event('input', { bubbles: true })); }
-    if (h > 0 && hEl) { hEl.value = String(h); hEl.dispatchEvent(new Event('input', { bubbles: true })); }
+    var isMobileView = (typeof IS_MOBILE !== 'undefined' && IS_MOBILE) || window.matchMedia('(max-width: 860px)').matches;
+    // 手機只帶入數字、不觸發試算（等客人選完材質等級再按「開始試算」）；桌機觸發即時試算
+    if (w > 0 && wEl) { wEl.value = String(w); if (!isMobileView) wEl.dispatchEvent(new Event('input', { bubbles: true })); }
+    if (h > 0 && hEl) { hEl.value = String(h); if (!isMobileView) hEl.dispatchEvent(new Event('input', { bubbles: true })); }
     if (params.get('motor') === '1' && motorSel) {
       var m = motorSel.querySelector('option[data-motor="single"]');
       if (m) { motorSel.selectedIndex = m.index; motorSel.dispatchEvent(new Event('change', { bubbles: true })); }
     }
-    // 首頁帶了寬高過來：直接算出結果（手機版也算，不用再按一次「開始試算」）
-    if (w > 0 && h > 0) { var btn = document.getElementById('quoteSubmit'); if (btn) btn.click(); }
+    // 首頁帶了寬高過來：
+    //   手機：先不出結果，捲到「材質等級」讓客人選基礎款／進階款，再自己按「開始試算」
+    //   桌機：結果本來就即時顯示，直接算出來
+    if (w > 0 && h > 0) {
+      if (isMobileView) {
+        // 清掉頁面載入時用預設值算出的示範金額，避免客人以為已經估好了
+        ['r-area','r-unit','r-qty'].forEach(function(id){ var el = document.getElementById(id); if (el) el.textContent = '—'; });
+        var rt = document.getElementById('r-total'); if (rt) rt.textContent = 'NT$ —';
+        var ml = document.getElementById('r-motor-line'); if (ml) ml.hidden = true;
+        var tierSel = document.getElementById('q-tier');
+        var tierField = tierSel && tierSel.closest('.field');
+        if (tierField) {
+          setTimeout(function(){
+            var header = document.getElementById('siteHeader');
+            var offset = (header ? header.getBoundingClientRect().height : 72) + 16;
+            window.scrollTo({ top: tierField.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
+            tierField.classList.add('field-spotlight');
+            setTimeout(function(){ tierField.classList.remove('field-spotlight'); }, 3200);
+          }, 350);
+        }
+      } else {
+        var btn = document.getElementById('quoteSubmit'); if (btn) btn.click();
+      }
+    }
   })();
 </script>
 
