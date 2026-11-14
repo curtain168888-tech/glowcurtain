@@ -1051,6 +1051,37 @@
   .home-quote-points{ list-style:none; margin:22px 0 0; padding:0; display:flex; flex-wrap:wrap; gap:8px 22px; color:var(--navy); font-size:15px; }
   .home-quote-points li::before{ content:'✓'; color:var(--gold-deep); margin-right:6px; }
   .home-quote-form{ background:var(--paper); padding:32px; box-shadow:var(--shadow); }
+  /* 量窗示範：實拍照上依序畫出寬、高量尺（進入畫面才播放；減少動態效果時直接顯示完整標註） */
+  .home-quote-left .section-head{ margin-bottom:28px; }
+  .hq-demo{ display:flex; align-items:center; gap:32px; }
+  .hq-demo-text p{ margin:0; color:var(--ink-soft); line-height:1.85; }
+  .home-quote-points{ flex-direction:column; gap:10px; }
+  .hq-measure{ position:relative; flex:none; width:300px; aspect-ratio:320 / 340; margin:0; overflow:hidden; box-shadow:var(--shadow-soft); background:var(--bg-soft); }
+  .hq-measure img{ width:100%; height:100%; object-fit:cover; object-position:50% 0; display:block; }
+  .hq-measure::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(35,46,54,.06), rgba(35,46,54,.26)); pointer-events:none; }
+  .hq-measure svg{ position:absolute; inset:0; width:100%; height:100%; z-index:1; }
+  .hqm-w, .hqm-h{ stroke-dasharray:100; stroke-dashoffset:100; }
+  .hqm-tick{ opacity:0; }
+  .hqm-tag{ position:absolute; z-index:2; background:var(--paper); color:var(--navy-deep); font-size:13.5px; font-weight:700; padding:4px 11px; border-radius:999px; white-space:nowrap; opacity:0; }
+  .hqm-tag-w{ left:57%; top:80%; transform:translateX(-50%); }
+  .hqm-tag-h{ left:17%; top:53%; transform:translateY(-50%); }
+  .hqm-cap{ position:absolute; z-index:2; left:12px; right:12px; top:12px; background:rgba(35,46,54,.86); color:var(--paper); font-size:13px; padding:8px 10px; text-align:center; letter-spacing:.04em; opacity:0; }
+  .hq-measure.is-playing .hqm-w{ animation:hqmW 7s ease-in-out infinite; }
+  .hq-measure.is-playing .hqm-h{ animation:hqmH 7s ease-in-out infinite; }
+  .hq-measure.is-playing .hqm-tick{ animation:hqmTick 7s ease-in-out infinite; }
+  .hq-measure.is-playing .hqm-tag-w{ animation:hqmTagW 7s ease-in-out infinite; }
+  .hq-measure.is-playing .hqm-tag-h{ animation:hqmTagH 7s ease-in-out infinite; }
+  .hq-measure.is-playing .hqm-cap{ animation:hqmCap 7s ease-in-out infinite; }
+  @keyframes hqmW{ 0%,8%{ stroke-dashoffset:100; opacity:1; } 30%,88%{ stroke-dashoffset:0; opacity:1; } 100%{ stroke-dashoffset:0; opacity:0; } }
+  @keyframes hqmH{ 0%,30%{ stroke-dashoffset:100; opacity:1; } 52%,88%{ stroke-dashoffset:0; opacity:1; } 100%{ stroke-dashoffset:0; opacity:0; } }
+  @keyframes hqmTick{ 0%,6%{ opacity:0; } 14%,88%{ opacity:1; } 100%{ opacity:0; } }
+  @keyframes hqmTagW{ 0%,24%{ opacity:0; transform:translate(-50%,6px); } 34%,88%{ opacity:1; transform:translate(-50%,0); } 100%{ opacity:0; transform:translate(-50%,0); } }
+  @keyframes hqmTagH{ 0%,46%{ opacity:0; transform:translate(-6px,-50%); } 56%,88%{ opacity:1; transform:translate(0,-50%); } 100%{ opacity:0; transform:translate(0,-50%); } }
+  @keyframes hqmCap{ 0%,60%{ opacity:0; transform:translateY(-6px); } 70%,88%{ opacity:1; transform:none; } 100%{ opacity:0; transform:none; } }
+  @media (prefers-reduced-motion: reduce){
+    .hq-measure .hqm-w, .hq-measure .hqm-h{ animation:none !important; stroke-dashoffset:0; }
+    .hq-measure .hqm-tick, .hq-measure .hqm-tag, .hq-measure .hqm-cap{ animation:none !important; opacity:1; }
+  }
   .home-quote-btn{ width:100%; min-height:52px; border:0; background:var(--navy); color:var(--paper); font-size:16px; letter-spacing:.06em; cursor:pointer; margin-top:6px; }
   .home-quote-btn:hover{ background:var(--navy-deep); }
   .home-quote-note{ margin:12px 0 0; font-size:13px; color:var(--ink-soft); text-align:center; }
@@ -1068,6 +1099,8 @@
   .home-book-ghost:hover{ background:rgba(228,201,169,.12); }
   @media (max-width:860px){
     .home-quote-grid{ grid-template-columns:1fr; gap:32px; }
+    .hq-demo{ flex-direction:column; align-items:stretch; gap:22px; }
+    .hq-measure{ width:100%; max-width:380px; margin:0 auto; }
     .home-quote-form{ padding:24px; }
     .home-book-band{ padding:64px 0; }
     .home-book-actions{ width:100%; }
@@ -1367,15 +1400,35 @@
 
 <section id="quote" class="home-quote">
   <div class="wrap home-quote-grid">
-    <div class="section-head">
-      <span class="eyebrow" data-cid="QUOTE-EYEBROW">02 — Instant Estimate</span>
-      <h2 data-cid="QUOTE-H2">線上報價試算</h2>
-      <p data-cid="QUOTE-DESC">輸入窗戶寬高就能估價，免傳照片。估完可直接帶入預約丈量<span class="js-promo">，官網預約現折 $2,000</span>。</p>
-      <ul class="home-quote-points">
-        <li data-cid="QUOTE-POINT1">11 種窗簾款式</li>
-        <li data-cid="QUOTE-POINT2">可升級電動</li>
-        <li data-cid="QUOTE-POINT3">一次估多扇窗</li>
-      </ul>
+    <div class="home-quote-left">
+      <div class="section-head">
+        <span class="eyebrow" data-cid="QUOTE-EYEBROW">02 — Instant Estimate</span>
+        <h2 data-cid="QUOTE-H2">線上報價試算</h2>
+      </div>
+      <div class="hq-demo">
+        <figure class="hq-measure" id="hqMeasure" aria-label="量窗示範：量窗框內側的寬度與高度">
+          <img src="/images/hero-photo2.webp" alt="織光窗簾安裝實景：窗戶與風琴簾" width="320" height="340" loading="lazy" decoding="async">
+          <svg viewBox="0 0 320 340" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <g fill="none" stroke="#FBF8F3" stroke-width="2" stroke-linecap="round">
+              <path class="hqm-w" pathLength="100" d="M64 314 H302"/>
+              <path class="hqm-tick" d="M64 306 V322 M302 306 V322"/>
+              <path class="hqm-h" pathLength="100" d="M44 66 V296"/>
+              <path class="hqm-tick" d="M36 66 H52 M36 296 H52"/>
+            </g>
+          </svg>
+          <span class="hqm-tag hqm-tag-w" data-cid="QUOTE-DEMO-W">寬 180 cm</span>
+          <span class="hqm-tag hqm-tag-h" data-cid="QUOTE-DEMO-H">高 220 cm</span>
+          <figcaption class="hqm-cap" data-cid="QUOTE-DEMO-CAP">量好寬高，填進來就能估</figcaption>
+        </figure>
+        <div class="hq-demo-text">
+          <p data-cid="QUOTE-DESC">量窗框內側的寬與高就好，不用很精準，免傳照片。估完可直接帶入預約丈量<span class="js-promo">，官網預約現折 $2,000</span>。</p>
+          <ul class="home-quote-points">
+            <li data-cid="QUOTE-POINT1">11 種窗簾款式</li>
+            <li data-cid="QUOTE-POINT2">可升級電動</li>
+            <li data-cid="QUOTE-POINT3">一次估多扇窗</li>
+          </ul>
+        </div>
+      </div>
     </div>
     <form class="home-quote-form" id="homeQuoteForm" action="/quote/" method="get">
       <div class="field">
@@ -2123,6 +2176,13 @@
 </script>
 
 <script>
+  // 量窗示範動畫：捲到畫面內才播放，離開就暫停（不在背景空轉）
+  (function(){
+    var fig = document.getElementById('hqMeasure');
+    if (!fig) return;
+    if (!('IntersectionObserver' in window)) { fig.classList.add('is-playing'); return; }
+    new IntersectionObserver(function(es){ es.forEach(function(e){ fig.classList.toggle('is-playing', e.isIntersecting); }); }, { threshold: 0.35 }).observe(fig);
+  })();
   // 首頁估價入口：送到 /quote/?style=…&w=…&h=…（沒有 JS 時表單本身也會用 GET 送過去）
   (function(){
     var f = document.getElementById('homeQuoteForm');
